@@ -1,0 +1,67 @@
+name: Telegram notifications
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
+      - ready_for_review
+
+  issues:
+    types:
+      - opened
+      - closed
+      - reopened
+      - assigned
+
+  release:
+    types:
+      - published
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send Telegram notification
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          EVENT_NAME: ${{ github.event_name }}
+          ACTION: ${{ github.event.action }}
+          REPOSITORY: ${{ github.repository }}
+          ACTOR: ${{ github.actor }}
+          REF_NAME: ${{ github.ref_name }}
+          SHA: ${{ github.sha }}
+          SERVER_URL: ${{ github.server_url }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          SHORT_SHA="${SHA:0:7}"
+
+          MESSAGE=$(printf '%s\n' \
+            "GitHub alert" \
+            "" \
+            "Repository: ${REPOSITORY}" \
+            "Event: ${EVENT_NAME}" \
+            "Action: ${ACTION}" \
+            "Actor: ${ACTOR}" \
+            "Branch/Ref: ${REF_NAME}" \
+            "Commit: ${SHORT_SHA}" \
+            "" \
+            "Run:" \
+            "${SERVER_URL}/${REPOSITORY}/actions/runs/${RUN_ID}")
+
+          curl -sS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=${MESSAGE}"
