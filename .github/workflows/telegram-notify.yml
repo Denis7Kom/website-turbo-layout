@@ -49,20 +49,18 @@ jobs:
         run: |
           SHORT_SHA="${SHA:0:7}"
 
-          MESSAGE=$(cat <<EOF
-🔔 GitHub alert
-
-Repository: ${REPOSITORY}
-Event: ${EVENT_NAME}
-Action: ${ACTION}
-Actor: ${ACTOR}
-Branch/Ref: ${REF_NAME}
-Commit: ${SHORT_SHA}
-
-Run:
-${SERVER_URL}/${REPOSITORY}/actions/runs/${RUN_ID}
-EOF
-          )
+          MESSAGE=$(printf '%s\n' \
+            "GitHub alert" \
+            "" \
+            "Repository: ${REPOSITORY}" \
+            "Event: ${EVENT_NAME}" \
+            "Action: ${ACTION}" \
+            "Actor: ${ACTOR}" \
+            "Branch/Ref: ${REF_NAME}" \
+            "Commit: ${SHORT_SHA}" \
+            "" \
+            "Run:" \
+            "${SERVER_URL}/${REPOSITORY}/actions/runs/${RUN_ID}")
 
           curl -sS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
