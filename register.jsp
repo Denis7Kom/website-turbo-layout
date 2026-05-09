@@ -1,0 +1,227 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrazione - Turbo Layout</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/register.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="header-inner">
+        <a href="${pageContext.request.contextPath}/index.jsp" class="logo">
+            <span class="logo-icon">
+                <span></span><span></span><span></span><span></span>
+            </span>
+            <span>Turbo Layout</span>
+        </a>
+
+        <nav class="main-nav">
+            <a href="#">Concerti</a>
+            <a href="#">Artisti</a>
+            <a href="#">Merch</a>
+            <a href="#">Eventi</a>
+        </nav>
+
+        <div class="header-actions">
+            <a href="${pageContext.request.contextPath}/login.jsp">Login</a>
+
+            <a href="${pageContext.request.contextPath}/cart.jsp" class="cart-link">
+                🛒
+                <span class="cart-count">0</span>
+            </a>
+        </div>
+    </div>
+</header>
+
+<main class="page-wrapper">
+
+    <section class="register-card">
+
+        <div class="promo-panel">
+            <div class="promo-overlay"></div>
+
+            <div class="promo-content">
+                <div class="sound-icon">
+                    <span></span><span></span><span></span><span></span>
+                </div>
+
+                <h1>
+                    Unisciti a <br>
+                    <span>Turbo Layout</span>
+                </h1>
+
+                <div class="title-line"></div>
+
+                <p class="promo-subtitle">
+                    Scopri concerti, segui i tuoi artisti preferiti
+                    e acquista merchandising ufficiale.
+                </p>
+
+                <div class="benefits">
+
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🎟️</div>
+                        <div>
+                            <h3>Acquista biglietti in anteprima</h3>
+                            <p>Accedi a prevendite esclusive e offerte riservate ai membri.</p>
+                        </div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <div class="benefit-icon">❤</div>
+                        <div>
+                            <h3>Segui i tuoi artisti preferiti</h3>
+                            <p>Ricevi aggiornamenti, novità e date dei prossimi eventi.</p>
+                        </div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🛍️</div>
+                        <div>
+                            <h3>Merch ufficiale</h3>
+                            <p>Scopri collezioni esclusive e porta la musica sempre con te.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="form-panel">
+            <div class="form-container">
+
+                <h2>Crea il tuo account</h2>
+
+                <p class="form-subtitle">
+                    Registrati per acquistare biglietti, seguire artisti
+                    e salvare i tuoi preferiti.
+                </p>
+
+                <% 
+                    String error = (String) request.getAttribute("error");
+                    if (error != null) {
+                %>
+                    <div class="error-box"><%= error %></div>
+                <% 
+                    }
+                %>
+
+                <form action="${pageContext.request.contextPath}/register" method="post" class="register-form">
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nome">Nome</label>
+                            <input type="text" id="nome" name="nome" placeholder="Inserisci il tuo nome" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cognome">Cognome</label>
+                            <input type="text" id="cognome" name="cognome" placeholder="Inserisci il tuo cognome" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Inserisci la tua email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="Scegli il tuo username" required>
+                    </div>
+
+                    <div class="form-group password-group">
+                        <label for="password">Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="password" name="password" placeholder="Crea una password" required>
+                            <button type="button" class="toggle-password" data-target="password">👁</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group password-group">
+                        <label for="confirmPassword">Conferma password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Conferma la tua password" required>
+                            <button type="button" class="toggle-password" data-target="confirmPassword">👁</button>
+                        </div>
+                    </div>
+
+                    <label class="checkbox-row">
+                        <input type="checkbox" name="terms" required>
+                        <span>Accetto i <a href="#">Termini</a> e la <a href="#">Privacy Policy</a></span>
+                    </label>
+
+                    <button type="submit" class="primary-btn">Crea account</button>
+
+                    <p class="login-text">
+                        Hai già un account?
+                        <a href="${pageContext.request.contextPath}/login.jsp">Accedi</a>
+                    </p>
+
+                    <div class="divider">
+                        <span></span>
+                        <p>oppure continua con</p>
+                        <span></span>
+                    </div>
+
+                    <div class="social-buttons">
+                        <button type="button" class="social-btn">
+                            <span class="google-icon">G</span>
+                            Continua con Google
+                        </button>
+
+                        <button type="button" class="social-btn">
+                            <span class="apple-icon">●</span>
+                            Continua con Apple
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </section>
+
+</main>
+
+<footer class="site-footer">
+    <div class="footer-inner">
+
+        <div class="footer-brand">
+            <a href="#" class="logo">
+                <span class="logo-icon">
+                    <span></span><span></span><span></span><span></span>
+                </span>
+                <span>Turbo Layout</span>
+            </a>
+            <p>La tua musica. I tuoi eventi. Sempre con te.</p>
+        </div>
+
+        <nav class="footer-links">
+            <a href="#">Contatti</a>
+            <a href="#">FAQ</a>
+            <a href="#">Privacy</a>
+            <a href="#">Termini</a>
+        </nav>
+
+        <div class="social-links">
+            <a href="#">Instagram</a>
+            <a href="#">Facebook</a>
+            <a href="#">X</a>
+            <a href="#">YouTube</a>
+        </div>
+
+    </div>
+
+    <p class="copyright">
+        © 2024 Turbo Layout. Tutti i diritti riservati.
+    </p>
+</footer>
+
+<script src="${pageContext.request.contextPath}/js/register.js"></script>
+</body>
+</html>
