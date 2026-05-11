@@ -1,15 +1,14 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Registrazione - Turbo Layout</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login- Turbo Layout</title>
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/register.css">
+    <link rel="stylesheet" href="login.css" /> 
 </head>
-<body>
 
+<body>
 <header class="site-header">
     <div class="header-inner">
         <a href="${pageContext.request.contextPath}/index.jsp" class="logo">
@@ -23,7 +22,6 @@
             <a href="#">Concerti</a>
             <a href="#">Artisti</a>
             <a href="#">Merch</a>
-            <a href="#">Eventi</a>
         </nav>
 
         <div class="header-actions">
@@ -100,15 +98,7 @@
                     Registrati per acquistare biglietti, seguire artisti
                     e salvare i tuoi preferiti.
                 </p>
-
-                <% 
-                    String error = (String) request.getAttribute("error");
-                    if (error != null) {
-                %>
-                    <div class="error-box"><%= error %></div>
-                <% 
-                    }
-                %>
+          
 
                 <form action="${pageContext.request.contextPath}/register" method="post" class="register-form">
 
@@ -160,25 +150,7 @@
                     <p class="login-text">
                         Hai già un account?
                         <a href="${pageContext.request.contextPath}/login.jsp">Accedi</a>
-                    </p>
-
-                    <div class="divider">
-                        <span></span>
-                        <p>oppure continua con</p>
-                        <span></span>
-                    </div>
-
-                    <div class="social-buttons">
-                        <button type="button" class="social-btn">
-                            <span class="google-icon">G</span>
-                            Continua con Google
-                        </button>
-
-                        <button type="button" class="social-btn">
-                            <span class="apple-icon">●</span>
-                            Continua con Apple
-                        </button>
-                    </div>
+                    </p>   
 
                 </form>
             </div>
@@ -188,38 +160,8 @@
 
 </main>
 
-<footer class="site-footer">
-    <div class="footer-inner">
-
-        <div class="footer-brand">
-            <a href="#" class="logo">
-                <span class="logo-icon">
-                    <span></span><span></span><span></span><span></span>
-                </span>
-                <span>Turbo Layout</span>
-            </a>
-            <p>La tua musica. I tuoi eventi. Sempre con te.</p>
-        </div>
-
-        <nav class="footer-links">
-            <a href="#">Contatti</a>
-            <a href="#">FAQ</a>
-            <a href="#">Privacy</a>
-            <a href="#">Termini</a>
-        </nav>
-
-        <div class="social-links">
-            <a href="#">Instagram</a>
-            <a href="#">Facebook</a>
-            <a href="#">X</a>
-            <a href="#">YouTube</a>
-        </div>
-
-    </div>
-
-    <p class="copyright">
-        © 2024 Turbo Layout. Tutti i diritti riservati.
-    </p>
+<footer class="site-footer">       
+        © 2026 Turbo Layout
 </footer>
 
 <script src="${pageContext.request.contextPath}/js/register.js"></script>
