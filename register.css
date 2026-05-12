@@ -116,15 +116,11 @@ body {
     font-size: 12px;
     font-weight: 700;
     width: 21px;
-    height: 21px;:root {
-    --primary: #6A5ACD;
-    --secondary: #FF8FBF;
-    --bg-main: #F7F7FA;
-    --bg-alt: #FFFFFF;
-    --text-main: #1E1E1E;
-    --text-secondary: #7A7A7A;
-    --border: #E5E5E5;
-    --shadow: 0 24px 60px rgba(30, 30, 30, 0.10);
+    height: 21px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 * {
