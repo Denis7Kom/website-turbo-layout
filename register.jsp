@@ -3,13 +3,14 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrazione - Turbo Layout</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/register.css" />
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/register.css">
 </head>
 
 <body>
@@ -17,7 +18,7 @@
     <div class="header-inner">
         <a href="${pageContext.request.contextPath}/index.jsp" class="logo">
             <img
-                src="${pageContext.request.contextPath}/images/logo.png"
+                src="${pageContext.request.contextPath}/images/logo.svg"
                 alt="Turbo Layout logo"
                 class="logo-img"
             >
@@ -51,8 +52,12 @@
             <div class="promo-overlay"></div>
 
             <div class="promo-content">
-                <div class="sound-icon" aria-hidden="true">
-                    <span></span><span></span><span></span><span></span>
+                <div class="promo-logo">
+                    <img
+                        src="${pageContext.request.contextPath}/images/logo.svg"
+                        alt="Turbo Layout logo"
+                        class="promo-logo-img"
+                    >
                 </div>
 
                 <h1>
