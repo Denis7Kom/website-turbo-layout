@@ -227,9 +227,12 @@ body {
     position: relative;
     min-height: 690px;
     background:
-        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.55), transparent 24%),
-        linear-gradient(135deg, rgba(106, 90, 205, 0.55), rgba(255, 143, 191, 0.60)),
-        linear-gradient(180deg, #eee8ff, #ffd8ea);
+        linear-gradient(
+            135deg,
+            rgba(106, 90, 205, 0.54),
+            rgba(255, 143, 191, 0.46)
+        ),
+        url("images/fono.png") center bottom / cover no-repeat;
     overflow: hidden;
 }
 
@@ -240,41 +243,43 @@ body {
     background:
         repeating-radial-gradient(
             circle at 0% 0%,
-            rgba(255, 255, 255, 0.38) 0,
-            rgba(255, 255, 255, 0.38) 1px,
+            rgba(255, 255, 255, 0.32) 0,
+            rgba(255, 255, 255, 0.32) 1px,
             transparent 2px,
             transparent 18px
         );
-    opacity: 0.45;
+    opacity: 0.38;
+    z-index: 1;
+    pointer-events: none;
 }
 
 .promo-panel::after {
     content: "";
     position: absolute;
-    left: -10%;
-    right: -10%;
-    bottom: 0;
-    height: 180px;
+    inset: 0;
     background:
-        radial-gradient(circle at 10% 100%, rgba(106, 90, 205, 0.75), transparent 22%),
-        radial-gradient(circle at 25% 100%, rgba(80, 65, 170, 0.72), transparent 25%),
-        radial-gradient(circle at 45% 100%, rgba(106, 90, 205, 0.66), transparent 25%),
-        radial-gradient(circle at 65% 100%, rgba(255, 143, 191, 0.60), transparent 26%),
-        radial-gradient(circle at 85% 100%, rgba(106, 90, 205, 0.68), transparent 24%),
-        linear-gradient(180deg, transparent, rgba(70, 50, 150, 0.85));
-    opacity: 0.95;
+        radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.34), transparent 34%),
+        radial-gradient(circle at 100% 100%, rgba(255, 143, 191, 0.24), transparent 42%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(70, 50, 150, 0.18));
+    z-index: 2;
+    pointer-events: none;
 }
 
 .promo-overlay {
     position: absolute;
     inset: 0;
-    background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.10), rgba(106, 90, 205, 0.10));
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.10),
+        rgba(106, 90, 205, 0.10)
+    );
+    z-index: 3;
+    pointer-events: none;
 }
 
 .promo-content {
     position: relative;
-    z-index: 2;
+    z-index: 4;
     padding: 80px 72px;
     height: 100%;
 }
