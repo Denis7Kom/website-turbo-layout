@@ -28,7 +28,6 @@
             <a href="#">Concerti</a>
             <a href="#">Artisti</a>
             <a href="#">Merch</a>
-            <a href="#">Eventi</a>
         </nav>
 
         <div class="header-actions">
