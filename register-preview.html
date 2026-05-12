@@ -2,13 +2,14 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrazione - Turbo Layout</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="register.css" />
+
+    <link rel="stylesheet" href="register.css">
 </head>
 
 <body>
@@ -121,16 +122,16 @@
                     e salvare i tuoi preferiti.
                 </p>
 
-                <%
-                    String error = (String) request.getAttribute("error");
-                    if (error != null) {
-                %>
-                    <div class="error-box"><%= error %></div>
-                <%
-                    }
-                %>
+                <!--
+                Блок для визуальной проверки ошибки.
+                Для preview можешь временно раскомментировать.
 
-                <form action="register" method="post" class="register-form">
+                <div class="error-box">
+                    Le password non coincidono.
+                </div>
+                -->
+
+                <form action="#" method="post" class="register-form">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="nome">Nome</label>
@@ -190,6 +191,6 @@
     © 2026 Turbo Layout
 </footer>
 
-<script src="${pageContext.request.contextPath}/register.js"></script>
+<script src="register.js"></script>
 </body>
 </html>
