@@ -60,10 +60,11 @@ body {
 }
 
 .logo-img {
-    width: 56px;
-    height: 56px;
-    max-width: 56px;
-    max-height: 56px;
+    width: 240px;
+    height: 240px;
+    max-width: 240px;
+    max-height: 240px;
+    margin: -90px -76px -90px -86px;
     object-fit: contain;
     display: block;
 }
@@ -223,14 +224,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 22px;
+    margin-bottom: 8px;
 }
 
 .promo-logo-img {
-    width: 72px;
-    height: 72px;
-    max-width: 72px;
-    max-height: 72px;
+    width: 300px;
+    height: 300px;
+    max-width: 300px;
+    max-height: 300px;
+    margin: -115px 0 -105px;
     object-fit: contain;
     display: block;
 }
@@ -554,10 +556,11 @@ body {
     }
 
     .logo-img {
-        width: 46px;
-        height: 46px;
-        max-width: 46px;
-        max-height: 46px;
+        width: 200px;
+        height: 200px;
+        max-width: 200px;
+        max-height: 200px;
+        margin: -76px -64px -76px -72px;
     }
 
     .page-wrapper {
@@ -569,10 +572,11 @@ body {
     }
 
     .promo-logo-img {
-        width: 64px;
-        height: 64px;
-        max-width: 64px;
-        max-height: 64px;
+        width: 250px;
+        height: 250px;
+        max-width: 250px;
+        max-height: 250px;
+        margin: -96px 0 -88px;
     }
 
     .promo-content h1 {
