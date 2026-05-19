@@ -18,7 +18,7 @@
     <div class="header-inner">
         <a href="${pageContext.request.contextPath}/index.jsp" class="logo">
             <img
-                src="${pageContext.request.contextPath}/images/logo.svg"
+                src="${pageContext.request.contextPath}/images/logo.png"
                 alt="Turbo Layout logo"
                 class="logo-img"
             >
@@ -54,7 +54,7 @@
             <div class="promo-content">
                 <div class="promo-logo">
                     <img
-                        src="${pageContext.request.contextPath}/images/logo.svg"
+                        src="${pageContext.request.contextPath}/images/logo.png"
                         alt="Turbo Layout logo"
                         class="promo-logo-img"
                     >
