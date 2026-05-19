@@ -233,6 +233,21 @@ main h2 {
     font-size: 20px;
 }
 
+
+.tasto_lato{
+    display:flex;
+    align-items: center;
+    text-decoration: none;
+    color: #6A5ACD;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+a:hover{
+    color: #6A5ACD;
+    text-decoration: underline;
+}
+
 footer {
     display: flex;
     justify-content: center;
