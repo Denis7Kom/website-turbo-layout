@@ -16,7 +16,7 @@
 <body>
 <header class="site-header">
     <div class="header-inner">
-        <a href="${pageContext.request.contextPath}/index.jsp" class="logo">
+        <a href="${pageContext.request.contextPath}/homepage.html" class="logo">
             <img
                 src="${pageContext.request.contextPath}/images/logo.svg"
                 alt="Turbo Layout logo"
