@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrazione - Turbo Layout</title>
+    <title>Registrazione - VibeShop</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,13 +16,13 @@
 <body>
 <header class="site-header">
     <div class="header-inner">
-        <a href="${pageContext.request.contextPath}/index.jsp" class="logo">
+        <a href="${pageContext.request.contextPath}/homepage.jsp" class="logo">
             <img
-                src="${pageContext.request.contextPath}/images/logo.png"
-                alt="Turbo Layout logo"
+                src="${pageContext.request.contextPath}/images/logo.svg"
+                alt="VibeShop logo"
                 class="logo-img"
             >
-            <span>Turbo Layout</span>
+            <span>VibeShop</span>
         </a>
 
         <nav class="main-nav">
@@ -54,15 +54,15 @@
             <div class="promo-content">
                 <div class="promo-logo">
                     <img
-                        src="${pageContext.request.contextPath}/images/logo.png"
-                        alt="Turbo Layout logo"
+                        src="${pageContext.request.contextPath}/images/logo.svg"
+                        alt="VibeShop logo"
                         class="promo-logo-img"
                     >
                 </div>
 
                 <h1>
                     Unisciti a <br>
-                    <span>Turbo Layout</span>
+                    <span>VibeShop</span>
                 </h1>
 
                 <div class="title-line"></div>
@@ -193,7 +193,7 @@
 </main>
 
 <footer class="site-footer">
-    © 2026 Turbo Layout
+    © 2026 VibeShop
 </footer>
 
 <script src="${pageContext.request.contextPath}/register.js"></script>

@@ -54,6 +54,22 @@ L'amministratore può:
 - visualizzare gli ordini per data;
 - gestire le richieste di assistenza degli utenti.
 
+## Struttura dei file in Eclipse
+vibeshop
+└── src
+    └── main
+        ├── java            <-- Classi Java (Servlet, Controller, Modelli)
+        └── webapp          <-- Tutto ciò che è pubblico
+            ├── main.html
+            ├── css
+            │   └── esempio.css
+            ├── img
+            │   └── logo.svg
+            ├── jsp         <-- (Opzionale) Cartella dedicata per organizzare le JSP
+            │   └── esempio.jsp
+            └── WEB-INF
+                └── web.xml <-- Configurazione (Servlet mapping, ecc.)
+
 ## Struttura del sito
 
 Il sito prevede una struttura di navigazione composta da:
