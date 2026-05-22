@@ -1,3 +1,6 @@
+@charset "UTF-8";
+
+/* Reset generale */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -9,6 +12,7 @@ body {
     font-family: sans-serif;
 }
 
+/* Header */
 header {
     display: flex;
     justify-content: space-between; 
@@ -22,45 +26,25 @@ header {
 header .left {
     display: flex;
     align-items: center;
-    gap: 0; 
-}
-
-header .logo {
-    display: flex;
-    align-items: center;
-    height: 100%;
 }
 
 header .logo img {
-    height: 120px;
+    height: 90px;
     width: auto;
     display: block;
-    transition: transform 0.3s ease;
-}
-
-header .logo img:hover {
-    transform: scale(1.05); 
 }
 
 header h1 {
     color: #1E1E1E;
-    font-family: 'Goudy Old Style', Georgia, serif;
-    font-style: italic;
     font-size: 30px;
-    margin-left: -20px;
+    margin-left: 10px;
 }
 
+/* Nav Bar e Ricerca */
 .navbar {
     display: flex;
     align-items: center;
-    flex-grow: 1; 
     gap: 25px;
-}
-
-.search-form {
-    display: flex;
-    align-items: center;
-    margin-left: auto; 
 }
 
 .search-container {
@@ -75,7 +59,6 @@ header h1 {
 .search-container input {
     border: none;
     padding: 5px 10px;
-    font-size: 16px;
     width: 180px; 
     outline: none;
 }
@@ -85,16 +68,10 @@ header h1 {
     border: none;
     padding: 5px 8px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     color: #1E1E1E;
 }
 
-.search-btn:hover {
-    background-color: #e5e5e5;
-}
-
+/* Azioni destra */
 .right {
     display: flex;
     align-items: center;
@@ -111,90 +88,14 @@ header h1 {
     position: relative;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
 }
 
 .cart-icon {
     width: 29px;
     height: 29px;
-    object-fit: contain;
-    display: block;
 }
 
-.cart-count {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    background: #FF8FBF; 
-    color: black;
-    font-size: 11px;
-    font-weight: 700;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.menu-toggle {
-    display: none; 
-}
-
-.hamburger-label {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 24px;
-    height: 18px;
-    cursor: pointer;
-    z-index: 100;
-}
-
-.hamburger-line {
-    width: 100%;
-    height: 3px;
-    background-color: #1E1E1E;
-    border-radius: 2px;
-    transition: all 0.3s ease;
-}
-
-.nav-left {
-    display: none; 
-    position: absolute;
-    top: 95px; 
-    left: 0;
-    width: 100%;
-    background-color: #ffffff;
-    flex-direction: column;
-    padding: 20px 40px;
-    gap: 15px;
-    border-bottom: 3px solid #E5E5E5;
-    box-shadow: 0px 8px 12px rgba(0,0,0,0.08);
-    z-index: 99;
-}
-
-.nav-left a {
-    text-decoration: none;
-    color: #6A5ACD;
-    font-weight: 600;
-    font-size: 18px;
-}
-
-.menu-toggle:checked ~ .nav-left {
-    display: flex;
-}
-
-.menu-toggle:checked ~ .hamburger-label .hamburger-line:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
-}
-.menu-toggle:checked ~ .hamburger-label .hamburger-line:nth-child(2) {
-    opacity: 0;
-}
-.menu-toggle:checked ~ .hamburger-label .hamburger-line:nth-child(3) {
-    transform: translateY(-8px) rotate(-45deg);
-}
-
+/* Main e Card */
 main {
     min-height: 100vh;
     padding: 40px 20px;
@@ -205,7 +106,7 @@ main h2 {
     justify-content: center;
     font-size: 40px;
     color: #7A7A7A;
-    margin-top: 20px;
+    margin-bottom: 30px;
 }
 
 .contenitore-card {
@@ -213,7 +114,6 @@ main h2 {
     justify-content: center;
     flex-wrap: wrap; 
     gap: 20px;
-    padding: 30px 0 50px 0;
 }
 
 .card {
@@ -230,24 +130,9 @@ main h2 {
 .card a {
     text-decoration: none;
     color: #7A7A7A;
-    font-size: 20px;
 }
 
-
-.tasto_lato{
-    display:flex;
-    align-items: center;
-    text-decoration: none;
-    color: #6A5ACD;
-    font-weight: 600;
-    font-size: 18px;
-}
-
-a:hover{
-    color: #6A5ACD;
-    text-decoration: underline;
-}
-
+/* Footer */
 footer {
     display: flex;
     justify-content: center;
