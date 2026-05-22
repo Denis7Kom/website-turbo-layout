@@ -12,7 +12,7 @@
         <header>
             <div class="left">
                 <a href="${pageContext.request.contextPath}/homepage.jsp" class="logo">
-                    <img src="${pageContext.request.contextPath}/img/logo2.png" alt="Site Logo" />
+                    <img src="${pageContext.request.contextPath}/img/logo.png" alt="Site Logo" />
                 </a>
                 <h1>VibeShop</h1>
             </div>
