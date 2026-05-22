@@ -38,6 +38,19 @@
                         <span class="cart-count">0</span>
                     </a>
                 </div>
+                
+                <input type="checkbox" id="menu-toggle" class="menu-toggle">
+            	<label for="menu-toggle" class="hamburger-label" aria-label="Apri menu">
+                	<span class="hamburger-line"></span>
+                	<span class="hamburger-line"></span>
+                	<span class="hamburger-line"></span>
+            	</label>
+
+            	<div class="nav-left">
+                	<a href="#">Concerti</a>
+                	<a href="#">Artisti</a>
+                	<a href="#">Merch</a>
+            	</div>
             </nav>
         </header>
 
