@@ -10,6 +10,103 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="register.css">
+
+    <!-- TEMP: centratura come nella pagina login -->
+    <style>
+        .header-inner {
+            max-width: 1420px;
+            padding: 12px 48px;
+        }
+
+        .main-nav {
+            margin-left: 42px;
+        }
+
+        .logo {
+            gap: 13px;
+            font-size: 25px;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            max-width: 40px;
+            max-height: 40px;
+        }
+
+        .main-nav a,
+        .header-actions a {
+            font-size: 16px;
+        }
+
+        .page-wrapper {
+            max-width: 1420px;
+            padding: 18px 48px;
+        }
+
+        .register-card {
+            grid-template-columns: 1.05fr 1.15fr;
+        }
+
+        .promo-content {
+            padding: 48px 44px 32px 96px;
+        }
+
+        .form-panel {
+            justify-content: flex-start;
+            padding: 34px 96px 34px 34px;
+        }
+
+        .form-container {
+            max-width: 540px;
+        }
+
+        @media (max-width: 980px) {
+            .header-inner {
+                max-width: 100%;
+                padding: 16px 24px;
+            }
+
+            .page-wrapper {
+                max-width: 100%;
+                padding: 28px 18px;
+            }
+
+            .form-panel {
+                justify-content: center;
+                padding: 44px 32px;
+            }
+
+            .promo-content {
+                padding: 56px 32px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .header-inner {
+                padding: 16px 20px;
+            }
+
+            .page-wrapper {
+                padding: 28px 18px;
+            }
+
+            .promo-content {
+                padding: 56px 28px;
+            }
+
+            .logo {
+                font-size: 21px;
+            }
+
+            .logo-img {
+                width: 36px;
+                height: 36px;
+                max-width: 36px;
+                max-height: 36px;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -126,56 +223,97 @@
                     e salvare i tuoi preferiti.
                 </p>
 
-                <!--
-                Для проверки внешнего вида ошибки можно временно раскомментировать:
-
-                <div class="error-box">
-                    Le password non coincidono.
-                </div>
-                -->
-
                 <form action="#" method="post" class="register-form">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="nome">Nome</label>
-                            <input type="text" id="nome" name="nome" placeholder="Inserisci il tuo nome" required>
+                            <input
+                                type="text"
+                                id="nome"
+                                name="nome"
+                                placeholder="Inserisci il tuo nome"
+                                required
+                            >
                         </div>
 
                         <div class="form-group">
                             <label for="cognome">Cognome</label>
-                            <input type="text" id="cognome" name="cognome" placeholder="Inserisci il tuo cognome" required>
+                            <input
+                                type="text"
+                                id="cognome"
+                                name="cognome"
+                                placeholder="Inserisci il tuo cognome"
+                                required
+                            >
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="Inserisci la tua email" required>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Inserisci la tua email"
+                            required
+                        >
                     </div>
 
                     <div class="form-group">
                         <label for="username">Username</label>
-                        <input type="text" id="username" name="username" placeholder="Scegli il tuo username" required>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            placeholder="Scegli il tuo username"
+                            required
+                        >
                     </div>
 
                     <div class="form-group password-group">
                         <label for="password">Password</label>
                         <div class="password-wrapper">
-                            <input type="password" id="password" name="password" placeholder="Crea una password" required>
-                            <button type="button" class="toggle-password" data-target="password" aria-label="Mostra o nascondi password">👁</button>
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Crea una password"
+                                required
+                            >
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                data-target="password"
+                                aria-label="Mostra o nascondi password"
+                            >👁</button>
                         </div>
                     </div>
 
                     <div class="form-group password-group">
                         <label for="confirmPassword">Conferma password</label>
                         <div class="password-wrapper">
-                            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Conferma la tua password" required>
-                            <button type="button" class="toggle-password" data-target="confirmPassword" aria-label="Mostra o nascondi conferma password">👁</button>
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                placeholder="Conferma la tua password"
+                                required
+                            >
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                data-target="confirmPassword"
+                                aria-label="Mostra o nascondi conferma password"
+                            >👁</button>
                         </div>
                     </div>
 
                     <label class="checkbox-row">
                         <input type="checkbox" name="terms" required>
-                        <span>Accetto i <a href="#">Termini</a> e la <a href="#">Privacy Policy</a></span>
+                        <span>
+                            Accetto i <a href="#">Termini</a> e la
+                            <a href="#">Privacy Policy</a>
+                        </span>
                     </label>
 
                     <button type="submit" class="primary-btn">Crea account</button>

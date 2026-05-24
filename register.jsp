@@ -129,7 +129,8 @@
 
                 <%
                     String error = (String) request.getAttribute("error");
-                    if (error != null) {
+
+                    if (error != null && !error.trim().isEmpty()) {
                 %>
                     <div class="error-box"><%= error %></div>
                 <%
@@ -140,44 +141,93 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="nome">Nome</label>
-                            <input type="text" id="nome" name="nome" placeholder="Inserisci il tuo nome" required>
+                            <input
+                                type="text"
+                                id="nome"
+                                name="nome"
+                                placeholder="Inserisci il tuo nome"
+                                required
+                            >
                         </div>
 
                         <div class="form-group">
                             <label for="cognome">Cognome</label>
-                            <input type="text" id="cognome" name="cognome" placeholder="Inserisci il tuo cognome" required>
+                            <input
+                                type="text"
+                                id="cognome"
+                                name="cognome"
+                                placeholder="Inserisci il tuo cognome"
+                                required
+                            >
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="Inserisci la tua email" required>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Inserisci la tua email"
+                            required
+                        >
                     </div>
 
                     <div class="form-group">
                         <label for="username">Username</label>
-                        <input type="text" id="username" name="username" placeholder="Scegli il tuo username" required>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            placeholder="Scegli il tuo username"
+                            required
+                        >
                     </div>
 
                     <div class="form-group password-group">
                         <label for="password">Password</label>
                         <div class="password-wrapper">
-                            <input type="password" id="password" name="password" placeholder="Crea una password" required>
-                            <button type="button" class="toggle-password" data-target="password" aria-label="Mostra o nascondi password">👁</button>
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Crea una password"
+                                required
+                            >
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                data-target="password"
+                                aria-label="Mostra o nascondi password"
+                            >👁</button>
                         </div>
                     </div>
 
                     <div class="form-group password-group">
                         <label for="confirmPassword">Conferma password</label>
                         <div class="password-wrapper">
-                            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Conferma la tua password" required>
-                            <button type="button" class="toggle-password" data-target="confirmPassword" aria-label="Mostra o nascondi conferma password">👁</button>
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                placeholder="Conferma la tua password"
+                                required
+                            >
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                data-target="confirmPassword"
+                                aria-label="Mostra o nascondi conferma password"
+                            >👁</button>
                         </div>
                     </div>
 
                     <label class="checkbox-row">
                         <input type="checkbox" name="terms" required>
-                        <span>Accetto i <a href="#">Termini</a> e la <a href="#">Privacy Policy</a></span>
+                        <span>
+                            Accetto i <a href="#">Termini</a> e la
+                            <a href="#">Privacy Policy</a>
+                        </span>
                     </label>
 
                     <button type="submit" class="primary-btn">Crea account</button>
