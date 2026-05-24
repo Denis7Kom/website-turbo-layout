@@ -61,10 +61,11 @@ body {
 }
 
 .logo-img {
-    width: 40px;
-    height: 40px;
-    max-width: 40px;
-    max-height: 40px;
+    width: 190px;
+    height: 190px;
+    max-width: 190px;
+    max-height: 190px;
+    margin: -70px -58px -70px -66px;
     object-fit: contain;
     display: block;
 }
@@ -160,10 +161,14 @@ body {
     background:
         linear-gradient(
             135deg,
-            rgba(245, 240, 255, 0.72),
-            rgba(255, 190, 220, 0.58)
+            rgba(255, 255, 255, 0.82),
+            rgba(248, 238, 255, 0.76) 42%,
+            rgba(255, 218, 238, 0.72)
         ),
-        url("images/fono.png") center center / cover no-repeat;
+        radial-gradient(circle at 18% 18%, rgba(255, 143, 191, 0.48) 0, rgba(255, 143, 191, 0.22) 18%, transparent 36%),
+        radial-gradient(circle at 78% 20%, rgba(106, 90, 205, 0.42) 0, rgba(106, 90, 205, 0.18) 20%, transparent 42%),
+        radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.62) 0, transparent 46%),
+        linear-gradient(135deg, #6A5ACD 0%, #B88AF2 45%, #FF8FBF 100%);
     overflow: hidden;
 }
 
@@ -174,8 +179,8 @@ body {
     background:
         linear-gradient(
             180deg,
-            rgba(255, 255, 255, 0.42),
-            rgba(255, 255, 255, 0.22)
+            rgba(255, 255, 255, 0.48),
+            rgba(255, 255, 255, 0.26)
         );
     z-index: 1;
     pointer-events: none;
@@ -188,12 +193,12 @@ body {
     background:
         repeating-radial-gradient(
             circle at 0% 0%,
-            rgba(255, 255, 255, 0.25) 0,
-            rgba(255, 255, 255, 0.25) 1px,
+            rgba(255, 255, 255, 0.34) 0,
+            rgba(255, 255, 255, 0.34) 1px,
             transparent 2px,
             transparent 18px
         );
-    opacity: 0.38;
+    opacity: 0.42;
     z-index: 2;
     pointer-events: none;
 }
@@ -202,12 +207,12 @@ body {
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.32), transparent 34%),
-        radial-gradient(circle at 100% 100%, rgba(106, 90, 205, 0.22), transparent 44%),
+        radial-gradient(circle at 12% 10%, rgba(255, 255, 255, 0.46), transparent 32%),
+        radial-gradient(circle at 92% 88%, rgba(106, 90, 205, 0.20), transparent 44%),
         linear-gradient(
             135deg,
-            rgba(106, 90, 205, 0.18),
-            rgba(255, 143, 191, 0.22)
+            rgba(106, 90, 205, 0.12),
+            rgba(255, 143, 191, 0.18)
         );
     z-index: 3;
     pointer-events: none;
@@ -224,14 +229,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 22px;
+    margin-bottom: 8px;
 }
 
 .promo-logo-img {
-    width: 48px;
-    height: 48px;
-    max-width: 48px;
-    max-height: 48px;
+    width: 300px;
+    height: 300px;
+    max-width: 300px;
+    max-height: 300px;
+    margin: -115px 0 -105px;
     object-fit: contain;
     display: block;
 }
@@ -283,8 +289,8 @@ body {
     align-items: center;
     padding: 8px 10px;
     border-radius: 18px;
-    background: rgba(255, 255, 255, 0.14);
-    backdrop-filter: blur(2px);
+    background: rgba(255, 255, 255, 0.24);
+    backdrop-filter: blur(6px);
 }
 
 .benefit-icon {
@@ -624,10 +630,11 @@ body {
     }
 
     .logo-img {
-        width: 36px;
-        height: 36px;
-        max-width: 36px;
-        max-height: 36px;
+        width: 150px;
+        height: 150px;
+        max-width: 150px;
+        max-height: 150px;
+        margin: -56px -48px -56px -54px;
     }
 
     .header-actions {
@@ -643,10 +650,11 @@ body {
     }
 
     .promo-logo-img {
-        width: 48px;
-        height: 48px;
-        max-width: 48px;
-        max-height: 48px;
+        width: 250px;
+        height: 250px;
+        max-width: 250px;
+        max-height: 250px;
+        margin: -96px 0 -88px;
     }
 
     .promo-content h1 {
