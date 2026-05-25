@@ -1,6 +1,6 @@
 [Template_System_Architecture.pdf](https://github.com/user-attachments/files/27531038/Template_System_Architecture.pdf)
 
-*I file logo.png, tickets_var2.svg e register-preview.html sono stati lasciati solo a titolo di riferimento. 
+*I file logo.svg, tickets_var2.svg e ...-preview.html sono stati lasciati solo a titolo di riferimento. 
 
 # VibeShop — Turbo Layout
 
@@ -53,6 +53,22 @@ L'amministratore può:
 - gestire il merchandising presente sul sito;
 - visualizzare gli ordini per data;
 - gestire le richieste di assistenza degli utenti.
+
+## Struttura dei file in Eclipse
+vibeshop
+└── src
+    └── main
+        ├── java            <-- Classi Java (Servlet, Controller, Modelli)
+        └── webapp          <-- Tutto ciò che è pubblico
+            ├── main.html
+            ├── css
+            │   └── esempio.css
+            ├── img
+            │   └── logo.svg
+            ├── jsp         <-- (Opzionale) Cartella dedicata per organizzare le JSP
+            │   └── esempio.jsp
+            └── WEB-INF
+                └── web.xml <-- Configurazione (Servlet mapping, ecc.)
 
 ## Struttura del sito
 
