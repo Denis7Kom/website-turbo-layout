@@ -56,43 +56,161 @@
         </nav>
     </header>
 
-    <main>
-        <h2>Concerti in evidenza</h2>
-        <div class="contenitore-card">
-            <div class="card"><a href="#">Card concerto</a></div>
-            <div class="card"><a href="#">Card concerto</a></div>
-            <div class="card"><a href="#">Card concerto</a></div>
-            <div class="card"><a href="#">Card concerto</a></div>
-            <div class="card"><a href="#">Card concerto</a></div>
-            <div class="card"><a href="#">Card concerto</a></div>
-            <a class="tasto_lato" href="#">altro</a>
+    <main class="main-content">
+    <section class="section-container">
+        <div class="section-header">
+            <h2>Concerti in evidenza</h2>
+            <a class="tasto_lato" href="#">Vedi tutti</a>
         </div>
+        <div class="contenitore-card fade-right">
+            <div class="card">
+                <a href="#">
+                    <div class="card-placeholder"></div>
+                    <span class="card-title">Nome Concerto</span>
+                </a>
+            </div>
+            
+            <div class="card">
+                <a href="#">
+                    <div class="card-placeholder"></div>
+                    <span class="card-title">Nome Concerto</span>
+                </a>
+            </div>
+            
+            <div class="card">
+                <a href="#">
+                    <div class="card-placeholder"></div>
+                    <span class="card-title">Nome Concerto</span>
+                </a>
+            </div>
+            
+            <div class="card">
+                <a href="#">
+                    <div class="card-placeholder"></div>
+                    <span class="card-title">Nome Concerto</span>
+                </a>
+            </div>
+            
+            <div class="card">
+                <a href="#">
+                    <div class="card-placeholder"></div>
+                    <span class="card-title">Nome Concerto</span>
+                </a>
+            </div>
+            
+            <div class="card">
+                <a href="#">
+                    <div class="card-placeholder"></div>
+                    <span class="card-title">Nome Concerto</span>
+                </a>
+            </div>
+        </div>
+    </section>
 
-        <h2>Artisti</h2>
-        <div class="contenitore-card">
-            <div class="card"><a href="#">Card artisti</a></div>
-            <div class="card"><a href="#">Card artisti</a></div>
-            <div class="card"><a href="#">Card artisti</a></div>
-            <div class="card"><a href="#">Card artisti</a></div>
-            <div class="card"><a href="#">Card artisti</a></div>
-            <div class="card"><a href="#">Card artisti</a></div>
-            <a class="tasto_lato" href="#">altro</a>
+    <section class="section-container">
+        <div class="section-header">
+            <h2>Artisti</h2>
+            <a class="tasto_lato" href="#">Vedi tutti</a>
         </div>
+        <div class="contenitore-card fade-right">
+            <div class="card">
+                <a href="#">
+                    <div class="card-placeholder"></div>
+                    <span class="card-title">Nome Artista</span>
+                </a>
+            </div>
+            
+            <div class="card">
+                <a href="#">
+                    <div class="card-placeholder"></div>
+                    <span class="card-title">Nome Artista</span>
+                </a>
+            </div>
+            
+            <div class="card">
+                <a href="#">
+                    <div class="card-placeholder"></div>
+                    <span class="card-title">Nome Artista</span>
+                </a>
+            </div>
+            
+            <div class="card">
+                <a href="#">
+                    <div class="card-placeholder"></div>
+                    <span class="card-title">Nome Artista</span>
+                </a>
+            </div>
+            
+            <div class="card">
+                <a href="#">
+                    <div class="card-placeholder"></div>
+                    <span class="card-title">Nome Artista</span>
+                </a>
+            </div>
+            
+            <div class="card">
+                <a href="#">
+                    <div class="card-placeholder"></div>
+                    <span class="card-title">Nome Artista</span>
+                </a>
+            </div>
+        </div>
+    </section>
 
-        <h2>Merchandising</h2>
-        <div class="contenitore-card">
-            <div class="card"><a href="#">Card merch</a></div>
-            <div class="card"><a href="#">Card merch</a></div>
-            <div class="card"><a href="#">Card merch</a></div>
-            <div class="card"><a href="#">Card merch</a></div>
-            <div class="card"><a href="#">Card merch</a></div>
-            <div class="card"><a href="#">Card merch</a></div>
-            <a class="tasto_lato" href="#">altro</a>
+    <section class="section-container">
+        <div class="section-header">
+            <h2>Merchandising</h2>
+            <a class="tasto_lato" href="#">Vedi tutti</a>
         </div>
-    </main>
+        <div class="contenitore-card fade-right">
+            <div class="card">
+                <a href="#">
+                    <div class="card-placeholder"></div>
+                    <span class="card-title">Nome Prodotto</span>
+                </a>
+            </div>
+            
+            <div class="card">
+                <a href="#">
+                    <div class="card-placeholder"></div>
+                    <span class="card-title">Nome Prodotto</span>
+                </a>
+            </div>
+            
+            <div class="card">
+                <a href="#">
+                    <div class="card-placeholder"></div>
+                    <span class="card-title">Nome Prodotto</span>
+                </a>
+            </div>
+            
+            <div class="card">
+                <a href="#">
+                    <div class="card-placeholder"></div>
+                    <span class="card-title">Nome Prodotto</span>
+                </a>
+            </div>
+            
+            <div class="card">
+                <a href="#">
+                    <div class="card-placeholder"></div>
+                    <span class="card-title">Nome Prodotto</span>
+                </a>
+            </div>
+            
+            <div class="card">
+                <a href="#">
+                    <div class="card-placeholder"></div>
+                    <span class="card-title">Nome Prodotto</span>
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
 
     <footer class="site-footer">© 2026 VibeShop</footer>
 
     <script src="${pageContext.request.contextPath}/js/menu.js"></script>
+    <script src="${pageContext.request.contextPath}/js/scroll-fade.js"></script>
 </body>
 </html>
