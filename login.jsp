@@ -4,19 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrazione - VibeShop</title>
+    <title>Login - VibeShop</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/register.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/login.css">
 </head>
 
 <body>
 <header class="site-header">
     <div class="header-inner">
-        <a href="${pageContext.request.contextPath}/homepage.jsp" class="logo">
+        <a href="${pageContext.request.contextPath}/index.jsp" class="logo">
             <img
                 src="${pageContext.request.contextPath}/images/logo.svg"
                 alt="VibeShop logo"
@@ -32,7 +32,7 @@
         </nav>
 
         <div class="header-actions">
-            <a href="${pageContext.request.contextPath}/login.jsp">Login</a>
+            <a href="${pageContext.request.contextPath}/register.jsp">Registrati</a>
 
             <a href="${pageContext.request.contextPath}/cart.jsp" class="cart-link" aria-label="Carrello">
                 <img
@@ -47,7 +47,7 @@
 </header>
 
 <main class="page-wrapper">
-    <section class="register-card">
+    <section class="login-card">
         <div class="promo-panel">
             <div class="promo-overlay"></div>
 
@@ -61,15 +61,15 @@
                 </div>
 
                 <h1>
-                    Unisciti a <br>
+                    Bentornato su <br>
                     <span>VibeShop</span>
                 </h1>
 
                 <div class="title-line"></div>
 
                 <p class="promo-subtitle">
-                    Scopri concerti, segui i tuoi artisti preferiti
-                    e acquista merchandising ufficiale.
+                    Accedi al tuo account per gestire biglietti,
+                    artisti preferiti e merchandising ufficiale.
                 </p>
 
                 <div class="benefits">
@@ -82,8 +82,8 @@
                             >
                         </div>
                         <div>
-                            <h3>Acquista biglietti in anteprima</h3>
-                            <p>Accedi a prevendite esclusive e offerte riservate ai membri.</p>
+                            <h3>I tuoi biglietti sempre disponibili</h3>
+                            <p>Consulta rapidamente i tuoi ordini e resta aggiornato sugli eventi acquistati.</p>
                         </div>
                     </div>
 
@@ -96,8 +96,8 @@
                             >
                         </div>
                         <div>
-                            <h3>Segui i tuoi artisti preferiti</h3>
-                            <p>Ricevi aggiornamenti, novità e date dei prossimi eventi.</p>
+                            <h3>Segui gli artisti che ami</h3>
+                            <p>Ricevi novità, annunci e informazioni sui concerti più attesi.</p>
                         </div>
                     </div>
 
@@ -105,13 +105,13 @@
                         <div class="benefit-icon">
                             <img
                                 src="${pageContext.request.contextPath}/images/bag.svg"
-                                alt="Merch ufficiale"
+                                alt="Merch"
                                 class="benefit-img"
                             >
                         </div>
                         <div>
-                            <h3>Merch ufficiale</h3>
-                            <p>Scopri collezioni esclusive e porta la musica sempre con te.</p>
+                            <h3>Accedi al merch ufficiale</h3>
+                            <p>Ritrova i tuoi prodotti preferiti e completa i tuoi acquisti in pochi clic.</p>
                         </div>
                     </div>
                 </div>
@@ -120,78 +120,53 @@
 
         <div class="form-panel">
             <div class="form-container">
-                <h2>Crea il tuo account</h2>
+                <h2>Accedi al tuo account</h2>
 
                 <p class="form-subtitle">
-                    Registrati per acquistare biglietti, seguire artisti
-                    e salvare i tuoi preferiti.
+                    Inserisci le tue credenziali per continuare
+                    a vivere l’esperienza VibeShop.
                 </p>
 
                 <%
                     String error = (String) request.getAttribute("error");
-
-                    if (error != null && !error.trim().isEmpty()) {
+                    if (error != null) {
                 %>
                     <div class="error-box"><%= error %></div>
                 <%
                     }
+
+                    String registered = request.getParameter("registered");
+                    if ("true".equals(registered)) {
+                %>
+                    <div class="success-box">Registrazione completata con successo. Ora puoi accedere.</div>
+                <%
+                    }
                 %>
 
-                <form action="${pageContext.request.contextPath}/register" method="post" class="register-form">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="nome">Nome</label>
-                            <input
-                                type="text"
-                                id="nome"
-                                name="nome"
-                                placeholder="Inserisci il tuo nome"
-                                required
-                            >
-                        </div>
-
-                        <div class="form-group">
-                            <label for="cognome">Cognome</label>
-                            <input
-                                type="text"
-                                id="cognome"
-                                name="cognome"
-                                placeholder="Inserisci il tuo cognome"
-                                required
-                            >
-                        </div>
-                    </div>
-
+                <form action="${pageContext.request.contextPath}/login" method="post" class="login-form">
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            placeholder="Inserisci la tua email"
-                            required
-                        >
-                    </div>
-
-                    <div class="form-group">
-                        <label for="username">Username</label>
+                        <label for="login">Email o Username</label>
                         <input
                             type="text"
-                            id="username"
-                            name="username"
-                            placeholder="Scegli il tuo username"
+                            id="login"
+                            name="login"
+                            placeholder="Inserisci email o username"
                             required
                         >
                     </div>
 
                     <div class="form-group password-group">
-                        <label for="password">Password</label>
+                        <div class="label-row">
+                            <label for="password">Password</label>
+                            <a href="#" class="forgot-link">Password dimenticata?</a>
+                        </div>
+
                         <div class="password-wrapper">
                             <input
                                 type="password"
                                 id="password"
                                 name="password"
-                                placeholder="Crea una password"
+                                placeholder="Inserisci la tua password"
                                 required
                             >
                             <button
@@ -203,38 +178,16 @@
                         </div>
                     </div>
 
-                    <div class="form-group password-group">
-                        <label for="confirmPassword">Conferma password</label>
-                        <div class="password-wrapper">
-                            <input
-                                type="password"
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                placeholder="Conferma la tua password"
-                                required
-                            >
-                            <button
-                                type="button"
-                                class="toggle-password"
-                                data-target="confirmPassword"
-                                aria-label="Mostra o nascondi conferma password"
-                            >👁</button>
-                        </div>
-                    </div>
-
-                    <label class="checkbox-row">
-                        <input type="checkbox" name="terms" required>
-                        <span>
-                            Accetto i <a href="#">Termini</a> e la
-                            <a href="#">Privacy Policy</a>
-                        </span>
+                    <label class="checkbox-row remember-row">
+                        <input type="checkbox" name="remember">
+                        <span>Ricordami su questo dispositivo</span>
                     </label>
 
-                    <button type="submit" class="primary-btn">Crea account</button>
+                    <button type="submit" class="primary-btn">Accedi</button>
 
-                    <p class="login-text">
-                        Hai già un account?
-                        <a href="${pageContext.request.contextPath}/login.jsp">Accedi</a>
+                    <p class="register-text">
+                        Non hai ancora un account?
+                        <a href="${pageContext.request.contextPath}/register.jsp">Registrati</a>
                     </p>
                 </form>
             </div>
@@ -246,6 +199,6 @@
     © 2026 VibeShop
 </footer>
 
-<script src="${pageContext.request.contextPath}/register.js"></script>
+<script src="${pageContext.request.contextPath}/login.js"></script>
 </body>
 </html>
