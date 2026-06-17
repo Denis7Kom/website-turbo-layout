@@ -89,10 +89,10 @@ main h2 {
     background: linear-gradient(to right, transparent, var(--bg-light));
     pointer-events: none;
     transition: opacity 0.3s ease;
-    opacity: 1; /* Visibile di default */
+    opacity: 1; 
 }
 
-/* Quando il JS aggiunge questa classe, il gradiente sparisce */
+
 .fade-right.scrolled-end::after {
     opacity: 0;
 }
