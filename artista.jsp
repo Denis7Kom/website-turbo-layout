@@ -1,84 +1,166 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
-	<meta charset="UTF-8">
-	<title>Artista</title>
-	<link rel="stylesheet" href="artista.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Artisti - VibeShop</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/artisti.css" />
 </head>
 <body>
-	   <header>
-            <div class="left">
-                <a href="${pageContext.request.contextPath}/homepage.jsp" class="logo">
-                    <img src="${pageContext.request.contextPath}/img/logo.png" alt="Site Logo" />
+
+<%@ include file="/WEB-INF/fragments/header.jspf" %>
+<%@ include file="/WEB-INF/fragments/nav.jspf" %>
+
+<!-- ── HERO ── -->
+<div class="artisti-hero">
+    <div class="artisti-hero-inner">
+        <span class="artisti-hero-label">Scopri la musica live</span>
+        <h1>Gli artisti<br>di VibeShop</h1>
+        <p>Concerti live, merchandising ufficiale.<br>Trova il tuo artista preferito.</p>
+    </div>
+    <div class="artisti-hero-fade"></div>
+</div>
+
+<main class="main-content">
+
+    <!-- ── IN EVIDENZA ── -->
+    <section class="section-container">
+        <div class="section-header">
+            <h2>In evidenza</h2>
+        </div>
+        <div class="featured-grid">
+
+            <!-- Card grande -->
+            <a href="#" class="featured-card featured-card--large">
+                <div class="featured-card-img"></div>
+                <div class="featured-card-overlay"></div>
+                <div class="featured-card-body">
+                    <span class="featured-card-label">Artista del momento</span>
+                    <div class="featured-card-nome">Nome Artista</div>
+                    <div class="featured-card-genere">Genere musicale</div>
+                </div>
+            </a>
+
+            <!-- Colonna destra: 2 card piccole -->
+            <div class="featured-col">
+                <a href="#" class="featured-card featured-card--small">
+                    <div class="featured-card-img"></div>
+                    <div class="featured-card-overlay"></div>
+                    <div class="featured-card-body">
+                        <span class="featured-card-label">Prossimamente live</span>
+                        <div class="featured-card-nome">Nome Artista</div>
+                        <div class="featured-card-genere">Genere musicale</div>
+                    </div>
                 </a>
-                <h1>VibeShop</h1>
+                <a href="#" class="featured-card featured-card--small">
+                    <div class="featured-card-img"></div>
+                    <div class="featured-card-overlay"></div>
+                    <div class="featured-card-body">
+                        <span class="featured-card-label">Nuovo album</span>
+                        <div class="featured-card-nome">Nome Artista</div>
+                        <div class="featured-card-genere">Genere musicale</div>
+                    </div>
+                </a>
             </div>
 
-            <nav class="navbar">
-                <!-- Action dinamica verso la Servlet -->
-                <form method="get" action="${pageContext.request.contextPath}/Ricerca" class="search-form">
-                    <div class="search-container">
-                        <input type="text" name="ricerca" placeholder="Cerca..." required />
-                        <button type="submit" class="search-btn" aria-label="Cerca">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                            </svg>
-                        </button>
-                    </div>
-                </form>
+        </div>
+    </section>
 
-                <div class="right">
-                    <a href="${pageContext.request.contextPath}/jsp/register.jsp" class="login">Login</a>
-                    <a href="${pageContext.request.contextPath}/jsp/cart.jsp" class="cart-link">
-                        <img src="${pageContext.request.contextPath}/img/shop.svg" alt="Carrello" class="cart-icon" />
-                        <span class="cart-count">0</span>
-                    </a>
+    <!-- ── TUTTI GLI ARTISTI ── -->
+    <section class="section-container">
+        <div class="section-header">
+            <h2>Tutti gli artisti</h2>
+        </div>
+        <div class="artisti-grid">
+            <a href="#" class="artista-card">
+                <div class="artista-card-img"></div>
+                <div class="artista-card-body">
+                    <span class="artista-card-nome">Nome Artista</span>
+                    <span class="artista-card-genere">Genere</span>
                 </div>
-                
-                <input type="checkbox" id="menu-toggle" class="menu-toggle">
-            	<label for="menu-toggle" class="hamburger-label" aria-label="Apri menu">
-                	<span class="hamburger-line"></span>
-                	<span class="hamburger-line"></span>
-                	<span class="hamburger-line"></span>
-            	</label>
+            </a>
+            <a href="#" class="artista-card">
+                <div class="artista-card-img"></div>
+                <div class="artista-card-body">
+                    <span class="artista-card-nome">Nome Artista</span>
+                    <span class="artista-card-genere">Genere</span>
+                </div>
+            </a>
+            <a href="#" class="artista-card">
+                <div class="artista-card-img"></div>
+                <div class="artista-card-body">
+                    <span class="artista-card-nome">Nome Artista</span>
+                    <span class="artista-card-genere">Genere</span>
+                </div>
+            </a>
+            <a href="#" class="artista-card">
+                <div class="artista-card-img"></div>
+                <div class="artista-card-body">
+                    <span class="artista-card-nome">Nome Artista</span>
+                    <span class="artista-card-genere">Genere</span>
+                </div>
+            </a>
+            <a href="#" class="artista-card">
+                <div class="artista-card-img"></div>
+                <div class="artista-card-body">
+                    <span class="artista-card-nome">Nome Artista</span>
+                    <span class="artista-card-genere">Genere</span>
+                </div>
+            </a>
+            <a href="#" class="artista-card">
+                <div class="artista-card-img"></div>
+                <div class="artista-card-body">
+                    <span class="artista-card-nome">Nome Artista</span>
+                    <span class="artista-card-genere">Genere</span>
+                </div>
+            </a>
+            <a href="#" class="artista-card">
+                <div class="artista-card-img"></div>
+                <div class="artista-card-body">
+                    <span class="artista-card-nome">Nome Artista</span>
+                    <span class="artista-card-genere">Genere</span>
+                </div>
+            </a>
+            <a href="#" class="artista-card">
+                <div class="artista-card-img"></div>
+                <div class="artista-card-body">
+                    <span class="artista-card-nome">Nome Artista</span>
+                    <span class="artista-card-genere">Genere</span>
+                </div>
+            </a>
+            <a href="#" class="artista-card">
+                <div class="artista-card-img"></div>
+                <div class="artista-card-body">
+                    <span class="artista-card-nome">Nome Artista</span>
+                    <span class="artista-card-genere">Genere</span>
+                </div>
+            </a>
+            <a href="#" class="artista-card">
+                <div class="artista-card-img"></div>
+                <div class="artista-card-body">
+                    <span class="artista-card-nome">Nome Artista</span>
+                    <span class="artista-card-genere">Genere</span>
+                </div>
+            </a>
+        </div>
+        <!-- ── PAGINAZIONE ── -->
+        <div class="pagination">
+            <a href="?page=1" class="prev"></a>
+            <span class="active">1</span>
+            <a href="?page=2">2</a>
+            <a href="?page=3">3</a>
+            <a href="?page=4">4</a>
+            <a href="?page=5">5</a>
+            <a href="?page=2" class="next"></a>
+        </div>
+    </section>
 
-            	<div class="nav-left">
-                	<a href="#">Concerti</a>
-                	<a href="#">Artisti</a>
-                	<a href="#">Merch</a>
-            	</div>
-            </nav>
-        </header>
-	
-	<main>
-		<div class="contenitore">
-			<img src="#"height="600"width="600" alt="artista">
-			<p>Nome d'arte<br>Genere musicale<br>Breve biografia</p>
-		</div>
-		
-		<div class="testo_1"><h2>Concerti dell' artista</h2></div>
-		<div class="contenitore_1">
-			<a href="#"><img src="#"height="50"width="100" alt="concerto"></a>
-			<a href="#"><img src="#"height="50"width="100" alt="concerto"></a>
-		</div>
-		
-		<div class="testo_2"><h2>Merch dell' artista</h2></div>
-		<div class="contenitore_2">
-			<a href="#"><img src="#"height="50"width="100" alt="prodotto"></a>
-			<a href="#"><img src="#"height="50"width="100" alt="prodotto"></a>
-			<a href="#"><img src="#"height="50"width="100" alt="prodotto"></a>
-		</div>
-		
-		<div class="testo_3"><h2>Artisti correlati/suggeriti</h2></div>
-		<div class="contenitore_3">
-			<a href="#"><img src="#"height="50"width="100" alt="Card"></a>
-			<a href="#"><img src="#"height="50"width="100" alt="Card"></a>
-			<a href="#"><img src="#"height="50"width="100" alt="Card"></a>
-		</div>
-	</main>
-	  <footer class="site-footer">© 2026 VibeShop</footer>
+</main>
+
+<%@ include file="/WEB-INF/fragments/footer.jspf" %>
+<script src="${pageContext.request.contextPath}/js/menu.js"></script>
+
 </body>
 </html>
