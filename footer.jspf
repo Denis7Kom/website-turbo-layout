@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<footer class="site-footer">© 2026 VibeShop</footer>
-
-<script src="${pageContext.request.contextPath}/js/menu.js"></script>
-<script src="${pageContext.request.contextPath}/js/scroll-fade.js"></script>
+<footer class="site-footer">
+    <div class="footer-inner">
+        <p class="footer-copy">© 2026 VibeShop · Tutti i diritti riservati</p>
+    </div>
+</footer>
