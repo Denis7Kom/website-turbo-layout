@@ -11,6 +11,8 @@
 <body>
 
     <%@ include file="/WEB-INF/fragments/header.jspf" %>
+    <%@ include file="/WEB-INF/fragments/nav.jspf" %>
+
 
     <main class="main-content">
         <section class="section-container">
@@ -148,8 +150,12 @@
             </div>
         </section>
     </main>
+    
+
 
     <%@ include file="/WEB-INF/fragments/footer.jspf" %>
+    
+ 	<script src="${pageContext.request.contextPath}/js/menu.js"></script>
 
 </body>
 </html>
