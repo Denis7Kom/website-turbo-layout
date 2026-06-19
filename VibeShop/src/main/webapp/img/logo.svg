@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="85%" y2="100%">
+      <stop offset="0%"   stop-color="#6A5ACD"/>
+      <stop offset="100%" stop-color="#FF8FBF"/>
+    </linearGradient>
+  </defs>
+
+  <!--
+    Logo mark finale: V bold con fondo a curva sinusoidale.
+
+    Letto in verticale:
+      → la V dice "Vibe" / "VibeShop"
+      → il profilo inferiore curvo dice "onda sonora / musica"
+
+    Costruzione:
+      - Braccio sinistro: rettangolo ruotato ~35° verso destra
+      - Braccio destro: speculare
+      - Fondo: non un punto secco ma una curva morbida (onda)
+      - Angoli superiori: smussati con rx per look moderno
+      - Tutto in un solo <path> per massima precisione
+  -->
+
+  <path
+    d="
+      M 5 5
+      L 16 5
+      L 24 33
+      L 32 5
+      L 43 5
+      L 29 43
+      Q 27 47 24 47
+      Q 21 47 19 43
+      Z
+    "
+    fill="url(#g)"
+  />
+
+  <!--
+    Tre tacche orizzontali bianche sul braccio sinistro
+    → leggibili come barre equalizzatore / soundwave
+    → la "firma nascosta" del logo musicale
+    Sottili, quasi impercettibili a 35px ma visibili ingrandendo
+  -->
+  <line x1="7"  y1="12" x2="13"  y2="12" stroke="white" stroke-width="1.6" stroke-linecap="round" opacity="0.5"/>
+  <line x1="9"  y1="19" x2="15.5" y2="19" stroke="white" stroke-width="1.6" stroke-linecap="round" opacity="0.38"/>
+  <line x1="11" y1="26" x2="17.5" y2="26" stroke="white" stroke-width="1.6" stroke-linecap="round" opacity="0.26"/>
+
+</svg>
