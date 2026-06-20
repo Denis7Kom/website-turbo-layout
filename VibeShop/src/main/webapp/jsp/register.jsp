@@ -2,184 +2,170 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrati - VibeShop</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css"> </head>
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registrazione - VibeShop</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css" />
+</head>
 <body>
 
-    <%@ include file="/WEB-INF/fragments/header.jspf" %>
+<%@ include file="/WEB-INF/fragments/header.jspf" %>
+<%@ include file="/WEB-INF/fragments/nav.jspf" %>
 
-    <main class="page-wrapper">
-        <section class="login-card">
-            <div class="promo-panel">
-                <div class="promo-overlay"></div>
+<main class="main-content auth-main">
+    <h1 class="cart-page-title">Crea il tuo account</h1>
 
-                <div class="promo-content">
-                    <div class="promo-logo">
-                        <img
-                            src="${pageContext.request.contextPath}/img/logo.svg"
-                            alt="VibeShop logo"
-                            class="promo-logo-img"
-                        >
+    <div class="auth-layout">
+        <aside class="auth-info-card">
+            <span class="auth-eyebrow">Nuovo account</span>
+            <h2>Entra in VibeShop e gestisci acquisti, eventi e preferenze.</h2>
+            <p>
+                Con un account puoi acquistare biglietti, salvare il carrello, consultare lo storico
+                degli ordini e accedere più velocemente al merchandising ufficiale.
+            </p>
+
+            <div class="auth-benefits">
+                <div class="auth-benefit-item">
+                    <img src="${pageContext.request.contextPath}/img/bag.svg" alt="Merch" />
+                    <div>
+                        <h3>Checkout più rapido</h3>
+                        <p>Usa i dati dell’account per completare gli ordini in meno passaggi.</p>
                     </div>
+                </div>
 
-                    <h1>
-                        Unisciti a <br>
-                        <span>VibeShop</span>
-                    </h1>
-
-                    <div class="title-line"></div>
-
-                    <p class="promo-subtitle">
-                        Crea un account per non perdere i biglietti dei tuoi concerti preferiti e accedere al merchandising esclusivo.
-                    </p>
-
-                    <div class="benefits">
-                        <div class="benefit-item">
-                            <div class="benefit-icon">
-                                <img
-                                    src="${pageContext.request.contextPath}/img/tickets.svg"
-                                    alt="Biglietti"
-                                    class="benefit-img"
-                                >
-                            </div>
-                            <div>
-                                <h3>Acquisti rapidi e sicuri</h3>
-                                <p>Salva i tuoi dati per completare i tuoi ordini in pochi secondi quando escono i biglietti.</p>
-                            </div>
-                        </div>
-
-                        <div class="benefit-item">
-                            <div class="benefit-icon">
-                                <img
-                                    src="${pageContext.request.contextPath}/img/like.svg"
-                                    alt="Artisti preferiti"
-                                    class="benefit-img"
-                                >
-                            </div>
-                            <div>
-                                <h3>Notifiche personalizzate</h3>
-                                <p>Sii il primo a sapere quando i tuoi artisti preferiti annunciano nuove date nella tua zona.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="benefit-item">
-                            <div class="benefit-icon">
-                                <img
-                                    src="${pageContext.request.contextPath}/img/bag.svg"
-                                    alt="Merch"
-                                    class="benefit-img"
-                                >
-                            </div>
-                            <div>
-                                <h3>Accedi al merch ufficiale</h3>
-                                <p>Ritrova i tuoi prodotti preferiti e completa i tuoi acquisti in pochi clic.</p>
-                            </div>
-                        </div>
+                <div class="auth-benefit-item">
+                    <img src="${pageContext.request.contextPath}/img/tickets.svg" alt="Biglietti" />
+                    <div>
+                        <h3>Ordini sempre tracciati</h3>
+                        <p>Ritrova biglietti e prodotti acquistati nella tua area personale.</p>
                     </div>
                 </div>
             </div>
+        </aside>
 
-            <div class="form-panel">
-                <div class="form-container">
-                    <h2>Crea il tuo account</h2>
+        <section class="auth-form-card">
+            <div class="auth-form-header">
+                <span class="auth-eyebrow">Registrazione</span>
+                <h2>Apri il tuo profilo</h2>
+                <p>Compila i campi richiesti per creare un nuovo account.</p>
+            </div>
 
-                    <p class="form-subtitle">
-                        Compila i campi sottostanti per registrarti sulla piattaforma.
-                    </p>
+            <%
+                String errorReg = (String) request.getAttribute("error");
+                if (errorReg != null && !errorReg.trim().isEmpty()) {
+            %>
+                <div class="auth-alert auth-alert-error"><%= errorReg %></div>
+            <%
+                }
+            %>
 
-                    <%
-                        String errorReg = (String) request.getAttribute("error");
-                        if (errorReg != null) {
-                    %>
-                        <div class="error-box"><%= errorReg %></div>
-                    <%
-                        }
-                    %>
+            <form action="${pageContext.request.contextPath}/register" method="post" class="auth-form">
+                <div class="auth-form-grid">
+                    <div class="auth-field">
+                        <label for="nome">Nome</label>
+                        <input
+                            type="text"
+                            id="nome"
+                            name="nome"
+                            placeholder="Inserisci il tuo nome"
+                            required
+                        />
+                    </div>
 
-                    <form action="${pageContext.request.contextPath}/register" method="post" class="login-form">
-                        <div class="form-group">
-                            <label for="username">Username</label>
-                            <input
-                                type="text"
-                                id="username"
-                                name="username"
-                                placeholder="Scegli un username unico"
-                                required
-                            >
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                placeholder="Inserisci la tua email"
-                                required
-                            >
-                        </div>
-
-                        <div class="form-group password-group">
-                            <label for="password">Password</label>
-                            <div class="password-wrapper">
-                                <input
-                                    type="password"
-                                    id="password"
-                                    name="password"
-                                    placeholder="Crea una password sicura"
-                                    required
-                                >
-                                <button
-                                    type="button"
-                                    class="toggle-password"
-                                    data-target="password"
-                                    aria-label="Mostra o nascondi password"
-                                >👁</button>
-                            </div>
-                        </div>
-
-                        <div class="form-group password-group">
-                            <label for="confirmPassword">Conferma Password</label>
-                            <div class="password-wrapper">
-                                <input
-                                    type="password"
-                                    id="confirmPassword"
-                                    name="confirmPassword"
-                                    placeholder="Ripeti la password"
-                                    required
-                                >
-                                <button
-                                    type="button"
-                                    class="toggle-password"
-                                    data-target="confirmPassword"
-                                    aria-label="Mostra o nascondi password"
-                                >👁</button>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="primary-btn">Registrati</button>
-
-                        <p class="register-text">
-                            Hai già un account?
-                            <a href="${pageContext.request.contextPath}/jsp/login.jsp">Accedi</a>
-                        </p>
-                    </form>
+                    <div class="auth-field">
+                        <label for="cognome">Cognome</label>
+                        <input
+                            type="text"
+                            id="cognome"
+                            name="cognome"
+                            placeholder="Inserisci il tuo cognome"
+                            required
+                        />
+                    </div>
                 </div>
+
+                <div class="auth-field">
+                    <label for="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Scegli un username unico"
+                        required
+                    />
+                </div>
+
+                <div class="auth-field">
+                    <label for="email">Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Inserisci la tua email"
+                        required
+                    />
+                </div>
+
+                <div class="auth-form-grid">
+                    <div class="auth-field">
+                        <label for="password">Password</label>
+                        <div class="auth-password-wrapper">
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Crea una password sicura"
+                                required
+                            />
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                data-target="password"
+                                aria-label="Mostra o nascondi password"
+                            >👁</button>
+                        </div>
+                    </div>
+
+                    <div class="auth-field">
+                        <label for="confirmPassword">Conferma password</label>
+                        <div class="auth-password-wrapper">
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                placeholder="Ripeti la password"
+                                required
+                            />
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                data-target="confirmPassword"
+                                aria-label="Mostra o nascondi password"
+                            >👁</button>
+                        </div>
+                    </div>
+                </div>
+
+                <label class="auth-checkbox-row">
+                    <input type="checkbox" name="terms" required />
+                    <span>Accetto i Termini di servizio e la Privacy Policy.</span>
+                </label>
+
+                <button type="submit" class="auth-primary-btn">Registrati</button>
+            </form>
+
+            <div class="auth-switch-card">
+                <span>Hai già un account?</span>
+                <a href="${pageContext.request.contextPath}/jsp/login.jsp">Accedi</a>
             </div>
         </section>
-    </main>
+    </div>
+</main>
 
-    <%@ include file="/WEB-INF/fragments/footer.jspf" %>
+<%@ include file="/WEB-INF/fragments/footer.jspf" %>
 
-    <script src="${pageContext.request.contextPath}/js/login.js"></script>
+<script src="${pageContext.request.contextPath}/js/menu.js"></script>
+<script src="${pageContext.request.contextPath}/js/login.js"></script>
 </body>
 </html>
