@@ -43,6 +43,7 @@ public class LoginServlet extends HttpServlet {
 
             HttpSession session = request.getSession(true);
             session.setAttribute("user", user);
+            session.setAttribute("utente", user.getNome());
             session.setAttribute("role", user.getRole());
 
             response.sendRedirect(request.getContextPath() + "/homepage.jsp");
