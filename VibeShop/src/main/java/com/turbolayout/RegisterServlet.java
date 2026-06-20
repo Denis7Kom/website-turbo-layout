@@ -27,17 +27,25 @@ public class RegisterServlet extends HttpServlet {
         String nome = trim(request.getParameter("nome"));
         String cognome = trim(request.getParameter("cognome"));
         String email = trim(request.getParameter("email"));
-        String cellulare = trim(request.getParameter("cellulare"));
-        String password = request.getParameter("password");
-        String confirmPassword = request.getParameter("confirmPassword");
+        String telefono = trim(request.getParameter("telefono"));
+        String username = trim(request.getParameter("username"));
+        String pwd = request.getParameter("password");
+        String confirmPwd = request.getParameter("confirmPassword");
+        String terms = request.getParameter("terms");
 
-        if (isEmpty(nome) || isEmpty(cognome) || isEmpty(email) || isEmpty(password) || isEmpty(confirmPassword)) {
+        if (isEmpty(nome) || isEmpty(cognome) || isEmpty(email)
+                || isEmpty(username) || isEmpty(pwd) || isEmpty(confirmPwd)) {
             forwardWithError(request, response, "Compila tutti i campi obbligatori.");
             return;
         }
 
-        if (!password.equals(confirmPassword)) {
+        if (!pwd.equals(confirmPwd)) {
             forwardWithError(request, response, "Le password non coincidono.");
+            return;
+        }
+
+        if (terms == null) {
+            forwardWithError(request, response, "Devi accettare i Termini e la Privacy Policy.");
             return;
         }
 
@@ -46,7 +54,7 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
 
-        if (password.length() < 8) {
+        if (pwd.length() < 8) {
             forwardWithError(request, response, "La password deve contenere almeno 8 caratteri.");
             return;
         }
@@ -61,9 +69,9 @@ public class RegisterServlet extends HttpServlet {
             user.setNome(nome);
             user.setCognome(cognome);
             user.setEmail(email);
-            user.setCellulare(cellulare);
+            user.setCellulare(telefono);
 
-            userDAO.create(user, password);
+            userDAO.create(user, pwd);
 
             response.sendRedirect(request.getContextPath() + "/jsp/login.jsp?registered=true");
 
