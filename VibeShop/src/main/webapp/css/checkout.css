@@ -48,17 +48,6 @@ h3 { color: var(--text); margin-bottom: 15px; font-size: 16px; font-weight: 700;
     cursor: pointer;
 }
 
-/* Footer */
-.site-footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80px;
-    font-size: 14px;
-    color: #7A7A7A;
-    border-top: 1px solid #E5E5E5;
-    background-color: #fff;
-}
 
 
 /* Riepilogo */

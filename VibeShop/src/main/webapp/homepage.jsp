@@ -18,7 +18,7 @@
         <section class="section-container">
             <div class="section-header">
                 <h2>Concerti in evidenza</h2>
-                <a class="tasto_lato" href="#">Vedi tutti</a>
+                <a class="tasto_lato" href="${pageContext.request.contextPath}/jsp/concerti.jsp">Vedi tutti</a>
             </div>
             <div class="contenitore-card fade-right">
                 <div class="card">
@@ -63,7 +63,7 @@
         <section class="section-container">
             <div class="section-header">
                 <h2>Artisti da scoprire</h2>
-                <a class="tasto_lato" href="#">Vedi tutti</a>
+                <a class="tasto_lato" href="${pageContext.request.contextPath}/jsp/artisti.jsp">Vedi tutti</a>
             </div>
             <div class="contenitore-card fade-right">
                 <div class="card">
@@ -108,7 +108,7 @@
         <section class="section-container">
             <div class="section-header">
                 <h2>Shop & Collezioni</h2>
-                <a class="tasto_lato" href="#">Vedi tutti</a>
+                <a class="tasto_lato" href="${pageContext.request.contextPath}/jsp/merch.jsp">Vedi tutti</a>
             </div>
             <div class="contenitore-card fade-right">
                 <div class="card">
