@@ -316,17 +316,6 @@ body {
 .pagination .prev::before { content: "←"; }
 .pagination .next::before { content: "→"; }
 
-/* Footer */
-.site-footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80px;
-    font-size: 14px;
-    color: #7A7A7A;
-    border-top: 1px solid #E5E5E5;
-    background-color: #fff;
-}
 
 /* RESPONSIVE */
 @media (max-width: 992px) {

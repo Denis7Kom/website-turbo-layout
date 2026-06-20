@@ -168,15 +168,3 @@ main h2 {
 .tasto_lato:hover::after {
     transform: translateX(3px); 
 }
-
-/* Footer */
-.site-footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80px;
-    font-size: 14px;
-    color: #7A7A7A;
-    border-top: 1px solid #E5E5E5;
-    background-color: #fff;
-}

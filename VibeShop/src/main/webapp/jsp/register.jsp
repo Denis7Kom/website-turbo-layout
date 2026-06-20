@@ -70,6 +70,20 @@
                                 <p>Sii il primo a sapere quando i tuoi artisti preferiti annunciano nuove date nella tua zona.</p>
                             </div>
                         </div>
+                        
+                        <div class="benefit-item">
+                            <div class="benefit-icon">
+                                <img
+                                    src="${pageContext.request.contextPath}/img/bag.svg"
+                                    alt="Merch"
+                                    class="benefit-img"
+                                >
+                            </div>
+                            <div>
+                                <h3>Accedi al merch ufficiale</h3>
+                                <p>Ritrova i tuoi prodotti preferiti e completa i tuoi acquisti in pochi clic.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -506,17 +506,6 @@ body {
     font-size: 14px;
 }
 
-/* FOOTER */
-
-.site-footer {
-    text-align: center;
-    background: var(--bg-alt);
-    border-top: 1px solid var(--border);
-    padding: 10px 32px 8px;
-    font-size: 13px;
-    color: var(--text-main);
-    flex-shrink: 0;
-}
 
 /* RESPONSIVE */
 
