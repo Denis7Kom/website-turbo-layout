@@ -3,6 +3,12 @@
     String currentURI = request.getRequestURI();
     boolean isLoginPage    = currentURI.contains("login.jsp");
     boolean isRegisterPage = currentURI.contains("register.jsp");
+    boolean isAuthPage     = isLoginPage || isRegisterPage;
+
+    Object utente = session.getAttribute("utente");
+    if (utente == null) {
+        utente = session.getAttribute("user");
+    }
 %>
 <header>
     <div class="left">
@@ -12,7 +18,7 @@
         <span class="brand-text">VibeShop</span>
     </div>
 
-    <% if (!isLoginPage && !isRegisterPage) { %>
+    <% if (!isAuthPage) { %>
     <nav class="navbar">
         <form method="get" action="${pageContext.request.contextPath}/Ricerca" class="search-form">
             <div class="search-container">
@@ -36,13 +42,13 @@
                 <a href="${pageContext.request.contextPath}/jsp/register.jsp" class="login">Registrati</a>
             <% } else if (isRegisterPage) { %>
                 <a href="${pageContext.request.contextPath}/jsp/login.jsp" class="login">Accedi</a>
-            <% } else {
-                Object utente = session.getAttribute("utente"); %>
+            <% } else { %>
                 <% if (utente != null) { %>
                     <a href="${pageContext.request.contextPath}/jsp/profilo.jsp" class="login"><%= utente %></a>
                 <% } else { %>
                     <a href="${pageContext.request.contextPath}/jsp/login.jsp" class="login">Login</a>
                 <% } %>
+
                 <a href="${pageContext.request.contextPath}/jsp/cart.jsp" class="cart-link">
                     <img src="${pageContext.request.contextPath}/img/shop.svg" alt="Carrello" class="cart-icon"/>
                     <span class="cart-count"><%
@@ -53,7 +59,7 @@
             <% } %>
         </div>
 
-        <% if (!isLoginPage && !isRegisterPage) { %>
+        <% if (!isAuthPage) { %>
         <button id="menu-btn" class="menu-trigger" aria-label="Menu">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2"

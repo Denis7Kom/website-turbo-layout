@@ -23,7 +23,7 @@ public class LoginServlet extends HttpServlet {
 
         if (isEmpty(login) || isEmpty(password)) {
             request.setAttribute("error", "Inserisci email/username e password.");
-            request.getRequestDispatcher("/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
             return;
         }
 
@@ -38,13 +38,14 @@ public class LoginServlet extends HttpServlet {
         if ("admin".equals(login) && "admin123".equals(password)) {
             HttpSession session = request.getSession();
             session.setAttribute("user", login);
+            session.setAttribute("utente", login);
 
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
+            response.sendRedirect(request.getContextPath() + "/homepage.jsp");
             return;
         }
 
         request.setAttribute("error", "Credenziali non valide.");
-        request.getRequestDispatcher("/login.jsp").forward(request, response);
+        request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
     }
 
     private boolean isEmpty(String value) {

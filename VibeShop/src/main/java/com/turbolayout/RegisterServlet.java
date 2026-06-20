@@ -20,6 +20,7 @@ public class RegisterServlet extends HttpServlet {
         String nome = request.getParameter("nome");
         String cognome = request.getParameter("cognome");
         String email = request.getParameter("email");
+        String telefono = request.getParameter("telefono");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
@@ -29,19 +30,19 @@ public class RegisterServlet extends HttpServlet {
                 || isEmpty(username) || isEmpty(password) || isEmpty(confirmPassword)) {
 
             request.setAttribute("error", "Compila tutti i campi obbligatori.");
-            request.getRequestDispatcher("/register.jsp").forward(request, response);
+            request.getRequestDispatcher("/jsp/register.jsp").forward(request, response);
             return;
         }
 
         if (!password.equals(confirmPassword)) {
             request.setAttribute("error", "Le password non coincidono.");
-            request.getRequestDispatcher("/register.jsp").forward(request, response);
+            request.getRequestDispatcher("/jsp/register.jsp").forward(request, response);
             return;
         }
 
         if (terms == null) {
             request.setAttribute("error", "Devi accettare i Termini e la Privacy Policy.");
-            request.getRequestDispatcher("/register.jsp").forward(request, response);
+            request.getRequestDispatcher("/jsp/register.jsp").forward(request, response);
             return;
         }
 
@@ -49,10 +50,10 @@ public class RegisterServlet extends HttpServlet {
             Qui dopo aggiungi:
             1. controllo se email già esiste
             2. hash della password
-            3. salvataggio nel database
+            3. salvataggio nel database, includendo anche il telefono se fornito
         */
 
-        response.sendRedirect(request.getContextPath() + "/login.jsp?registered=true");
+        response.sendRedirect(request.getContextPath() + "/jsp/login.jsp?registered=true");
     }
 
     private boolean isEmpty(String value) {
