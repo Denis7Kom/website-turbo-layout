@@ -51,18 +51,20 @@ OrderDAO
 
 ## Registration fields
 
-The registration form now sends:
+The registration form sends:
 
 ```text
 nome
 cognome
+username
 email
-cellulare
+telefono
 password
 confirmPassword
+terms
 ```
 
-`cellulare` is optional. All other fields are required.
+`telefono` is optional in the form and is mapped to the `utente.cellulare` database column. `username` is currently validated from the form but is not persisted by the first DAO version because the current `utente` table does not include a username column.
 
 ## Password handling
 
