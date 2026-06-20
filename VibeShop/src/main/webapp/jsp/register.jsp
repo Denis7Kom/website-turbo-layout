@@ -11,7 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css"> </head>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css">
+</head>
 
 <body>
 
@@ -70,7 +71,7 @@
                                 <p>Sii il primo a sapere quando i tuoi artisti preferiti annunciano nuove date nella tua zona.</p>
                             </div>
                         </div>
-                        
+
                         <div class="benefit-item">
                             <div class="benefit-icon">
                                 <img
@@ -107,12 +108,23 @@
 
                     <form action="${pageContext.request.contextPath}/register" method="post" class="login-form">
                         <div class="form-group">
-                            <label for="username">Username</label>
+                            <label for="nome">Nome</label>
                             <input
                                 type="text"
-                                id="username"
-                                name="username"
-                                placeholder="Scegli un username unico"
+                                id="nome"
+                                name="nome"
+                                placeholder="Inserisci il tuo nome"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cognome">Cognome</label>
+                            <input
+                                type="text"
+                                id="cognome"
+                                name="cognome"
+                                placeholder="Inserisci il tuo cognome"
                                 required
                             >
                         </div>
@@ -125,6 +137,16 @@
                                 name="email"
                                 placeholder="Inserisci la tua email"
                                 required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cellulare">Cellulare</label>
+                            <input
+                                type="tel"
+                                id="cellulare"
+                                name="cellulare"
+                                placeholder="Inserisci il tuo numero di telefono"
                             >
                         </div>
 
