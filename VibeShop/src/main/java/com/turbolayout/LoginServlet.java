@@ -1,5 +1,8 @@
 package com.turbolayout;
 
+import model.UserBean;
+import model.dao.UserDAO;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,9 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    private final UserDAO userDAO = new UserDAO();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -18,34 +25,42 @@ public class LoginServlet extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
 
-        String login = request.getParameter("login");
+        String email = trim(request.getParameter("login"));
         String password = request.getParameter("password");
 
-        if (isEmpty(login) || isEmpty(password)) {
-            request.setAttribute("error", "Inserisci email/username e password.");
-            request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
+        if (isEmpty(email) || isEmpty(password)) {
+            forwardWithError(request, response, "Inserisci email e password.");
             return;
         }
 
-        /*
-            TEMPORANEO:
-            Questa è solo una verifica fittizia.
-            Dopo va sostituita con:
-            1. ricerca utente nel database
-            2. confronto password con hash
-            3. creazione sessione reale
-        */
-        if ("admin".equals(login) && "admin123".equals(password)) {
-            HttpSession session = request.getSession();
-            session.setAttribute("user", login);
-            session.setAttribute("utente", login);
+        try {
+            UserBean user = userDAO.findByEmailAndPassword(email, password);
+
+            if (user == null) {
+                forwardWithError(request, response, "Credenziali non valide.");
+                return;
+            }
+
+            HttpSession session = request.getSession(true);
+            session.setAttribute("user", user);
+            session.setAttribute("utente", user.getNome());
+            session.setAttribute("role", user.getRole());
 
             response.sendRedirect(request.getContextPath() + "/homepage.jsp");
-            return;
-        }
 
-        request.setAttribute("error", "Credenziali non valide.");
+        } catch (SQLException e) {
+            throw new ServletException("Database error during login", e);
+        }
+    }
+
+    private void forwardWithError(HttpServletRequest request, HttpServletResponse response, String error)
+            throws ServletException, IOException {
+        request.setAttribute("error", error);
         request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
+    }
+
+    private String trim(String value) {
+        return value == null ? null : value.trim();
     }
 
     private boolean isEmpty(String value) {
