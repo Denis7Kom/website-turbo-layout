@@ -20,6 +20,7 @@ public class RegisterServlet extends HttpServlet {
         String nome = request.getParameter("nome");
         String cognome = request.getParameter("cognome");
         String email = request.getParameter("email");
+        String telefono = request.getParameter("telefono");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
@@ -49,7 +50,7 @@ public class RegisterServlet extends HttpServlet {
             Qui dopo aggiungi:
             1. controllo se email già esiste
             2. hash della password
-            3. salvataggio nel database
+            3. salvataggio nel database, includendo anche il telefono se fornito
         */
 
         response.sendRedirect(request.getContextPath() + "/jsp/login.jsp?registered=true");
