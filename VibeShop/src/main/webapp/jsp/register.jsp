@@ -96,15 +96,27 @@
                     />
                 </div>
 
-                <div class="auth-field">
-                    <label for="email">Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="Inserisci la tua email"
-                        required
-                    />
+                <div class="auth-form-grid">
+                    <div class="auth-field">
+                        <label for="email">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Inserisci la tua email"
+                            required
+                        />
+                    </div>
+
+                    <div class="auth-field">
+                        <label for="telefono">Telefono</label>
+                        <input
+                            type="tel"
+                            id="telefono"
+                            name="telefono"
+                            placeholder="Inserisci il tuo numero"
+                        />
+                    </div>
                 </div>
 
                 <div class="auth-form-grid">
