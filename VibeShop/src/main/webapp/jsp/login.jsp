@@ -2,173 +2,125 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - VibeShop</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css" />
 </head>
-
 <body>
 
-    <%@ include file="/WEB-INF/fragments/header.jspf" %>
+<%@ include file="/WEB-INF/fragments/header.jspf" %>
+<%@ include file="/WEB-INF/fragments/nav.jspf" %>
 
-    <main class="page-wrapper">
-        <section class="login-card">
-            <div class="promo-panel">
-                <div class="promo-overlay"></div>
+<main class="main-content auth-main">
+    <h1 class="cart-page-title">Accedi al tuo account</h1>
 
-                <div class="promo-content">
-                    <div class="promo-logo">
-                        <img
-                            src="${pageContext.request.contextPath}/img/logo.svg"
-                            alt="VibeShop logo"
-                            class="promo-logo-img"
-                        >
+    <div class="auth-layout">
+        <aside class="auth-info-card">
+            <span class="auth-eyebrow">Area personale</span>
+            <h2>Ritrova biglietti, ordini e merchandising in un unico spazio.</h2>
+            <p>
+                Accedi per gestire gli acquisti, consultare il carrello e seguire gli aggiornamenti
+                sugli eventi e sugli artisti che ti interessano.
+            </p>
+
+            <div class="auth-benefits">
+                <div class="auth-benefit-item">
+                    <img src="${pageContext.request.contextPath}/img/tickets.svg" alt="Biglietti" />
+                    <div>
+                        <h3>Biglietti sempre disponibili</h3>
+                        <p>Consulta rapidamente gli ordini associati al tuo account.</p>
                     </div>
+                </div>
 
-                    <h1>
-                        Bentornato su <br>
-                        <span>VibeShop</span>
-                    </h1>
-
-                    <div class="title-line"></div>
-
-                    <p class="promo-subtitle">
-                        Accedi al tuo account per gestire biglietti,
-                        artisti preferiti e merchandising ufficiale.
-                    </p>
-
-                    <div class="benefits">
-                        <div class="benefit-item">
-                            <div class="benefit-icon">
-                                <img
-                                    src="${pageContext.request.contextPath}/img/tickets.svg"
-                                    alt="Biglietti"
-                                    class="benefit-img"
-                                >
-                            </div>
-                            <div>
-                                <h3>I tuoi biglietti sempre disponibili</h3>
-                                <p>Consulta rapidamente i tuoi ordini e resta aggiornato sugli eventi acquistati.</p>
-                            </div>
-                        </div>
-
-                        <div class="benefit-item">
-                            <div class="benefit-icon">
-                                <img
-                                    src="${pageContext.request.contextPath}/img/like.svg"
-                                    alt="Artisti preferiti"
-                                    class="benefit-img"
-                                >
-                            </div>
-                            <div>
-                                <h3>Segui gli artisti che ami</h3>
-                                <p>Ricevi novità, annunci e informazioni sui concerti più attesi.</p>
-                            </div>
-                        </div>
-
-                        <div class="benefit-item">
-                            <div class="benefit-icon">
-                                <img
-                                    src="${pageContext.request.contextPath}/img/bag.svg"
-                                    alt="Merch"
-                                    class="benefit-img"
-                                >
-                            </div>
-                            <div>
-                                <h3>Accedi al merch ufficiale</h3>
-                                <p>Ritrova i tuoi prodotti preferiti e completa i tuoi acquisti in pochi clic.</p>
-                            </div>
-                        </div>
+                <div class="auth-benefit-item">
+                    <img src="${pageContext.request.contextPath}/img/like.svg" alt="Artisti" />
+                    <div>
+                        <h3>Artisti e novità</h3>
+                        <p>Resta aggiornato su concerti, date e prodotti ufficiali.</p>
                     </div>
                 </div>
             </div>
+        </aside>
 
-            <div class="form-panel">
-                <div class="form-container">
-                    <h2>Accedi al tuo account</h2>
+        <section class="auth-form-card">
+            <div class="auth-form-header">
+                <span class="auth-eyebrow">Login</span>
+                <h2>Bentornato su VibeShop</h2>
+                <p>Inserisci le tue credenziali per continuare.</p>
+            </div>
 
-                    <p class="form-subtitle">
-                        Inserisci le tue credenziali per continuare
-                        a vivere l’esperienza VibeShop.
-                    </p>
+            <%
+                String error = (String) request.getAttribute("error");
+                if (error != null && !error.trim().isEmpty()) {
+            %>
+                <div class="auth-alert auth-alert-error"><%= error %></div>
+            <%
+                }
 
-                    <%
-                        String error = (String) request.getAttribute("error");
-                        if (error != null) {
-                    %>
-                        <div class="error-box"><%= error %></div>
-                    <%
-                        }
+                String registered = request.getParameter("registered");
+                if ("true".equals(registered)) {
+            %>
+                <div class="auth-alert auth-alert-success">Registrazione completata con successo. Ora puoi accedere.</div>
+            <%
+                }
+            %>
 
-                        String registered = request.getParameter("registered");
-                        if ("true".equals(registered)) {
-                    %>
-                        <div class="success-box">Registrazione completata con successo. Ora puoi accedere.</div>
-                    <%
-                        }
-                    %>
-
-                    <form action="${pageContext.request.contextPath}/login" method="post" class="login-form">
-                        <div class="form-group">
-                            <label for="login">Email o Username</label>
-                            <input
-                                type="text"
-                                id="login"
-                                name="login"
-                                placeholder="Inserisci email o username"
-                                required
-                            >
-                        </div>
-
-                        <div class="form-group password-group">
-                            <div class="label-row">
-                                <label for="password">Password</label>
-                                <a href="#" class="forgot-link">Password dimenticata?</a>
-                            </div>
-
-                            <div class="password-wrapper">
-                                <input
-                                    type="password"
-                                    id="password"
-                                    name="password"
-                                    placeholder="Inserisci la tua password"
-                                    required
-                                >
-                                <button
-                                    type="button"
-                                    class="toggle-password"
-                                    data-target="password"
-                                    aria-label="Mostra o nascondi password"
-                                >👁</button>
-                            </div>
-                        </div>
-
-                        <label class="checkbox-row remember-row">
-                            <input type="checkbox" name="remember">
-                            <span>Ricordami su questo dispositivo</span>
-                        </label>
-
-                        <button type="submit" class="primary-btn">Accedi</button>
-
-                        <p class="register-text">
-                            Non hai ancora un account?
-                            <a href="${pageContext.request.contextPath}/jsp/register.jsp">Registrati</a>
-                        </p>
-                    </form>
+            <form action="${pageContext.request.contextPath}/login" method="post" class="auth-form">
+                <div class="auth-field">
+                    <label for="login">Email o username</label>
+                    <input
+                        type="text"
+                        id="login"
+                        name="login"
+                        placeholder="Inserisci email o username"
+                        required
+                    />
                 </div>
+
+                <div class="auth-field">
+                    <div class="auth-label-row">
+                        <label for="password">Password</label>
+                        <a href="#" class="auth-link">Password dimenticata?</a>
+                    </div>
+
+                    <div class="auth-password-wrapper">
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Inserisci la tua password"
+                            required
+                        />
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            data-target="password"
+                            aria-label="Mostra o nascondi password"
+                        >👁</button>
+                    </div>
+                </div>
+
+                <label class="auth-checkbox-row">
+                    <input type="checkbox" name="remember" />
+                    <span>Ricordami su questo dispositivo</span>
+                </label>
+
+                <button type="submit" class="auth-primary-btn">Accedi</button>
+            </form>
+
+            <div class="auth-switch-card">
+                <span>Non hai ancora un account?</span>
+                <a href="${pageContext.request.contextPath}/jsp/register.jsp">Registrati</a>
             </div>
         </section>
-    </main>
+    </div>
+</main>
 
-    <%@ include file="/WEB-INF/fragments/footer.jspf" %>
+<%@ include file="/WEB-INF/fragments/footer.jspf" %>
 
-    <script src="${pageContext.request.contextPath}/js/login.js"></script>
+<script src="${pageContext.request.contextPath}/js/menu.js"></script>
+<script src="${pageContext.request.contextPath}/js/login.js"></script>
 </body>
 </html>
