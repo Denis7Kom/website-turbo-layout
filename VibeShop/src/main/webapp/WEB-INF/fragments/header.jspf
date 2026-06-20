@@ -3,7 +3,9 @@
     String currentURI = request.getRequestURI();
     boolean isLoginPage    = currentURI.contains("login.jsp");
     boolean isRegisterPage = currentURI.contains("register.jsp");
-    boolean isAuthPage     = isLoginPage || isRegisterPage;
+    
+    // Nuova variabile per comodità: è true se siamo nel login o nel register
+    boolean hideNavElements = isLoginPage || isRegisterPage;
 
     Object utente = session.getAttribute("utente");
     if (utente == null) {
@@ -18,7 +20,8 @@
         <span class="brand-text">VibeShop</span>
     </div>
 
-    <% if (!isAuthPage) { %>
+    <%-- Mostra la barra di ricerca SOLO se non siamo in login/register --%>
+    <% if (!hideNavElements) { %>
     <nav class="navbar">
         <form method="get" action="${pageContext.request.contextPath}/Ricerca" class="search-form">
             <div class="search-container">
@@ -38,28 +41,28 @@
 
     <div class="header-actions">
         <div class="right">
-            <% if (isLoginPage) { %>
+            <% if (utente != null) { %>
+                <a href="${pageContext.request.contextPath}/jsp/profilo.jsp" class="login"><%= utente %></a>
+            <% } else if (isLoginPage) { %>
                 <a href="${pageContext.request.contextPath}/jsp/register.jsp" class="login">Registrati</a>
             <% } else if (isRegisterPage) { %>
                 <a href="${pageContext.request.contextPath}/jsp/login.jsp" class="login">Accedi</a>
             <% } else { %>
-                <% if (utente != null) { %>
-                    <a href="${pageContext.request.contextPath}/jsp/profilo.jsp" class="login"><%= utente %></a>
-                <% } else { %>
-                    <a href="${pageContext.request.contextPath}/jsp/login.jsp" class="login">Login</a>
-                <% } %>
+                <a href="${pageContext.request.contextPath}/jsp/login.jsp" class="login">Login</a>
+            <% } %>
 
-                <a href="${pageContext.request.contextPath}/jsp/cart.jsp" class="cart-link">
-                    <img src="${pageContext.request.contextPath}/img/shop.svg" alt="Carrello" class="cart-icon"/>
-                    <span class="cart-count"><%
-                        Object cc = session.getAttribute("cartCount");
-                        out.print(cc != null ? cc : 0);
-                    %></span>
-                </a>
+            <%-- Mostra il carrello SOLO se non siamo in login/register --%>
+            <% if (!hideNavElements) { %>
+            <a href="${pageContext.request.contextPath}/jsp/cart.jsp" class="cart-link">
+                <img src="${pageContext.request.contextPath}/img/shop.svg" alt="Carrello" class="cart-icon"/>
+                <span class="cart-count"><%
+                    Object cc = session.getAttribute("cartCount");
+                    out.print(cc != null ? cc : 0);
+                %></span>
+            </a>
             <% } %>
         </div>
 
-        <% if (!isAuthPage) { %>
         <button id="menu-btn" class="menu-trigger" aria-label="Menu">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2"
@@ -68,6 +71,5 @@
                 <line x1="12" y1="16" x2="21" y2="16"></line>
             </svg>
         </button>
-        <% } %>
     </div>
 </header>
