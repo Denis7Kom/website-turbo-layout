@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -25,6 +26,10 @@ public class AdminOrderServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if (!isAdmin(request, response)) {
+            return;
+        }
+
         try {
             Integer idUtente = parseNullableInt(request.getParameter("idUtente"));
             Date fromDate = parseDate(request.getParameter("from"));
@@ -44,6 +49,10 @@ public class AdminOrderServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if (!isAdmin(request, response)) {
+            return;
+        }
+
         request.setCharacterEncoding("UTF-8");
         int idOrdine = parseInt(request.getParameter("idOrdine"), 0);
         String stato = normalizeStatus(request.getParameter("statoOrdine"));
@@ -59,6 +68,16 @@ public class AdminOrderServlet extends HttpServlet {
             }
         }
         response.sendRedirect(request.getContextPath() + "/admin/orders");
+    }
+
+    private boolean isAdmin(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession(false);
+        if (session != null && "ADMIN".equals(session.getAttribute("role"))) {
+            return true;
+        }
+
+        response.sendRedirect(request.getContextPath() + "/jsp/login.jsp?auth=required");
+        return false;
     }
 
     private String normalizeStatus(String status) {
