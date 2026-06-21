@@ -1,4 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="java.math.BigDecimal" %>
+<%@ page import="model.OrderBean" %>
+<%!
+    private String h(String value) {
+        if (value == null) {
+            return "";
+        }
+        return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#39;");
+    }
+%>
+<%
+    Object ordersObject = request.getAttribute("orders");
+    List<OrderBean> orders = ordersObject instanceof List ? (List<OrderBean>) ordersObject : new ArrayList<OrderBean>();
+    NumberFormat money = NumberFormat.getCurrencyInstance(Locale.ITALY);
+    Object revenueObject = request.getAttribute("revenue");
+    BigDecimal revenue = revenueObject instanceof BigDecimal ? (BigDecimal) revenueObject : BigDecimal.ZERO;
+    Object orderCountObject = request.getAttribute("orderCount");
+    Object productCountObject = request.getAttribute("productCount");
+    int orderCount = orderCountObject instanceof Integer ? (Integer) orderCountObject : orders.size();
+    int productCount = productCountObject instanceof Integer ? (Integer) productCountObject : 0;
+%>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -6,7 +31,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pannello Amministratore - VibeShop</title>
     <link rel="icon" type="image/svg+xml" href="${pageContext.request.contextPath}/img/logo.svg" />
-    
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css" />
 </head>
@@ -16,95 +40,61 @@
 <%@ include file="/WEB-INF/fragments/nav.jspf" %>
 
 <main class="admin-main-container">
-
     <header class="admin-hero">
         <div class="admin-welcome-box">
-            <div class="admin-icon">⚙️</div>
+            <div class="admin-icon">DB</div>
             <div class="admin-welcome-text">
                 <h1>Pannello di Controllo</h1>
-                <p>Accesso come: <strong>Amministratore</strong></p>
+                <p>Dati caricati dinamicamente dal database MySQL.</p>
             </div>
         </div>
-        
         <div class="admin-quick-stats">
-            <div class="quick-stat">
-                <span class="stat-val">€ 12.450.123</span>
-                <span class="stat-lbl">Entrate Mese</span>
-            </div>
-            <div class="quick-stat">
-                <span class="stat-val">145</span>
-                <span class="stat-lbl">Ordini Attivi</span>
-            </div>
+            <div class="quick-stat"><span class="stat-val"><%= money.format(revenue) %></span><span class="stat-lbl">Entrate totali</span></div>
+            <div class="quick-stat"><span class="stat-val"><%= orderCount %></span><span class="stat-lbl">Ordini</span></div>
+            <div class="quick-stat"><span class="stat-val"><%= productCount %></span><span class="stat-lbl">Prodotti attivi</span></div>
         </div>
     </header>
 
     <div class="admin-content-grid">
-     
         <aside class="admin-sidebar">
             <nav class="sidebar-nav">
-                <a href="${pageContext.request.contextPath}/jsp/admin/dashboard.jsp" class="active">📊 Panoramica</a>
-                <a href="${pageContext.request.contextPath}/jsp/admin/ad-orders.jsp">📦 Gestione Ordini</a>
-                <a href="${pageContext.request.contextPath}/jsp/admin/products.jsp">🎟️ Gestione Prodotti</a>
-                
+                <a href="${pageContext.request.contextPath}/admin/dashboard" class="active">Panoramica</a>
+                <a href="${pageContext.request.contextPath}/admin/orders">Gestione Ordini</a>
+                <a href="${pageContext.request.contextPath}/admin/products">Gestione Prodotti</a>
                 <a href="${pageContext.request.contextPath}/logout" class="logout-link">Disconnetti</a>
             </nav>
         </aside>
 
         <div class="admin-main-view">
             <section class="card-vibe">
-                <div class="section-title-row">
-                    <h2>Ultimi Ordini Ricevuti</h2>
-                    <a href="${pageContext.request.contextPath}/jsp/admin/ad-orders.jsp" class="edit-link">Vedi Tutto</a>
-                </div>
-
+                <div class="section-title-row"><h2>Ultimi Ordini Ricevuti</h2><a href="${pageContext.request.contextPath}/admin/orders" class="edit-link">Vedi Tutto</a></div>
                 <div class="table-responsive">
                     <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>Codice Ordine</th>
-                                <th>Cliente</th>
-                                <th>Data</th>
-                                <th>Totale</th>
-                                <th>Stato</th>
-                                <th>Azione</th>
-                            </tr>
-                        </thead>
+                        <thead><tr><th>Codice Ordine</th><th>Cliente</th><th>Data</th><th>Totale</th><th>Stato</th><th>Azione</th></tr></thead>
                         <tbody>
-                            <tr>
-                                <td><strong>#VB-99812</strong></td>
-                                <td>vibe.u@vibeshop.it</td>
-                                <td>20 Giu 2026</td>
-                                <td>€ 155,00</td>
-                                <td><span class="badge pending">In Lavorazione</span></td>
-                                <td><a href="${pageContext.request.contextPath}/jsp/admin/ad-orders.jsp" class="btn-manage">Gestisci</a></td>
-                            </tr>
-                            <tr>
-                                <td><strong>#VB-99811</strong></td>
-                                <td>mario.rossi@email.it</td>
-                                <td>19 Giu 2026</td>
-                                <td>€ 45,00</td>
-                                <td><span class="badge completed">Spedito</span></td>
-                                <td><a href="${pageContext.request.contextPath}/jsp/admin/ad-orders.jsp" class="btn-manage">Gestisci</a></td>
-                            </tr>
-                            <tr>
-                                <td><strong>#VB-99810</strong></td>
-                                <td>luigi.verdi@email.it</td>
-                                <td>18 Giu 2026</td>
-                                <td>€ 81,00</td>
-                                <td><span class="badge completed">Spedito</span></td>
-                                <td><a href="${pageContext.request.contextPath}/jsp/admin/ad-orders.jsp" class="btn-manage">Gestisci</a></td>
-                            </tr>
+                            <% if (orders.isEmpty()) { %>
+                                <tr><td colspan="6">Nessun ordine trovato.</td></tr>
+                            <% } else { %>
+                                <% for (int i = 0; i < orders.size() && i < 5; i++) { OrderBean order = orders.get(i); %>
+                                    <tr>
+                                        <td><strong>#<%= order.getIdOrdine() %></strong></td>
+                                        <td>ID <%= order.getIdUtente() %></td>
+                                        <td><%= order.getDataOrdine() %></td>
+                                        <td><%= order.getTotalPrice() == null ? money.format(BigDecimal.ZERO) : money.format(order.getTotalPrice()) %></td>
+                                        <td><span class="badge completed"><%= h(order.getStatoOrdine()) %></span></td>
+                                        <td><a href="${pageContext.request.contextPath}/admin/orders" class="btn-manage">Gestisci</a></td>
+                                    </tr>
+                                <% } %>
+                            <% } %>
                         </tbody>
                     </table>
                 </div>
             </section>
         </div>
-
     </div>
 </main>
 
 <%@ include file="/WEB-INF/fragments/footer.jspf" %>
 <script src="${pageContext.request.contextPath}/js/menu.js"></script>
-
 </body>
 </html>
