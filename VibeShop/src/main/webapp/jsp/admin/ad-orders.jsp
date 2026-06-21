@@ -49,7 +49,7 @@
     <div class="admin-content-grid">
         <aside class="admin-sidebar">
             <nav class="sidebar-nav">
-                <a href="${pageContext.request.contextPath}/jsp/admin/dashboard.jsp">Panoramica</a>
+                <a href="${pageContext.request.contextPath}/admin/dashboard">Panoramica</a>
                 <a href="${pageContext.request.contextPath}/admin/orders" class="active">Gestione Ordini</a>
                 <a href="${pageContext.request.contextPath}/admin/products">Gestione Prodotti</a>
                 <a href="${pageContext.request.contextPath}/logout" class="logout-link">Disconnetti</a>
@@ -59,33 +59,14 @@
             <section class="card-vibe">
                 <div class="section-title-row"><h2>Registro Ordini Ricevuti</h2></div>
                 <form class="admin-filters-bar" method="get" action="${pageContext.request.contextPath}/admin/orders">
-                    <div class="filter-group-select">
-                        <label for="idUtente">ID Cliente</label>
-                        <input type="number" id="idUtente" name="idUtente" placeholder="Es. 1" />
-                    </div>
-                    <div class="filter-group-select">
-                        <label for="from">Da</label>
-                        <input type="date" id="from" name="from" />
-                    </div>
-                    <div class="filter-group-select">
-                        <label for="to">A</label>
-                        <input type="date" id="to" name="to" />
-                    </div>
+                    <div class="filter-group-select"><label for="idUtente">ID Cliente</label><input type="number" id="idUtente" name="idUtente" placeholder="Es. 1" /></div>
+                    <div class="filter-group-select"><label for="from">Da</label><input type="date" id="from" name="from" /></div>
+                    <div class="filter-group-select"><label for="to">A</label><input type="date" id="to" name="to" /></div>
                     <button type="submit" class="btn-table-edit">Filtra</button>
                 </form>
                 <div class="table-responsive">
                     <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>Codice Ordine</th>
-                                <th>ID Cliente</th>
-                                <th>Data</th>
-                                <th>Totale</th>
-                                <th>Pagamento</th>
-                                <th>Stato</th>
-                                <th>Azioni</th>
-                            </tr>
-                        </thead>
+                        <thead><tr><th>Codice Ordine</th><th>ID Cliente</th><th>Data</th><th>Totale</th><th>Pagamento</th><th>Stato</th><th>Azioni</th></tr></thead>
                         <tbody>
                             <% if (orders.isEmpty()) { %>
                                 <tr><td colspan="7">Nessun ordine trovato.</td></tr>
@@ -101,11 +82,7 @@
                                         <td>
                                             <form method="post" action="${pageContext.request.contextPath}/admin/orders">
                                                 <input type="hidden" name="idOrdine" value="<%= order.getIdOrdine() %>">
-                                                <select name="statoOrdine">
-                                                    <option value="CONFERMATO">CONFERMATO</option>
-                                                    <option value="IN_ELABORAZIONE">IN_ELABORAZIONE</option>
-                                                    <option value="ANNULLATO">ANNULLATO</option>
-                                                </select>
+                                                <select name="statoOrdine"><option value="CONFERMATO">CONFERMATO</option><option value="IN_ELABORAZIONE">IN_ELABORAZIONE</option><option value="ANNULLATO">ANNULLATO</option></select>
                                                 <button type="submit" class="btn-table-edit">Aggiorna</button>
                                             </form>
                                         </td>
