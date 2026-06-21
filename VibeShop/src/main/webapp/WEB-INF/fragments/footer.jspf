@@ -4,4 +4,4 @@
         <p class="footer-copy">© 2026 VibeShop · Tutti i diritti riservati</p>
     </div>
 </footer>
-
+<script src="${pageContext.request.contextPath}/js/vibeshop-ajax.js"></script>
