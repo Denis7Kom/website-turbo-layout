@@ -35,10 +35,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/merch.css" />
 </head>
 <body>
-
 <%@ include file="/WEB-INF/fragments/header.jspf" %>
 <%@ include file="/WEB-INF/fragments/nav.jspf" %>
-
 <div class="merch-hero">
     <div class="merch-hero-inner">
         <span class="merch-hero-label">Collezioni Esclusive</span>
@@ -47,32 +45,22 @@
     </div>
     <div class="merch-hero-fade"></div>
 </div>
-
 <main class="main-content">
-
     <div class="filter-bar">
         <div class="categories-capsules">
             <a href="${pageContext.request.contextPath}/merch" class="capsule active">Tutti i prodotti</a>
-            <a href="#" class="capsule">T-Shirt</a>
-            <a href="#" class="capsule">Felpe</a>
-            <a href="#" class="capsule">Accessori</a>
-            <a href="#" class="capsule">Vinili & CD</a>
-        </div>
-        <div class="filter-select-wrapper">
-            <select class="filter-select">
-                <option>Ordina per: In evidenza</option>
-                <option>Prezzo: dal più basso</option>
-                <option>Prezzo: dal più alto</option>
-                <option>Più recenti</option>
-            </select>
+            <a href="${pageContext.request.contextPath}/jsp/concerti.jsp" class="capsule">Biglietti</a>
+            <a href="${pageContext.request.contextPath}/jsp/artisti.jsp" class="capsule">Artisti</a>
         </div>
     </div>
-
     <section class="section-container">
+        <% if (searchQuery != null && !searchQuery.trim().isEmpty()) { %>
+            <div class="section-header"><h2>Risultati per: <%= h(searchQuery) %></h2></div>
+        <% } %>
         <% if (products.isEmpty()) { %>
             <div class="empty-catalog-message">
                 <h2>Nessun prodotto disponibile</h2>
-                <p>Il catalogo merch è temporaneamente vuoto.</p>
+                <p>Il catalogo merch è temporaneamente vuoto o non ci sono risultati per la ricerca.</p>
             </div>
         <% } else { %>
             <div class="merch-grid">
@@ -97,11 +85,8 @@
             </div>
         <% } %>
     </section>
-
 </main>
-
 <%@ include file="/WEB-INF/fragments/footer.jspf" %>
 <script src="${pageContext.request.contextPath}/js/menu.js"></script>
-
 </body>
 </html>

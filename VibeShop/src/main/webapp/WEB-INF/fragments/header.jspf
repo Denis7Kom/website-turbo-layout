@@ -23,7 +23,7 @@
 
     <% if (!hideNavElements) { %>
     <nav class="navbar">
-        <form method="get" action="${pageContext.request.contextPath}/Ricerca" class="search-form">
+        <form method="get" action="${pageContext.request.contextPath}/search" class="search-form">
             <div class="search-container">
                 <input type="text" name="ricerca" placeholder="Cerca..." required />
                 <button type="submit" class="search-btn" aria-label="Cerca">

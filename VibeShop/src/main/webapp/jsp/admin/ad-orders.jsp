@@ -19,14 +19,7 @@
 %>
 <!DOCTYPE html>
 <html lang="it">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gestione Ordini - VibeShop</title>
-    <link rel="icon" type="image/svg+xml" href="${pageContext.request.contextPath}/img/logo.svg" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css" />
-</head>
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Gestione Ordini - VibeShop</title><link rel="icon" type="image/svg+xml" href="${pageContext.request.contextPath}/img/logo.svg" /><link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css" /><link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css" /></head>
 <body>
 <%@ include file="/WEB-INF/fragments/header.jspf" %>
 <%@ include file="/WEB-INF/fragments/nav.jspf" %>

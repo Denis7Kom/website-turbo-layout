@@ -24,10 +24,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css" />
 </head>
 <body>
-
 <%@ include file="/WEB-INF/fragments/header.jspf" %>
 <%@ include file="/WEB-INF/fragments/nav.jspf" %>
-
 <main class="admin-main-container">
     <header class="admin-hero">
         <div class="admin-welcome-box">
@@ -98,7 +96,6 @@
         </div>
     </div>
 </main>
-
 <%@ include file="/WEB-INF/fragments/footer.jspf" %>
 <script src="${pageContext.request.contextPath}/js/menu.js"></script>
 </body>
