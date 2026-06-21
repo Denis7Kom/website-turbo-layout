@@ -46,7 +46,7 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("utente", user.getNome());
             session.setAttribute("role", user.getRole());
 
-            response.sendRedirect(request.getContextPath() + "/homepage.jsp");
+            response.sendRedirect(request.getContextPath() + "/home");
 
         } catch (SQLException e) {
             throw new ServletException("Database error during login", e);
