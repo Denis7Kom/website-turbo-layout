@@ -11,6 +11,10 @@
         }
         return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#39;");
     }
+
+    private boolean hasText(String value) {
+        return value != null && !value.trim().isEmpty();
+    }
 %>
 <%
     Object value = request.getAttribute("products");
@@ -66,13 +70,20 @@
             <div class="merch-grid">
                 <% for (ProductBean product : products) { %>
                     <div class="product-card">
-                        <div class="product-card-img-container">
-                            <div class="product-card-img-placeholder"></div>
-                        </div>
+                        <% if (hasText(product.getImmagine())) { %>
+                            <div class="product-card-img-container">
+                                <img class="product-card-img"
+                                     src="${pageContext.request.contextPath}/<%= h(product.getImmagine()) %>"
+                                     alt="<%= h(product.getNome()) %>">
+                            </div>
+                        <% } %>
                         <div class="product-card-body">
                             <span class="product-artist">VibeShop</span>
                             <h3 class="product-title"><%= h(product.getNome()) %></h3>
-                            <span class="product-price"><%= money.format(product.getPrezzo()) %></span>
+                            <% if (hasText(product.getDescrizione())) { %>
+                                <p class="product-description"><%= h(product.getDescrizione()) %></p>
+                            <% } %>
+                            <span class="product-price"><%= product.getPrezzo() == null ? "" : money.format(product.getPrezzo()) %></span>
                             <form action="${pageContext.request.contextPath}/cart" method="post">
                                 <input type="hidden" name="action" value="add">
                                 <input type="hidden" name="idProdotto" value="<%= product.getIdProdotto() %>">
