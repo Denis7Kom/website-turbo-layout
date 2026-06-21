@@ -32,7 +32,10 @@ public class SearchServlet extends HttpServlet {
         query = query.trim();
 
         try {
-            List<ProductBean> products = query.length() < 2 ? Collections.<ProductBean>emptyList() : productDAO.searchActiveByName(query);
+            List<ProductBean> products = query.length() < 2
+                    ? Collections.<ProductBean>emptyList()
+                    : productDAO.searchActiveByName(query);
+
             StringBuilder out = new StringBuilder("[");
             for (int i = 0; i < products.size(); i++) {
                 ProductBean p = products.get(i);
@@ -41,8 +44,8 @@ public class SearchServlet extends HttpServlet {
                 }
                 out.append('{');
                 out.append("\"id\":").append(p.getIdProdotto()).append(',');
-                out.append("\"name\":\"").append(p.getNome()).append("\",");
-                out.append("\"price\":\"").append(p.getPrezzo()).append("\"");
+                out.append("\"name\":\"").append(jsonEscape(p.getNome())).append("\",");
+                out.append("\"price\":\"").append(jsonEscape(String.valueOf(p.getPrezzo()))).append("\"");
                 out.append('}');
             }
             out.append(']');
@@ -50,5 +53,16 @@ public class SearchServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new ServletException("Database error while searching products", e);
         }
+    }
+
+    private String jsonEscape(String value) {
+        if (value == null) {
+            return "";
+        }
+        return value
+                .replace("\\", "\\\\")
+                .replace("\"", "\\\"")
+                .replace("\r", "\\r")
+                .replace("\n", "\\n");
     }
 }
