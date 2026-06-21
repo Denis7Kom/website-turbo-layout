@@ -206,7 +206,7 @@ CREATE TABLE `utente` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `role` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'CLIENTE',
   `cellulare` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `password_hash` char(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password_hash` char(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id_utente`),
   UNIQUE KEY `uk_utente_email` (`email`),
   KEY `idx_utente_role` (`role`),
