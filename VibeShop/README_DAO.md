@@ -1,6 +1,6 @@
 # VibeShop DAO setup
 
-This branch contains the first DAO layer for the Tomcat 9 version of VibeShop.
+This branch contains the DAO layer for the Tomcat 9 version of VibeShop.
 
 ## Tomcat 9 rule
 
@@ -13,6 +13,7 @@ Tomcat 9 supports Java EE / Servlet 4.x APIs. Mixing Tomcat 9 with `jakarta.serv
 ```text
 VibeShop/src/main/java/model/
 VibeShop/src/main/java/model/dao/
+VibeShop/src/main/java/util/
 ```
 
 ## Database connection
@@ -25,19 +26,22 @@ user: vibeshop_app
 password: VibeShopApp2026!
 ```
 
-## Required dependency
+## Required dependencies
 
-Add MySQL Connector/J to:
+Add the following JAR files to:
 
 ```text
 VibeShop/src/main/webapp/WEB-INF/lib/
 ```
 
-Example:
+Required examples:
 
 ```text
 mysql-connector-j-8.0.xx.jar
+jbcrypt-0.4.jar
 ```
+
+`jbcrypt-0.4.jar` is required because `util.PasswordUtils` uses `org.mindrot.jbcrypt.BCrypt` for password hashing and verification.
 
 ## Current implemented DAO classes
 
@@ -47,7 +51,7 @@ ProductDAO
 OrderDAO
 ```
 
-`UserDAO` is already wired into `LoginServlet` and `RegisterServlet`.
+`UserDAO` is wired into `LoginServlet`, `RegisterServlet`, `CheckEmailServlet` and profile-related user operations.
 
 ## Registration fields
 
@@ -64,14 +68,38 @@ confirmPassword
 terms
 ```
 
-`telefono` is optional in the form and is mapped to the `utente.cellulare` database column. `username` is currently validated from the form but is not persisted by the first DAO version because the current `utente` table does not include a username column.
+`telefono` is optional in the form and is mapped to the `utente.cellulare` database column. `username` is currently validated from the form but is not persisted because the current `utente` table does not include a username column.
 
 ## Password handling
 
-Passwords are stored and checked through MySQL:
+Passwords are hashed and verified in Java through bcrypt:
 
-```sql
-SHA2(?, 256)
+```java
+PasswordUtils.hashPassword(plainPassword)
+PasswordUtils.verifyPassword(plainPassword, storedHash)
 ```
 
-This matches the current `utente.password_hash` column.
+The database stores only the bcrypt hash in `utente.password_hash`.
+
+The bcrypt hash already contains:
+
+```text
+algorithm marker
+cost factor
+salt
+hash body
+```
+
+No separate `salt` column is required.
+
+## Database migration for bcrypt
+
+After importing `VibeShop/db/VIBESHOP.sql`, run:
+
+```text
+VibeShop/db/2026_06_21_bcrypt_passwords.sql
+```
+
+This migration changes `utente.password_hash` from the legacy SHA-256 size to a bcrypt-compatible `VARCHAR(100)`.
+
+Important: legacy SHA-256 hashes from the original dump cannot be verified by bcrypt. Seed users must be recreated or have their passwords reset through the Java application so new bcrypt hashes are generated.
