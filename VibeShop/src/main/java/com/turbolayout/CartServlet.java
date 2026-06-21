@@ -1,7 +1,10 @@
 package com.turbolayout;
 
 import model.Cart;
+import model.CartItem;
+import model.ConcertoBean;
 import model.ProductBean;
+import model.dao.ConcertoDAO;
 import model.dao.ProductDAO;
 
 import javax.servlet.ServletException;
@@ -19,6 +22,7 @@ public class CartServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private final ProductDAO productDAO = new ProductDAO();
+    private final ConcertoDAO concertoDAO = new ConcertoDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -45,6 +49,13 @@ public class CartServlet extends HttpServlet {
         try {
             if ("add".equalsIgnoreCase(action)) {
                 addProduct(request, cart);
+                synchronizeCartCount(session, cart);
+                response.sendRedirect(request.getContextPath() + "/cart?added=true");
+                return;
+            }
+
+            if ("addConcert".equalsIgnoreCase(action)) {
+                addConcert(request, cart);
                 synchronizeCartCount(session, cart);
                 response.sendRedirect(request.getContextPath() + "/cart?added=true");
                 return;
@@ -82,6 +93,29 @@ public class CartServlet extends HttpServlet {
 
         if (product != null && product.isActive()) {
             cart.addProduct(product, quantity);
+        }
+    }
+
+    private void addConcert(HttpServletRequest request, Cart cart) throws SQLException {
+        int idConcerto = parseInt(request.getParameter("idConcerto"), 0);
+        int quantity = parseInt(request.getParameter("quantity"), 1);
+
+        if (idConcerto <= 0) {
+            return;
+        }
+
+        ConcertoBean concert = concertoDAO.findById(idConcerto);
+
+        if (concert != null && concert.isActive()) {
+            CartItem item = new CartItem();
+            item.setItemType(CartItem.TYPE_CONCERT);
+            item.setIdConcerto(concert.getIdConcerto());
+            item.setItemName(concert.getNome());
+            item.setDescription(concert.getLuogo());
+            item.setUnitPrice(concert.getPrezzo());
+            item.setIva(concert.getIva());
+            item.setQuantity(quantity);
+            cart.addItem(item);
         }
     }
 

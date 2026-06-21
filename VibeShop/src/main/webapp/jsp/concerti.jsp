@@ -1,18 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Locale" %>
 <%@ page import="model.ConcertoBean" %>
-<%@ page import="model.dao.ConcertoDAO" %>
 <%!
     private String h(String value) {
-        if (value == null) return "";
+        if (value == null) {
+            return "";
+        }
         return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#39;");
     }
 %>
 <%
-    List<ConcertoBean> concerts = new ConcertoDAO().findAllActive();
+    Object concertsObject = request.getAttribute("concerts");
+    List<ConcertoBean> concerts;
+
+    if (concertsObject instanceof List) {
+        concerts = (List<ConcertoBean>) concertsObject;
+    } else {
+        concerts = new ArrayList<ConcertoBean>();
+    }
+
     NumberFormat money = NumberFormat.getCurrencyInstance(Locale.ITALY);
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm", Locale.ITALY);
 %>
@@ -33,7 +43,7 @@
     <div class="concerti-hero-inner">
         <span class="concerti-hero-label">Vivi l'atmosfera Live</span>
         <h1>I Concerti<br>più attesi</h1>
-        <p>Trova gli eventi collegati al catalogo VibeShop.</p>
+        <p>Trova gli eventi collegati al catalogo VibeShop e aggiungi i biglietti al carrello.</p>
     </div>
     <div class="concerti-hero-fade"></div>
 </div>
@@ -56,6 +66,12 @@
                             <% if (concert.getDataEvento() != null) { %>
                                 <span class="concerto-card-location"><%= dateFormat.format(concert.getDataEvento()) %></span>
                             <% } %>
+                            <form action="${pageContext.request.contextPath}/cart" method="post">
+                                <input type="hidden" name="action" value="addConcert">
+                                <input type="hidden" name="idConcerto" value="<%= concert.getIdConcerto() %>">
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="btn-acquista">Acquista Biglietto</button>
+                            </form>
                         </div>
                     </div>
                 <% } %>

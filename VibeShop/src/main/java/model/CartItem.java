@@ -6,8 +6,8 @@ import java.math.BigDecimal;
 public class CartItem implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    public static final String TYPE_PRODUCT = "PRODUCT";
-    public static final String TYPE_CONCERT = "CONCERT";
+    public static final String TYPE_PRODUCT = "PRODOTTO";
+    public static final String TYPE_CONCERT = "CONCERTO";
 
     private String itemType;
     private Integer idProdotto;

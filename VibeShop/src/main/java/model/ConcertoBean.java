@@ -10,6 +10,7 @@ public class ConcertoBean {
     private String luogo;
     private Timestamp dataEvento;
     private BigDecimal prezzo;
+    private BigDecimal iva;
     private String descrizione;
     private String immagine;
     private boolean active = true;
@@ -31,6 +32,9 @@ public class ConcertoBean {
 
     public BigDecimal getPrezzo() { return prezzo; }
     public void setPrezzo(BigDecimal prezzo) { this.prezzo = prezzo; }
+
+    public BigDecimal getIva() { return iva; }
+    public void setIva(BigDecimal iva) { this.iva = iva; }
 
     public String getDescrizione() { return descrizione; }
     public void setDescrizione(String descrizione) { this.descrizione = descrizione; }

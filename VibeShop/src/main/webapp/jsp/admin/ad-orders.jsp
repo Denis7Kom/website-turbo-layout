@@ -19,7 +19,14 @@
 %>
 <!DOCTYPE html>
 <html lang="it">
-<head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Gestione Ordini - VibeShop</title><link rel="icon" type="image/svg+xml" href="${pageContext.request.contextPath}/img/logo.svg" /><link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css" /><link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css" /></head>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestione Ordini - VibeShop</title>
+    <link rel="icon" type="image/svg+xml" href="${pageContext.request.contextPath}/img/logo.svg" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css" />
+</head>
 <body>
 <%@ include file="/WEB-INF/fragments/header.jspf" %>
 <%@ include file="/WEB-INF/fragments/nav.jspf" %>
@@ -76,11 +83,12 @@
                                 <th>Totale</th>
                                 <th>Pagamento</th>
                                 <th>Stato</th>
+                                <th>Azioni</th>
                             </tr>
                         </thead>
                         <tbody>
                             <% if (orders.isEmpty()) { %>
-                                <tr><td colspan="6">Nessun ordine trovato.</td></tr>
+                                <tr><td colspan="7">Nessun ordine trovato.</td></tr>
                             <% } else { %>
                                 <% for (OrderBean order : orders) { %>
                                     <tr>
@@ -90,6 +98,17 @@
                                         <td><strong><%= money.format(order.getTotalPrice()) %></strong></td>
                                         <td><%= h(order.getTipoPagamento()) %></td>
                                         <td><span class="badge completed"><%= h(order.getStatoOrdine()) %></span></td>
+                                        <td>
+                                            <form method="post" action="${pageContext.request.contextPath}/admin/orders">
+                                                <input type="hidden" name="idOrdine" value="<%= order.getIdOrdine() %>">
+                                                <select name="statoOrdine">
+                                                    <option value="CONFERMATO">CONFERMATO</option>
+                                                    <option value="IN_ELABORAZIONE">IN_ELABORAZIONE</option>
+                                                    <option value="ANNULLATO">ANNULLATO</option>
+                                                </select>
+                                                <button type="submit" class="btn-table-edit">Aggiorna</button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 <% } %>
                             <% } %>

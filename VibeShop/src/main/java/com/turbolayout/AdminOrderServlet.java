@@ -46,12 +46,12 @@ public class AdminOrderServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         int idOrdine = parseInt(request.getParameter("idOrdine"), 0);
-        String stato = request.getParameter("statoOrdine");
+        String stato = normalizeStatus(request.getParameter("statoOrdine"));
 
-        if (idOrdine > 0 && stato != null && !stato.trim().isEmpty()) {
+        if (idOrdine > 0 && stato != null) {
             try (Connection connection = DataSourceProvider.getConnection();
                  PreparedStatement statement = connection.prepareStatement("UPDATE ordine SET stato_ordine = ? WHERE id_ordine = ?")) {
-                statement.setString(1, stato.trim());
+                statement.setString(1, stato);
                 statement.setInt(2, idOrdine);
                 statement.executeUpdate();
             } catch (SQLException e) {
@@ -59,6 +59,19 @@ public class AdminOrderServlet extends HttpServlet {
             }
         }
         response.sendRedirect(request.getContextPath() + "/admin/orders");
+    }
+
+    private String normalizeStatus(String status) {
+        if (status == null) {
+            return null;
+        }
+
+        String value = status.trim().toUpperCase();
+        if ("CONFERMATO".equals(value) || "IN_ELABORAZIONE".equals(value) || "ANNULLATO".equals(value)) {
+            return value;
+        }
+
+        return null;
     }
 
     private Integer parseNullableInt(String value) {
