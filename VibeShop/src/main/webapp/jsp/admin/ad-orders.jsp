@@ -1,10 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
 <%@ page import="model.OrderBean" %>
+<%!
+    private String h(String value) {
+        if (value == null) {
+            return "";
+        }
+        return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#39;");
+    }
+%>
 <%
     Object ordersObject = request.getAttribute("orders");
     List<OrderBean> orders = ordersObject instanceof List ? (List<OrderBean>) ordersObject : new ArrayList<OrderBean>();
+    NumberFormat money = NumberFormat.getCurrencyInstance(Locale.ITALY);
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -83,9 +94,9 @@
                                         <td><strong>#<%= order.getIdOrdine() %></strong></td>
                                         <td><%= order.getIdUtente() %></td>
                                         <td><%= order.getDataOrdine() %></td>
-                                        <td><strong>€ <%= order.getTotalPrice() %></strong></td>
-                                        <td><%= order.getTipoPagamento() %></td>
-                                        <td><span class="badge completed"><%= order.getStatoOrdine() %></span></td>
+                                        <td><strong><%= money.format(order.getTotalPrice()) %></strong></td>
+                                        <td><%= h(order.getTipoPagamento()) %></td>
+                                        <td><span class="badge completed"><%= h(order.getStatoOrdine()) %></span></td>
                                     </tr>
                                 <% } %>
                             <% } %>
