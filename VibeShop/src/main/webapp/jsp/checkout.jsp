@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
 <%@ page import="model.Cart" %>
 <%
     Object cartObject = request.getAttribute("cart");
@@ -14,6 +16,7 @@
 
     boolean ordineCompletato = Boolean.TRUE.equals(request.getAttribute("orderCompleted"));
     Object orderId = request.getAttribute("orderId");
+    NumberFormat money = NumberFormat.getCurrencyInstance(Locale.ITALY);
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -71,13 +74,13 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn-confirm-pay">Conferma e Paga €<%= cart.getTotalPrice() %></button>
+                <button type="submit" class="btn-confirm-pay">Conferma e Paga <%= money.format(cart.getTotalPrice()) %></button>
             </form>
 
             <div class="cart-summary-section">
                 <div class="summary-card">
                     <h2>Riepilogo Ordine</h2>
-                    <div class="summary-row"><span>Totale Articoli</span><strong>€ <%= cart.getTotalPrice() %></strong></div>
+                    <div class="summary-row"><span>Totale Articoli</span><strong><%= money.format(cart.getTotalPrice()) %></strong></div>
                     <a href="${pageContext.request.contextPath}/cart" class="btn-modifica">Modifica Carrello</a>
                 </div>
             </div>

@@ -6,15 +6,23 @@
 <%@ page import="model.ProductBean" %>
 <%!
     private String h(String value) {
-        if (value == null) return "";
+        if (value == null) {
+            return "";
+        }
         return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#39;");
     }
 %>
 <%
     Object value = request.getAttribute("products");
-    List<ProductBean> products = value instanceof List ? (List<ProductBean>) value : new ArrayList<ProductBean>();
+    List<ProductBean> products;
+
+    if (value instanceof List) {
+        products = (List<ProductBean>) value;
+    } else {
+        products = new ArrayList<ProductBean>();
+    }
+
     NumberFormat money = NumberFormat.getCurrencyInstance(Locale.ITALY);
-    String searchQuery = (String) request.getAttribute("searchQuery");
 %>
 <!DOCTYPE html>
 <html lang="it">
