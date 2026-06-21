@@ -15,8 +15,12 @@
 %>
 <%
     Object concertsObject = request.getAttribute("concerts");
-    List<ConcertoBean> concerts;
+    if (concertsObject == null) {
+        response.sendRedirect(request.getContextPath() + "/concerti");
+        return;
+    }
 
+    List<ConcertoBean> concerts;
     if (concertsObject instanceof List) {
         concerts = (List<ConcertoBean>) concertsObject;
     } else {
@@ -39,46 +43,16 @@
 <body>
 <%@ include file="/WEB-INF/fragments/header.jspf" %>
 <%@ include file="/WEB-INF/fragments/nav.jspf" %>
-<div class="concerti-hero">
-    <div class="concerti-hero-inner">
-        <span class="concerti-hero-label">Vivi l'atmosfera Live</span>
-        <h1>I Concerti<br>più attesi</h1>
-        <p>Trova gli eventi collegati al catalogo VibeShop e aggiungi i biglietti al carrello.</p>
-    </div>
-    <div class="concerti-hero-fade"></div>
-</div>
-<main class="main-content">
-    <section class="section-container">
-        <div class="section-header"><h2>Tutti i concerti</h2></div>
-        <% if (concerts.isEmpty()) { %>
-            <p>Nessun concerto disponibile al momento.</p>
-        <% } else { %>
-            <div class="concerti-grid">
-                <% for (ConcertoBean concert : concerts) { %>
-                    <div class="concerto-card">
-                        <div class="concerto-card-img">
-                            <span class="date-badge"><%= concert.getDataEvento() == null ? "LIVE" : new SimpleDateFormat("dd").format(concert.getDataEvento()) %><br><small><%= concert.getDataEvento() == null ? "" : new SimpleDateFormat("MMM", Locale.ITALY).format(concert.getDataEvento()).toUpperCase() %></small></span>
-                        </div>
-                        <div class="concerto-card-body">
-                            <span class="concerto-card-artista"><%= h(concert.getNome()) %></span>
-                            <span class="concerto-card-location"><%= h(concert.getLuogo()) %></span>
-                            <span class="concerto-card-prezzo">Da <%= money.format(concert.getPrezzo()) %></span>
-                            <% if (concert.getDataEvento() != null) { %>
-                                <span class="concerto-card-location"><%= dateFormat.format(concert.getDataEvento()) %></span>
-                            <% } %>
-                            <form action="${pageContext.request.contextPath}/cart" method="post">
-                                <input type="hidden" name="action" value="addConcert">
-                                <input type="hidden" name="idConcerto" value="<%= concert.getIdConcerto() %>">
-                                <input type="hidden" name="quantity" value="1">
-                                <button type="submit" class="btn-acquista">Acquista Biglietto</button>
-                            </form>
-                        </div>
-                    </div>
-                <% } %>
-            </div>
-        <% } %>
-    </section>
-</main>
+<div class="concerti-hero"><div class="concerti-hero-inner"><span class="concerti-hero-label">Vivi l'atmosfera Live</span><h1>I Concerti<br>più attesi</h1><p>Trova gli eventi collegati al catalogo VibeShop e aggiungi i biglietti al carrello.</p></div><div class="concerti-hero-fade"></div></div>
+<main class="main-content"><section class="section-container"><div class="section-header"><h2>Tutti i concerti</h2></div>
+    <% if (concerts.isEmpty()) { %><p>Nessun concerto disponibile al momento.</p><% } else { %>
+        <div class="concerti-grid">
+            <% for (ConcertoBean concert : concerts) { %>
+                <div class="concerto-card"><div class="concerto-card-img"><span class="date-badge"><%= concert.getDataEvento() == null ? "LIVE" : new SimpleDateFormat("dd").format(concert.getDataEvento()) %><br><small><%= concert.getDataEvento() == null ? "" : new SimpleDateFormat("MMM", Locale.ITALY).format(concert.getDataEvento()).toUpperCase() %></small></span></div><div class="concerto-card-body"><span class="concerto-card-artista"><%= h(concert.getNome()) %></span><span class="concerto-card-location"><%= h(concert.getLuogo()) %></span><span class="concerto-card-prezzo">Da <%= money.format(concert.getPrezzo()) %></span><% if (concert.getDataEvento() != null) { %><span class="concerto-card-location"><%= dateFormat.format(concert.getDataEvento()) %></span><% } %><form action="${pageContext.request.contextPath}/cart" method="post"><input type="hidden" name="action" value="addConcert"><input type="hidden" name="idConcerto" value="<%= concert.getIdConcerto() %>"><input type="hidden" name="quantity" value="1"><button type="submit" class="btn-acquista">Acquista Biglietto</button></form></div></div>
+            <% } %>
+        </div>
+    <% } %>
+</section></main>
 <%@ include file="/WEB-INF/fragments/footer.jspf" %>
 <script src="${pageContext.request.contextPath}/js/menu.js"></script>
 </body>
