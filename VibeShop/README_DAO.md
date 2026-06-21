@@ -103,3 +103,21 @@ VibeShop/db/2026_06_21_bcrypt_passwords.sql
 This migration changes `utente.password_hash` from the legacy SHA-256 size to a bcrypt-compatible `VARCHAR(100)`.
 
 Important: legacy SHA-256 hashes from the original dump cannot be verified by bcrypt. Seed users must be recreated or have their passwords reset through the Java application so new bcrypt hashes are generated.
+
+## Demo account setup after bcrypt migration
+
+Recommended demo flow:
+
+1. Import `VibeShop/db/VIBESHOP.sql`.
+2. Run `VibeShop/db/2026_06_21_bcrypt_passwords.sql`.
+3. Add `mysql-connector-j-8.0.xx.jar` and `jbcrypt-0.4.jar` to `WEB-INF/lib`.
+4. Register a fresh user through `/jsp/register.jsp`; this creates a bcrypt password hash.
+5. To use that user as admin for the demo, run:
+
+```sql
+UPDATE utente
+SET role = 'ADMIN'
+WHERE email = 'replace-with-demo-email@example.com';
+```
+
+Do not reuse the old seeded SHA-256 passwords after enabling bcrypt.
