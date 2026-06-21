@@ -14,50 +14,19 @@
     <%@ include file="/WEB-INF/fragments/header.jspf" %>
     <%@ include file="/WEB-INF/fragments/nav.jspf" %>
 
-
     <main class="main-content">
         <section class="section-container">
             <div class="section-header">
                 <h2>Concerti in evidenza</h2>
-                <a class="tasto_lato" href="${pageContext.request.contextPath}/jsp/concerti.jsp">Vedi tutti</a>
+                <a class="tasto_lato" href="${pageContext.request.contextPath}/concerti">Vedi tutti</a>
             </div>
             <div class="contenitore-card fade-right">
-                <div class="card">
-                    <a href="#">
-                        <div class="card-placeholder"></div>
-                        <span class="card-title">Nome Concerto</span>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="#">
-                        <div class="card-placeholder"></div>
-                        <span class="card-title">Nome Concerto</span>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="#">
-                        <div class="card-placeholder"></div>
-                        <span class="card-title">Nome Concerto</span>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="#">
-                        <div class="card-placeholder"></div>
-                        <span class="card-title">Nome Concerto</span>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="#">
-                        <div class="card-placeholder"></div>
-                        <span class="card-title">Nome Concerto</span>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="#">
-                        <div class="card-placeholder"></div>
-                        <span class="card-title">Nome Concerto</span>
-                    </a>
-                </div>
+                <div class="card"><a href="${pageContext.request.contextPath}/concerti"><div class="card-placeholder"></div><span class="card-title">Eventi live</span></a></div>
+                <div class="card"><a href="${pageContext.request.contextPath}/concerti"><div class="card-placeholder"></div><span class="card-title">Biglietti disponibili</span></a></div>
+                <div class="card"><a href="${pageContext.request.contextPath}/concerti"><div class="card-placeholder"></div><span class="card-title">Prossimi concerti</span></a></div>
+                <div class="card"><a href="${pageContext.request.contextPath}/concerti"><div class="card-placeholder"></div><span class="card-title">Tour ufficiali</span></a></div>
+                <div class="card"><a href="${pageContext.request.contextPath}/concerti"><div class="card-placeholder"></div><span class="card-title">Live experience</span></a></div>
+                <div class="card"><a href="${pageContext.request.contextPath}/concerti"><div class="card-placeholder"></div><span class="card-title">Calendario eventi</span></a></div>
             </div>
         </section>
 
@@ -67,42 +36,12 @@
                 <a class="tasto_lato" href="${pageContext.request.contextPath}/jsp/artisti.jsp">Vedi tutti</a>
             </div>
             <div class="contenitore-card fade-right">
-                <div class="card">
-                    <a href="#">
-                        <div class="card-placeholder"></div>
-                        <span class="card-title">Nome Artista</span>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="#">
-                        <div class="card-placeholder"></div>
-                        <span class="card-title">Nome Artista</span>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="#">
-                        <div class="card-placeholder"></div>
-                        <span class="card-title">Nome Artista</span>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="#">
-                        <div class="card-placeholder"></div>
-                        <span class="card-title">Nome Artista</span>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="#">
-                        <div class="card-placeholder"></div>
-                        <span class="card-title">Nome Artista</span>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="#">
-                        <div class="card-placeholder"></div>
-                        <span class="card-title">Nome Artista</span>
-                    </a>
-                </div>
+                <div class="card"><a href="${pageContext.request.contextPath}/jsp/artisti.jsp"><div class="card-placeholder"></div><span class="card-title">Artisti pop</span></a></div>
+                <div class="card"><a href="${pageContext.request.contextPath}/jsp/artisti.jsp"><div class="card-placeholder"></div><span class="card-title">Artisti rap</span></a></div>
+                <div class="card"><a href="${pageContext.request.contextPath}/jsp/artisti.jsp"><div class="card-placeholder"></div><span class="card-title">Rock & alternative</span></a></div>
+                <div class="card"><a href="${pageContext.request.contextPath}/jsp/artisti.jsp"><div class="card-placeholder"></div><span class="card-title">Artisti italiani</span></a></div>
+                <div class="card"><a href="${pageContext.request.contextPath}/jsp/artisti.jsp"><div class="card-placeholder"></div><span class="card-title">Nuove uscite</span></a></div>
+                <div class="card"><a href="${pageContext.request.contextPath}/jsp/artisti.jsp"><div class="card-placeholder"></div><span class="card-title">In evidenza</span></a></div>
             </div>
         </section>
 
@@ -112,51 +51,18 @@
                 <a class="tasto_lato" href="${pageContext.request.contextPath}/merch">Vedi tutti</a>
             </div>
             <div class="contenitore-card fade-right">
-                <div class="card">
-                    <a href="#">
-                        <div class="card-placeholder"></div>
-                        <span class="card-title">Nome Prodotto</span>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="#">
-                        <div class="card-placeholder"></div>
-                        <span class="card-title">Nome Prodotto</span>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="#">
-                        <div class="card-placeholder"></div>
-                        <span class="card-title">Nome Prodotto</span>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="#">
-                        <div class="card-placeholder"></div>
-                        <span class="card-title">Nome Prodotto</span>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="#">
-                        <div class="card-placeholder"></div>
-                        <span class="card-title">Nome Prodotto</span>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="#">
-                        <div class="card-placeholder"></div>
-                        <span class="card-title">Nome Prodotto</span>
-                    </a>
-                </div>
+                <div class="card"><a href="${pageContext.request.contextPath}/merch"><div class="card-placeholder"></div><span class="card-title">Merch ufficiale</span></a></div>
+                <div class="card"><a href="${pageContext.request.contextPath}/merch"><div class="card-placeholder"></div><span class="card-title">T-shirt</span></a></div>
+                <div class="card"><a href="${pageContext.request.contextPath}/merch"><div class="card-placeholder"></div><span class="card-title">Felpe</span></a></div>
+                <div class="card"><a href="${pageContext.request.contextPath}/merch"><div class="card-placeholder"></div><span class="card-title">Vinili & CD</span></a></div>
+                <div class="card"><a href="${pageContext.request.contextPath}/merch"><div class="card-placeholder"></div><span class="card-title">Accessori</span></a></div>
+                <div class="card"><a href="${pageContext.request.contextPath}/merch"><div class="card-placeholder"></div><span class="card-title">Collezioni</span></a></div>
             </div>
         </section>
     </main>
-    
-
 
     <%@ include file="/WEB-INF/fragments/footer.jspf" %>
-    
-  	<script src="${pageContext.request.contextPath}/js/menu.js"></script>
+    <script src="${pageContext.request.contextPath}/js/menu.js"></script>
 
 </body>
 </html>
