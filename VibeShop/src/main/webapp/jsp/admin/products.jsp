@@ -1,10 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
 <%@ page import="model.ProductBean" %>
+<%!
+    private String h(String value) {
+        if (value == null) {
+            return "";
+        }
+        return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#39;");
+    }
+%>
 <%
     Object data = request.getAttribute("products");
     List<ProductBean> products = data instanceof List ? (List<ProductBean>) data : new ArrayList<ProductBean>();
+    NumberFormat money = NumberFormat.getCurrencyInstance(Locale.ITALY);
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -72,8 +83,8 @@
                             <% } else { %>
                                 <% for (ProductBean product : products) { %>
                                     <tr>
-                                        <td><strong><%= product.getNome() %></strong><br><span><%= product.getDescrizione() == null ? "" : product.getDescrizione() %></span></td>
-                                        <td>€ <%= product.getPrezzo() %></td>
+                                        <td><strong><%= h(product.getNome()) %></strong><br><span><%= h(product.getDescrizione()) %></span></td>
+                                        <td><%= money.format(product.getPrezzo()) %></td>
                                         <td><%= product.getIva() %>%</td>
                                         <td>
                                             <a href="${pageContext.request.contextPath}/admin/product-form?id=<%= product.getIdProdotto() %>" class="btn-table-edit">Modifica</a>
@@ -94,6 +105,5 @@
 </main>
 <%@ include file="/WEB-INF/fragments/footer.jspf" %>
 <script src="${pageContext.request.contextPath}/js/menu.js"></script>
-<script src="${pageContext.request.contextPath}/js/vibeshop-ajax.js"></script>
 </body>
 </html>
