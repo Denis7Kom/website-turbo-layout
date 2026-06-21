@@ -1,9 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
 <%@ page import="model.UserBean" %>
 <%@ page import="model.OrderBean" %>
 <%@ page import="model.OrderItemBean" %>
+<%!
+    private String h(String value) {
+        if (value == null) {
+            return "";
+        }
+        return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#39;");
+    }
+%>
 <%
     Object userObject = session.getAttribute("user");
     UserBean user = userObject instanceof UserBean ? (UserBean) userObject : null;
@@ -13,6 +23,7 @@
 
     String userName = user == null ? "Utente" : user.getNome();
     String initials = userName == null || userName.isEmpty() ? "U" : userName.substring(0, 1).toUpperCase();
+    NumberFormat money = NumberFormat.getCurrencyInstance(Locale.ITALY);
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -33,10 +44,10 @@
     <header class="profile-hero">
         <div class="profile-avatar-box">
             <a href="${pageContext.request.contextPath}/jsp/profile.jsp" class="avatar-link">
-                <div class="avatar-circle"><%= initials %></div>
+                <div class="avatar-circle"><%= h(initials) %></div>
             </a>
             <div class="profile-welcome">
-                <h1>Ciao, <%= userName %></h1>
+                <h1>Ciao, <%= h(userName) %></h1>
                 <p>Cronologia ordini VibeShop</p>
             </div>
         </div>
@@ -71,19 +82,19 @@
                                                 <span class="order-date"><%= order.getDataOrdine() %></span>
                                             </div>
                                             <div class="order-col-center">
-                                                <div class="order-badge-status completed"><%= order.getStatoOrdine() %></div>
+                                                <div class="order-badge-status completed"><%= h(order.getStatoOrdine()) %></div>
                                             </div>
                                             <div class="order-col-right">
-                                                <span class="order-price">€ <%= order.getTotalPrice() %></span>
+                                                <span class="order-price"><%= money.format(order.getTotalPrice()) %></span>
                                             </div>
                                         </div>
                                         <div class="order-row-body">
                                             <div class="expanded-items-container">
                                                 <% for (OrderItemBean item : order.getItems()) { %>
                                                     <div class="expanded-item-line">
-                                                        <span class="item-name"><%= item.getItemName() %></span>
+                                                        <span class="item-name"><%= h(item.getItemName()) %></span>
                                                         <span class="item-qty">x<%= item.getQuantitaProdotto() == null ? item.getQuantitaBiglietti() : item.getQuantitaProdotto() %></span>
-                                                        <span class="item-subprice">€ <%= item.getPrezzoTotale() %></span>
+                                                        <span class="item-subprice"><%= money.format(item.getPrezzoTotale()) %></span>
                                                     </div>
                                                 <% } %>
                                             </div>

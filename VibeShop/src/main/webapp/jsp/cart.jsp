@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
 <%@ page import="model.Cart, model.CartItem" %>
 <%
     Object cartObject = request.getAttribute("cart");
@@ -13,6 +15,7 @@
         session.setAttribute("cart", cart);
     }
 
+    NumberFormat money = NumberFormat.getCurrencyInstance(Locale.ITALY);
     session.setAttribute("cartCount", cart.getTotalQuantity());
 %>
 <!DOCTYPE html>
@@ -59,7 +62,7 @@
                         </div>
 
                         <div class="cart-item-price-block">
-                            <span class="cart-item-price">€ <%= item.getSubtotal() %></span>
+                            <span class="cart-item-price"><%= money.format(item.getSubtotal()) %></span>
                             <form action="${pageContext.request.contextPath}/cart" method="post" style="display:inline;">
                                 <input type="hidden" name="action" value="remove">
                                 <input type="hidden" name="cartKey" value="<%= item.getCartKey() %>">
@@ -81,7 +84,7 @@
 
                 <div class="summary-row">
                     <span>Subtotale Articoli</span>
-                    <span>€ <%= cart.getTotalPrice() %></span>
+                    <span><%= money.format(cart.getTotalPrice()) %></span>
                 </div>
                 <div class="summary-row">
                     <span>Spedizione</span>
@@ -91,8 +94,8 @@
                 <hr class="summary-divider">
 
                 <div class="summary-row total-row">
-                    <span>Totale (IVA incl.)</span>
-                    <span>€ <%= cart.getTotalPrice() %></span>
+                    <span>Totale IVA incl.</span>
+                    <span><%= money.format(cart.getTotalPrice()) %></span>
                 </div>
 
                 <% if (!cart.isEmpty()) { %>

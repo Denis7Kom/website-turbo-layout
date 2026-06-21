@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="model.UserBean" %>
+<%!
+    private String h(String value) {
+        if (value == null) {
+            return "";
+        }
+        return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#39;");
+    }
+%>
 <%
     Object userObject = session.getAttribute("user");
     UserBean user = userObject instanceof UserBean ? (UserBean) userObject : null;
@@ -28,9 +36,9 @@
 
     <header class="profile-hero">
         <div class="profile-avatar-box">
-            <div class="avatar-circle"><%= initials %></div>
+            <div class="avatar-circle"><%= h(initials) %></div>
             <div class="profile-welcome">
-                <h1>Ciao, <%= nome %></h1>
+                <h1>Ciao, <%= h(nome) %></h1>
                 <p>Area personale VibeShop</p>
             </div>
         </div>
@@ -58,15 +66,15 @@
                         <div class="info-grid">
                             <div class="info-field">
                                 <label>Nome Completo</label>
-                                <p><%= nome %> <%= cognome == null ? "" : cognome %></p>
+                                <p><%= h(nome) %> <%= h(cognome) %></p>
                             </div>
                             <div class="info-field">
                                 <label>Email</label>
-                                <p><%= email == null ? "" : email %></p>
+                                <p><%= h(email) %></p>
                             </div>
                             <div class="info-field">
                                 <label>Telefono</label>
-                                <p><%= telefono == null ? "" : telefono %></p>
+                                <p><%= h(telefono) %></p>
                             </div>
                             <div class="info-field">
                                 <label>Metodo di Pagamento</label>
