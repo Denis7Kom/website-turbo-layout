@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
 @WebServlet({"/home", "/homepage"})
@@ -36,9 +37,15 @@ public class HomeServlet extends HttpServlet {
             request.setAttribute("featuredConcerts", concerts);
             request.setAttribute("featuredArtists", artists);
             request.setAttribute("featuredProducts", products);
-            request.getRequestDispatcher("/homepage.jsp").forward(request, response);
         } catch (SQLException e) {
-            throw new ServletException("Database error while loading homepage", e);
+            // The homepage must remain reachable even if the database is not configured yet.
+            // In that case the JSP renders proper empty states instead of breaking the whole site.
+            request.setAttribute("featuredConcerts", Collections.<ConcertoBean>emptyList());
+            request.setAttribute("featuredArtists", Collections.<ArtistBean>emptyList());
+            request.setAttribute("featuredProducts", Collections.<ProductBean>emptyList());
+            request.setAttribute("databaseWarning", "Database non disponibile: contenuti dinamici temporaneamente vuoti.");
         }
+
+        request.getRequestDispatcher("/homepage.jsp").forward(request, response);
     }
 }
