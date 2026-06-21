@@ -40,7 +40,7 @@
     <div class="admin-content-grid">
         <aside class="admin-sidebar">
             <nav class="sidebar-nav">
-                <a href="${pageContext.request.contextPath}/jsp/admin/dashboard.jsp">Panoramica</a>
+                <a href="${pageContext.request.contextPath}/admin/dashboard">Panoramica</a>
                 <a href="${pageContext.request.contextPath}/admin/orders">Gestione Ordini</a>
                 <a href="${pageContext.request.contextPath}/admin/products" class="active">Gestione Prodotti</a>
                 <a href="${pageContext.request.contextPath}/logout" class="logout-link">Disconnetti</a>

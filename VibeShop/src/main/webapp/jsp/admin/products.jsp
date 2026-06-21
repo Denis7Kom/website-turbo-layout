@@ -49,7 +49,7 @@
     <div class="admin-content-grid">
         <aside class="admin-sidebar">
             <nav class="sidebar-nav">
-                <a href="${pageContext.request.contextPath}/jsp/admin/dashboard.jsp">Panoramica</a>
+                <a href="${pageContext.request.contextPath}/admin/dashboard">Panoramica</a>
                 <a href="${pageContext.request.contextPath}/admin/orders">Gestione Ordini</a>
                 <a href="${pageContext.request.contextPath}/admin/products" class="active">Gestione Prodotti</a>
                 <a href="${pageContext.request.contextPath}/logout" class="logout-link">Disconnetti</a>
@@ -70,12 +70,7 @@
                 <div class="table-responsive">
                     <table class="admin-table" id="adminProductsTable">
                         <thead>
-                            <tr>
-                                <th>Prodotto</th>
-                                <th>Prezzo</th>
-                                <th>IVA</th>
-                                <th>Azioni</th>
-                            </tr>
+                            <tr><th>Prodotto</th><th>Prezzo</th><th>IVA</th><th>Azioni</th></tr>
                         </thead>
                         <tbody>
                             <% if (products.isEmpty()) { %>
@@ -105,5 +100,6 @@
 </main>
 <%@ include file="/WEB-INF/fragments/footer.jspf" %>
 <script src="${pageContext.request.contextPath}/js/menu.js"></script>
+<script src="${pageContext.request.contextPath}/js/vibeshop-ajax.js"></script>
 </body>
 </html>

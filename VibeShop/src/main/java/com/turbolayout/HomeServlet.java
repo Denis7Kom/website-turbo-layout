@@ -1,0 +1,44 @@
+package com.turbolayout;
+
+import model.ArtistBean;
+import model.ConcertoBean;
+import model.ProductBean;
+import model.dao.ArtistDAO;
+import model.dao.ConcertoDAO;
+import model.dao.ProductDAO;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
+@WebServlet({"/home", "/homepage"})
+public class HomeServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    private final ProductDAO productDAO = new ProductDAO();
+    private final ConcertoDAO concertoDAO = new ConcertoDAO();
+    private final ArtistDAO artistDAO = new ArtistDAO();
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            List<ConcertoBean> concerts = concertoDAO.findAllActive();
+            List<ArtistBean> artists = artistDAO.findFeatured(6);
+            List<ProductBean> products = productDAO.findAllActive();
+
+            request.setAttribute("featuredConcerts", concerts);
+            request.setAttribute("featuredArtists", artists);
+            request.setAttribute("featuredProducts", products);
+            request.getRequestDispatcher("/homepage.jsp").forward(request, response);
+        } catch (SQLException e) {
+            throw new ServletException("Database error while loading homepage", e);
+        }
+    }
+}
