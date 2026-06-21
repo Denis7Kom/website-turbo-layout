@@ -12,6 +12,7 @@
     Object productObject = request.getAttribute("product");
     ProductBean product = productObject instanceof ProductBean ? (ProductBean) productObject : null;
     boolean editing = product != null;
+    String formError = (String) request.getAttribute("error");
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -54,7 +55,13 @@
                     <a href="${pageContext.request.contextPath}/admin/products" class="btn-cancel-link">Annulla</a>
                 </div>
 
-                <form action="${pageContext.request.contextPath}/admin/products/save" method="post" class="vibe-admin-form">
+                <% if (formError != null && !formError.trim().isEmpty()) { %>
+                    <div class="admin-form-error">
+                        <strong>Errore:</strong> <%= h(formError) %>
+                    </div>
+                <% } %>
+
+                <form action="${pageContext.request.contextPath}/admin/products/save" method="post" class="vibe-admin-form" novalidate>
                     <input type="hidden" name="idProdotto" value="<%= editing ? product.getIdProdotto() : 0 %>">
 
                     <div class="form-row">
