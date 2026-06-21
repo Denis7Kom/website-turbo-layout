@@ -23,9 +23,13 @@ public class SearchServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json");
 
         String query = request.getParameter("q");
+        boolean ajax = true;
+        if (query == null) {
+            query = request.getParameter("ricerca");
+            ajax = false;
+        }
         if (query == null) {
             query = "";
         }
@@ -33,15 +37,22 @@ public class SearchServlet extends HttpServlet {
 
         try {
             List<ProductBean> products = query.length() < 2 ? Collections.<ProductBean>emptyList() : productDAO.searchActiveByName(query);
+
+            if (!ajax) {
+                request.setAttribute("products", products);
+                request.setAttribute("searchQuery", query);
+                request.getRequestDispatcher("/jsp/merch.jsp").forward(request, response);
+                return;
+            }
+
+            response.setContentType("application/json");
             StringBuilder out = new StringBuilder("[");
             for (int i = 0; i < products.size(); i++) {
                 ProductBean p = products.get(i);
-                if (i > 0) {
-                    out.append(',');
-                }
+                if (i > 0) out.append(',');
                 out.append('{');
                 out.append("\"id\":").append(p.getIdProdotto()).append(',');
-                out.append("\"name\":\"").append(p.getNome()).append("\",");
+                out.append("\"name\":\"").append(escape(p.getNome())).append("\",");
                 out.append("\"price\":\"").append(p.getPrezzo()).append("\"");
                 out.append('}');
             }
@@ -50,5 +61,10 @@ public class SearchServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new ServletException("Database error while searching products", e);
         }
+    }
+
+    private String escape(String value) {
+        if (value == null) return "";
+        return value.replace("\\", "\\\\").replace("\"", "\\\"");
     }
 }
