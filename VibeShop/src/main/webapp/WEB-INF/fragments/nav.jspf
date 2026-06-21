@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <nav id="nav-menu" class="nav-left">
     <a href="${pageContext.request.contextPath}/concerti">Concerti</a>
-    <a href="${pageContext.request.contextPath}/jsp/artisti.jsp">Artisti</a>
+    <a href="${pageContext.request.contextPath}/artisti">Artisti</a>
     <a href="${pageContext.request.contextPath}/merch">Merch</a>
 </nav>
