@@ -1,6 +1,6 @@
 [Template_System_Architecture.pdf](https://github.com/user-attachments/files/27531038/Template_System_Architecture.pdf)
 
-*I file Sito WEB(Gruppo), logo.svg, tickets_var2.svg e ...-preview.html sono stati lasciati solo a titolo di riferimento.
+*I file README_DAO.MD e ...-preview.html sono stati lasciati solo a titolo di riferimento.
 
 # VibeShop — Turbo Layout
 
