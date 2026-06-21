@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Locale" %>
 <%@ page import="model.ConcertoBean" %>
-<%@ page import="model.dao.ConcertoDAO" %>
 <%!
     private String h(String value) {
         if (value == null) {
@@ -14,7 +14,15 @@
     }
 %>
 <%
-    List<ConcertoBean> concerts = new ConcertoDAO().findAllActive();
+    Object concertsObject = request.getAttribute("concerts");
+    List<ConcertoBean> concerts;
+
+    if (concertsObject instanceof List) {
+        concerts = (List<ConcertoBean>) concertsObject;
+    } else {
+        concerts = new ArrayList<ConcertoBean>();
+    }
+
     NumberFormat money = NumberFormat.getCurrencyInstance(Locale.ITALY);
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm", Locale.ITALY);
 %>
