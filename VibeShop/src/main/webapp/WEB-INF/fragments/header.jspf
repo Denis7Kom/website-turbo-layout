@@ -23,7 +23,7 @@
 
     <% if (!hideNavElements) { %>
     <nav class="navbar">
-        <form method="get" action="${pageContext.request.contextPath}/Ricerca" class="search-form">
+        <form method="get" action="${pageContext.request.contextPath}/search" class="search-form">
             <div class="search-container">
                 <input type="text" name="ricerca" placeholder="Cerca..." required />
                 <button type="submit" class="search-btn" aria-label="Cerca">Cerca</button>
@@ -35,7 +35,7 @@
     <div class="header-actions">
         <div class="right">
             <% if (utente != null) { %>
-                <a href="${pageContext.request.contextPath}/jsp/profilo.jsp" class="login"><%= utente %></a>
+                <a href="${pageContext.request.contextPath}/jsp/profile.jsp" class="login"><%= utente %></a>
             <% } else if (isLoginPage) { %>
                 <a href="${pageContext.request.contextPath}/jsp/register.jsp" class="login">Registrati</a>
             <% } else if (isRegisterPage) { %>
