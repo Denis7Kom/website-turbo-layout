@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(urlPatterns = {"/admin/products", "/admin/product-form", "/admin/products/save", "/admin/products/delete"})
+@WebServlet(urlPatterns = {"/admin/products", "/admin/product-form", "/admin/products/save", "/admin/products/delete", "/AdminProductServlet"})
 public class AdminProductServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private final ProductDAO productDAO = new ProductDAO();
