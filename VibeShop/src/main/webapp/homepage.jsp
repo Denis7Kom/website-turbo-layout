@@ -32,7 +32,7 @@
     List<ProductBean> products = productsObject instanceof List ? (List<ProductBean>) productsObject : new ArrayList<ProductBean>();
 
     NumberFormat money = NumberFormat.getCurrencyInstance(Locale.ITALY);
-    SimpleDateFormat dayFormat = new SimpleDateFormat("dd MMM", Locale.ITALY);
+    SimpleDateFormat dayFormat = new SimpleDateFormat("dd MMM yyyy", Locale.ITALY);
 %>
 <!doctype html>
 <html lang="it">
@@ -49,23 +49,119 @@
     <%@ include file="/WEB-INF/fragments/nav.jspf" %>
 
     <main class="main-content">
-        <section class="section-container"><div class="section-header"><h2>Concerti in evidenza</h2><a class="tasto_lato" href="${pageContext.request.contextPath}/concerti">Vedi tutti</a></div><div class="contenitore-card fade-right">
-            <% if (concerts.isEmpty()) { %><div class="card"><a href="${pageContext.request.contextPath}/concerti"><div class="card-placeholder"></div><span class="card-title">Nessun concerto disponibile</span></a></div><% } else { %>
-                <% for (int i = 0; i < concerts.size() && i < 6; i++) { ConcertoBean concert = concerts.get(i); %><div class="card"><a href="${pageContext.request.contextPath}/concerti"><div class="card-placeholder"></div><span class="card-title"><%= h(concert.getNome()) %></span><% if (concert.getDataEvento() != null) { %><span class="card-title"><%= dayFormat.format(concert.getDataEvento()) %></span><% } %></a></div><% } %>
-            <% } %>
-        </div></section>
+        <section class="section-container">
+            <div class="section-header">
+                <h2>Concerti in evidenza</h2>
+                <a class="tasto_lato" href="${pageContext.request.contextPath}/concerti">Vedi tutti</a>
+            </div>
+            <div class="contenitore-card fade-right">
+                <% if (concerts.isEmpty()) { %>
+                    <div class="card empty-card">
+                        <a href="${pageContext.request.contextPath}/concerti">
+                            <div class="card-content">
+                                <span class="card-label">Concerti</span>
+                                <span class="card-title">Nessun concerto disponibile</span>
+                                <span class="card-meta">Il calendario eventi verrà aggiornato a breve.</span>
+                            </div>
+                        </a>
+                    </div>
+                <% } else { %>
+                    <% for (int i = 0; i < concerts.size() && i < 6; i++) { ConcertoBean concert = concerts.get(i); %>
+                        <div class="card">
+                            <a href="${pageContext.request.contextPath}/concerti">
+                                <div class="card-content">
+                                    <span class="card-label">Concerto</span>
+                                    <span class="card-title"><%= h(concert.getNome()) %></span>
+                                    <% if (concert.getLuogo() != null && !concert.getLuogo().trim().isEmpty()) { %>
+                                        <span class="card-meta"><%= h(concert.getLuogo()) %></span>
+                                    <% } %>
+                                    <% if (concert.getDataEvento() != null) { %>
+                                        <span class="card-meta"><%= dayFormat.format(concert.getDataEvento()) %></span>
+                                    <% } %>
+                                    <% if (concert.getPrezzo() != null) { %>
+                                        <span class="card-price"><%= money.format(concert.getPrezzo()) %></span>
+                                    <% } %>
+                                </div>
+                            </a>
+                        </div>
+                    <% } %>
+                <% } %>
+            </div>
+        </section>
 
-        <section class="section-container"><div class="section-header"><h2>Artisti da scoprire</h2><a class="tasto_lato" href="${pageContext.request.contextPath}/artisti">Vedi tutti</a></div><div class="contenitore-card fade-right">
-            <% if (artists.isEmpty()) { %><div class="card"><a href="${pageContext.request.contextPath}/artisti"><div class="card-placeholder"></div><span class="card-title">Nessun artista disponibile</span></a></div><% } else { %>
-                <% for (int i = 0; i < artists.size() && i < 6; i++) { ArtistBean artist = artists.get(i); %><div class="card"><a href="${pageContext.request.contextPath}/artisti"><div class="card-placeholder"></div><span class="card-title"><%= h(artist.getNomeArte()) %></span><span class="card-title"><%= h(artist.getGenere()) %></span></a></div><% } %>
-            <% } %>
-        </div></section>
+        <section class="section-container">
+            <div class="section-header">
+                <h2>Artisti da scoprire</h2>
+                <a class="tasto_lato" href="${pageContext.request.contextPath}/artisti">Vedi tutti</a>
+            </div>
+            <div class="contenitore-card fade-right">
+                <% if (artists.isEmpty()) { %>
+                    <div class="card empty-card">
+                        <a href="${pageContext.request.contextPath}/artisti">
+                            <div class="card-content">
+                                <span class="card-label">Artisti</span>
+                                <span class="card-title">Nessun artista disponibile</span>
+                                <span class="card-meta">Aggiungi artisti dal database per mostrarli qui.</span>
+                            </div>
+                        </a>
+                    </div>
+                <% } else { %>
+                    <% for (int i = 0; i < artists.size() && i < 6; i++) { ArtistBean artist = artists.get(i); %>
+                        <div class="card">
+                            <a href="${pageContext.request.contextPath}/artisti">
+                                <div class="card-content">
+                                    <span class="card-label">Artista</span>
+                                    <span class="card-title"><%= h(artist.getNomeArte()) %></span>
+                                    <% if (artist.getGenere() != null && !artist.getGenere().trim().isEmpty()) { %>
+                                        <span class="card-meta"><%= h(artist.getGenere()) %></span>
+                                    <% } %>
+                                    <% if (artist.getPaese() != null && !artist.getPaese().trim().isEmpty()) { %>
+                                        <span class="card-meta"><%= h(artist.getPaese()) %></span>
+                                    <% } %>
+                                </div>
+                            </a>
+                        </div>
+                    <% } %>
+                <% } %>
+            </div>
+        </section>
 
-        <section class="section-container"><div class="section-header"><h2>Shop & Collezioni</h2><a class="tasto_lato" href="${pageContext.request.contextPath}/merch">Vedi tutti</a></div><div class="contenitore-card fade-right">
-            <% if (products.isEmpty()) { %><div class="card"><a href="${pageContext.request.contextPath}/merch"><div class="card-placeholder"></div><span class="card-title">Nessun prodotto disponibile</span></a></div><% } else { %>
-                <% for (int i = 0; i < products.size() && i < 6; i++) { ProductBean product = products.get(i); %><div class="card"><a href="${pageContext.request.contextPath}/merch"><div class="card-placeholder"></div><span class="card-title"><%= h(product.getNome()) %></span><span class="card-title"><%= product.getPrezzo() == null ? "" : money.format(product.getPrezzo()) %></span></a></div><% } %>
-            <% } %>
-        </div></section>
+        <section class="section-container">
+            <div class="section-header">
+                <h2>Shop & Collezioni</h2>
+                <a class="tasto_lato" href="${pageContext.request.contextPath}/merch">Vedi tutti</a>
+            </div>
+            <div class="contenitore-card fade-right">
+                <% if (products.isEmpty()) { %>
+                    <div class="card empty-card">
+                        <a href="${pageContext.request.contextPath}/merch">
+                            <div class="card-content">
+                                <span class="card-label">Merch</span>
+                                <span class="card-title">Nessun prodotto disponibile</span>
+                                <span class="card-meta">Il catalogo merch è temporaneamente vuoto.</span>
+                            </div>
+                        </a>
+                    </div>
+                <% } else { %>
+                    <% for (int i = 0; i < products.size() && i < 6; i++) { ProductBean product = products.get(i); %>
+                        <div class="card">
+                            <a href="${pageContext.request.contextPath}/merch">
+                                <div class="card-content">
+                                    <span class="card-label">Merch</span>
+                                    <span class="card-title"><%= h(product.getNome()) %></span>
+                                    <% if (product.getDescrizione() != null && !product.getDescrizione().trim().isEmpty()) { %>
+                                        <span class="card-meta"><%= h(product.getDescrizione()) %></span>
+                                    <% } %>
+                                    <% if (product.getPrezzo() != null) { %>
+                                        <span class="card-price"><%= money.format(product.getPrezzo()) %></span>
+                                    <% } %>
+                                </div>
+                            </a>
+                        </div>
+                    <% } %>
+                <% } %>
+            </div>
+        </section>
     </main>
 
     <%@ include file="/WEB-INF/fragments/footer.jspf" %>

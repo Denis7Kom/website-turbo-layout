@@ -16,6 +16,7 @@
 
     boolean ordineCompletato = Boolean.TRUE.equals(request.getAttribute("orderCompleted"));
     Object orderId = request.getAttribute("orderId");
+    String checkoutError = (String) request.getAttribute("error");
     NumberFormat money = NumberFormat.getCurrencyInstance(Locale.ITALY);
 %>
 <!DOCTYPE html>
@@ -51,26 +52,32 @@
             <a href="${pageContext.request.contextPath}/merch" class="btn-back-home">Vai al Merch</a>
         </div>
     <% } else { %>
+        <% if (checkoutError != null && !checkoutError.trim().isEmpty()) { %>
+            <div class="checkout-error">
+                <strong>Errore:</strong> <%= checkoutError %>
+            </div>
+        <% } %>
+
         <div class="checkout-grid">
-            <form method="post" action="${pageContext.request.contextPath}/checkout" class="checkout-form">
+            <form method="post" action="${pageContext.request.contextPath}/checkout" class="checkout-form" novalidate>
                 <div class="checkout-card">
                     <h3>Indirizzo di Spedizione</h3>
                     <input type="text" name="nome" placeholder="Nome e Cognome" required class="input-field">
                     <input type="text" name="indirizzo" placeholder="Via e numero civico" required class="input-field">
                     <div class="row-fields">
                         <input type="text" name="citta" placeholder="Città" required class="input-field">
-                        <input type="text" name="cap" placeholder="CAP" required class="input-field">
+                        <input type="text" name="cap" placeholder="CAP" required maxlength="5" class="input-field">
                     </div>
                 </div>
 
                 <div class="checkout-card">
                     <h3>Dati di Pagamento</h3>
                     <input type="hidden" name="tipoPagamento" value="Carta">
-                    <input type="text" placeholder="Nome intestatario" required class="input-field">
-                    <input type="text" placeholder="Numero Carta (16 cifre)" required maxlength="16" class="input-field">
+                    <input type="text" name="cardHolder" placeholder="Nome intestatario" required class="input-field">
+                    <input type="text" name="cardNumber" placeholder="Numero Carta (16 cifre)" required maxlength="16" class="input-field">
                     <div class="row-fields">
-                        <input type="text" placeholder="MM/YY" required maxlength="5" class="input-field">
-                        <input type="password" placeholder="CVV" required maxlength="3" class="input-field">
+                        <input type="text" name="expiry" placeholder="MM/YY" required maxlength="5" class="input-field">
+                        <input type="password" name="cvv" placeholder="CVV" required maxlength="3" class="input-field">
                     </div>
                 </div>
 

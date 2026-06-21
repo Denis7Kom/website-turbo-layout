@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +57,14 @@ public class CheckoutServlet extends HttpServlet {
             return;
         }
 
+        String validationError = validateCheckout(request);
+        if (validationError != null) {
+            request.setAttribute("error", validationError);
+            request.setAttribute("cart", cart);
+            request.getRequestDispatcher("/jsp/checkout.jsp").forward(request, response);
+            return;
+        }
+
         try {
             OrderBean order = buildOrder(request, user, cart);
             int orderId = orderDAO.createOrder(order);
@@ -70,6 +79,58 @@ public class CheckoutServlet extends HttpServlet {
 
         } catch (SQLException e) {
             throw new ServletException("Database error while creating order", e);
+        }
+    }
+
+    private String validateCheckout(HttpServletRequest request) {
+        String nome = trim(request.getParameter("nome"));
+        String indirizzo = trim(request.getParameter("indirizzo"));
+        String citta = trim(request.getParameter("citta"));
+        String cap = trim(request.getParameter("cap"));
+        String cardHolder = trim(request.getParameter("cardHolder"));
+        String cardNumber = trim(request.getParameter("cardNumber"));
+        String expiry = trim(request.getParameter("expiry"));
+        String cvv = trim(request.getParameter("cvv"));
+
+        if (isEmpty(nome) || isEmpty(indirizzo) || isEmpty(citta) || isEmpty(cap)) {
+            return "Compila tutti i campi dell'indirizzo di spedizione.";
+        }
+
+        if (!cap.matches("\\d{5}")) {
+            return "Il CAP deve contenere esattamente 5 cifre.";
+        }
+
+        if (isEmpty(cardHolder) || isEmpty(cardNumber) || isEmpty(expiry) || isEmpty(cvv)) {
+            return "Compila tutti i campi di pagamento.";
+        }
+
+        if (!cardNumber.matches("\\d{16}")) {
+            return "Il numero carta deve contenere esattamente 16 cifre.";
+        }
+
+        if (!cvv.matches("\\d{3}")) {
+            return "Il CVV deve contenere esattamente 3 cifre.";
+        }
+
+        if (!isValidExpiry(expiry)) {
+            return "La scadenza della carta non è valida o è già passata.";
+        }
+
+        return null;
+    }
+
+    private boolean isValidExpiry(String expiry) {
+        if (expiry == null || !expiry.matches("(0[1-9]|1[0-2])/[0-9]{2}")) {
+            return false;
+        }
+
+        try {
+            int month = Integer.parseInt(expiry.substring(0, 2));
+            int year = 2000 + Integer.parseInt(expiry.substring(3, 5));
+            YearMonth expiryMonth = YearMonth.of(year, month);
+            return !expiryMonth.isBefore(YearMonth.now());
+        } catch (RuntimeException e) {
+            return false;
         }
     }
 
@@ -159,5 +220,9 @@ public class CheckoutServlet extends HttpServlet {
 
     private String trim(String value) {
         return value == null ? null : value.trim();
+    }
+
+    private boolean isEmpty(String value) {
+        return value == null || value.trim().isEmpty();
     }
 }

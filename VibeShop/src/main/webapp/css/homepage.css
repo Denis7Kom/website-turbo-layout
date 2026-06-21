@@ -10,9 +10,11 @@
 :root {
     --system-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     --text-main: #1E1E1E;
+    --text-muted: #7A7A7A;
     --accent-purple: #6A5ACD;
     --accent-pink: #FF8FBF;
     --bg-light: #F7F7FA;
+    --border: #E5E5E5;
 }
 
 body {
@@ -23,8 +25,8 @@ body {
 }
 
 h1, h2, h3 {
-    font-weight: 700; 
-    letter-spacing: -0.5px; 
+    font-weight: 700;
+    letter-spacing: -0.5px;
 }
 
 .section-header {
@@ -34,41 +36,34 @@ h1, h2, h3 {
     margin-bottom: 20px;
 }
 
-/* Main e Card */
 .main-content {
     min-height: calc(100vh - 80px - 90px);
-    max-width: 95%; 
+    max-width: 95%;
     margin: 0 auto;
-    padding: 40px 30px; 
+    padding: 40px 30px;
 }
 
 .main-content h2 {
     font-size: 32px;
     color: var(--text-main);
-    margin-bottom: 10px; 
-    text-align: left; 
-    letter-spacing: -0.5px; 
-}
-
-main h2 {
-    font-size: 32px;
-    color: var(--text-main);
-    margin-bottom: 30px;
-    text-align: left; 
+    margin-bottom: 10px;
+    text-align: left;
     letter-spacing: -0.5px;
 }
 
-/*----------------------*/
+.section-container {
+    margin-bottom: 42px;
+}
 
 .contenitore-card {
-    display: flex;            
-    flex-wrap: nowrap;       
-    overflow-x: auto;         
-    overflow-y: hidden;      
-    gap: 30px;                
-    padding-bottom: 20px;     
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 30px;
+    padding-bottom: 20px;
     width: 100%;
-    position: relative; 
+    position: relative;
 }
 
 .contenitore-card::-webkit-scrollbar {
@@ -89,43 +84,24 @@ main h2 {
     background: linear-gradient(to right, transparent, var(--bg-light));
     pointer-events: none;
     transition: opacity 0.3s ease;
-    opacity: 1; 
+    opacity: 1;
 }
-
 
 .fade-right.scrolled-end::after {
     opacity: 0;
 }
 
-
-.card-title {
-    padding: 20px;          
-    font-size: 18px;        
-    font-weight: 700;       
-    color: var(--text-main);
-    text-align: left;       
-    margin-top: auto;
-}
-
-.card-placeholder {
-    width: 100%;
-    height: 78%;            
-    background: #E5E5E5;
-    flex-shrink: 0;
-}
-   
-
-
 .card {
-    flex: 0 0 250px;          
-    height: 400px;
+    flex: 0 0 250px;
+    min-height: 260px;
     background: #FFFFFF;
+    border: 1px solid var(--border);
     border-radius: 24px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
 }
 
 .card:hover {
@@ -141,30 +117,98 @@ main h2 {
     height: 100%;
 }
 
+.card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 260px;
+    height: 100%;
+    padding: 24px;
+    background: linear-gradient(135deg, rgba(106, 90, 205, 0.10), rgba(255, 143, 191, 0.12));
+}
+
+.card-label {
+    align-self: flex-start;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: rgba(106, 90, 205, 0.12);
+    color: var(--accent-purple);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.card-title {
+    font-size: 20px;
+    line-height: 1.2;
+    font-weight: 800;
+    color: var(--text-main);
+    text-align: left;
+    margin-top: 6px;
+}
+
+.card-meta {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.35;
+}
+
+.card-price {
+    margin-top: auto;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--accent-purple);
+}
+
+.empty-card .card-content {
+    background: #FFFFFF;
+}
+
 .tasto_lato {
     text-decoration: none;
     color: var(--accent-purple);
     font-weight: 600;
     font-size: 15px;
-    padding: 8px 16px;           
-    border-radius: 12px;         
-    background-color: rgba(106, 90, 205, 0.08); 
+    padding: 8px 16px;
+    border-radius: 12px;
+    background-color: rgba(106, 90, 205, 0.08);
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
 }
 
 .tasto_lato:hover {
-    background-color: rgba(106, 90, 205, 0.15); 
+    background-color: rgba(106, 90, 205, 0.15);
     transform: translateY(-1px);
 }
 
 .tasto_lato::after {
-    content: " →"; 
+    content: " →";
     margin-left: 5px;
     transition: transform 0.2s;
 }
 
 .tasto_lato:hover::after {
-    transform: translateX(3px); 
+    transform: translateX(3px);
+}
+
+@media (max-width: 768px) {
+    .section-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .main-content {
+        padding: 28px 18px;
+    }
+
+    .main-content h2 {
+        font-size: 26px;
+    }
+
+    .card {
+        flex-basis: 230px;
+    }
 }

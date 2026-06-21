@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -26,6 +27,12 @@ public class AdminDashboardServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session == null || !"ADMIN".equals(session.getAttribute("role"))) {
+            response.sendRedirect(request.getContextPath() + "/jsp/login.jsp?auth=required");
+            return;
+        }
+
         try {
             List<OrderBean> orders = orderDAO.findAll();
             List<ProductBean> products = productDAO.findAllActive();
