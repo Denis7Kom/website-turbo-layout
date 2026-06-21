@@ -1,7 +1,5 @@
 [Template_System_Architecture.pdf](https://github.com/user-attachments/files/27531038/Template_System_Architecture.pdf)
 
-*I file README_DAO.MD e ...-preview.html sono stati lasciati solo a titolo di riferimento.
-
 # VibeShop — Turbo Layout
 
 **VibeShop** è un progetto web sviluppato dal gruppo **Turbo Layout** per il corso di **Tecnologie Software per il Web** presso l'Università degli Studi di Salerno.
