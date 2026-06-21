@@ -1,6 +1,7 @@
 package model.dao;
 
 import model.UserBean;
+import util.PasswordUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,27 +43,24 @@ public class UserDAO {
     }
 
     public UserBean findByEmailAndPassword(String email, String plainPassword) throws SQLException {
-        String sql = "SELECT id_utente, nome, cognome, email, role, cellulare, password_hash "
-                + "FROM utente WHERE email = ? AND password_hash = SHA2(?, 256)";
+        UserBean user = findByEmail(email);
 
-        try (Connection con = DataSourceProvider.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-
-            ps.setString(1, email);
-            ps.setString(2, plainPassword);
-
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return mapUser(rs);
-                }
-                return null;
-            }
+        if (user == null) {
+            return null;
         }
+
+        if (!PasswordUtils.verifyPassword(plainPassword, user.getPasswordHash())) {
+            return null;
+        }
+
+        return user;
     }
 
     public void create(UserBean user, String plainPassword) throws SQLException {
         String sql = "INSERT INTO utente (nome, cognome, email, role, cellulare, password_hash) "
-                + "VALUES (?, ?, ?, 'CLIENTE', ?, SHA2(?, 256))";
+                + "VALUES (?, ?, ?, 'CLIENTE', ?, ?)";
+
+        String passwordHash = PasswordUtils.hashPassword(plainPassword);
 
         try (Connection con = DataSourceProvider.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -71,7 +69,7 @@ public class UserDAO {
             ps.setString(2, user.getCognome());
             ps.setString(3, user.getEmail());
             ps.setString(4, user.getCellulare());
-            ps.setString(5, plainPassword);
+            ps.setString(5, passwordHash);
 
             ps.executeUpdate();
         }
@@ -93,12 +91,14 @@ public class UserDAO {
     }
 
     public void updatePassword(int idUtente, String newPlainPassword) throws SQLException {
-        String sql = "UPDATE utente SET password_hash = SHA2(?, 256) WHERE id_utente = ?";
+        String sql = "UPDATE utente SET password_hash = ? WHERE id_utente = ?";
+
+        String passwordHash = PasswordUtils.hashPassword(newPlainPassword);
 
         try (Connection con = DataSourceProvider.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setString(1, newPlainPassword);
+            ps.setString(1, passwordHash);
             ps.setInt(2, idUtente);
 
             ps.executeUpdate();
