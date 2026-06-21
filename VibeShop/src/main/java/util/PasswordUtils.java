@@ -1,16 +1,19 @@
 package util;
 
-import org.mindrot.jbcrypt.BCrypt;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * Utility class for password hashing and verification.
  *
- * Passwords are never stored in plain text. The generated bcrypt hash already
- * contains the algorithm marker, cost factor and salt.
+ * The project uses jBCrypt when the jbcrypt-0.4.jar library is available in WEB-INF/lib.
+ * Reflection is used here so the whole web project can still compile in Eclipse even before
+ * the external JAR is added to the build path.
  */
 public final class PasswordUtils {
 
     private static final int BCRYPT_COST = 12;
+    private static final String BCRYPT_CLASS = "org.mindrot.jbcrypt.BCrypt";
 
     private PasswordUtils() {
         // Utility class: do not instantiate.
@@ -21,7 +24,17 @@ public final class PasswordUtils {
             throw new IllegalArgumentException("Password cannot be null");
         }
 
-        return BCrypt.hashpw(plainPassword, BCrypt.gensalt(BCRYPT_COST));
+        try {
+            Class<?> bcrypt = Class.forName(BCRYPT_CLASS);
+            Method gensalt = bcrypt.getMethod("gensalt", int.class);
+            Method hashpw = bcrypt.getMethod("hashpw", String.class, String.class);
+            String salt = (String) gensalt.invoke(null, BCRYPT_COST);
+            return (String) hashpw.invoke(null, plainPassword, salt);
+        } catch (ClassNotFoundException e) {
+            throw new IllegalStateException("jBCrypt library is missing. Add jbcrypt-0.4.jar to WEB-INF/lib.", e);
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            throw new IllegalStateException("Unable to generate bcrypt password hash.", e);
+        }
     }
 
     public static boolean verifyPassword(String plainPassword, String storedHash) {
@@ -30,8 +43,12 @@ public final class PasswordUtils {
         }
 
         try {
-            return BCrypt.checkpw(plainPassword, storedHash);
-        } catch (IllegalArgumentException e) {
+            Class<?> bcrypt = Class.forName(BCRYPT_CLASS);
+            Method checkpw = bcrypt.getMethod("checkpw", String.class, String.class);
+            return Boolean.TRUE.equals(checkpw.invoke(null, plainPassword, storedHash));
+        } catch (ClassNotFoundException e) {
+            throw new IllegalStateException("jBCrypt library is missing. Add jbcrypt-0.4.jar to WEB-INF/lib.", e);
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             return false;
         }
     }
