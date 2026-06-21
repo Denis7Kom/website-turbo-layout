@@ -1,4 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.ProductBean" %>
+<%
+    Object value = request.getAttribute("products");
+    List<ProductBean> products;
+
+    if (value instanceof List) {
+        products = (List<ProductBean>) value;
+    } else {
+        products = new ArrayList<ProductBean>();
+    }
+%>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -27,7 +40,7 @@
 
     <div class="filter-bar">
         <div class="categories-capsules">
-            <a href="#" class="capsule active">Tutti i prodotti</a>
+            <a href="${pageContext.request.contextPath}/merch" class="capsule active">Tutti i prodotti</a>
             <a href="#" class="capsule">T-Shirt</a>
             <a href="#" class="capsule">Felpe</a>
             <a href="#" class="capsule">Accessori</a>
@@ -44,62 +57,33 @@
     </div>
 
     <section class="section-container">
-        <div class="merch-grid">
-            
-            <div class="product-card">
-                <div class="product-card-img-container">
-                    <span class="product-badge new">Nuovo</span>
-                    <div class="product-card-img-placeholder"></div>
-                </div>
-                <div class="product-card-body">
-                    <span class="product-artist">Coldplay</span>
-                    <h3 class="product-title">T-Shirt Music Of The Spheres</h3>
-                    <span class="product-price">€ 35,00</span>
-                </div>
+        <% if (products.isEmpty()) { %>
+            <div class="empty-catalog-message">
+                <h2>Nessun prodotto disponibile</h2>
+                <p>Il catalogo merch è temporaneamente vuoto.</p>
             </div>
-
-            <div class="product-card">
-                <div class="product-card-img-container">
-                    <span class="product-badge limited">Limited</span>
-                    <div class="product-card-img-placeholder"></div>
-                </div>
-                <div class="product-card-body">
-                    <span class="product-artist">Marracash</span>
-                    <h3 class="product-title">Felpa con Cappuccio Persona</h3>
-                    <span class="product-price">€ 65,00</span>
-                </div>
+        <% } else { %>
+            <div class="merch-grid">
+                <% for (ProductBean product : products) { %>
+                    <div class="product-card">
+                        <div class="product-card-img-container">
+                            <div class="product-card-img-placeholder"></div>
+                        </div>
+                        <div class="product-card-body">
+                            <span class="product-artist">VibeShop</span>
+                            <h3 class="product-title"><%= product.getNome() %></h3>
+                            <span class="product-price">€ <%= product.getPrezzo() %></span>
+                            <form action="${pageContext.request.contextPath}/cart" method="post">
+                                <input type="hidden" name="action" value="add">
+                                <input type="hidden" name="idProdotto" value="<%= product.getIdProdotto() %>">
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="auth-primary-btn">Aggiungi al carrello</button>
+                            </form>
+                        </div>
+                    </div>
+                <% } %>
             </div>
-
-            <div class="product-card">
-                <div class="product-card-img-container">
-                    <div class="product-card-img-placeholder"></div>
-                </div>
-                <div class="product-card-body">
-                    <span class="product-artist">Travis Scott</span>
-                    <h3 class="product-title">Cappellino Vintage Utopia</h3>
-                    <span class="product-price">€ 28,00</span>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-card-img-container">
-                    <div class="product-card-img-placeholder"></div>
-                </div>
-                <div class="product-card-body">
-                    <span class="product-artist">Pinguini Tattici Nucleari</span>
-                    <h3 class="product-title">Tazza Logo Ceramica</h3>
-                    <span class="product-price">€ 15,00</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="pagination">
-            <a href="?page=1" class="prev"></a>
-            <span class="active">1</span>
-            <a href="?page=2">2</a>
-            <a href="?page=3">3</a>
-            <a href="?page=2" class="next"></a>
-        </div>
+        <% } %>
     </section>
 
 </main>
