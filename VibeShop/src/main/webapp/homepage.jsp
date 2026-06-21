@@ -109,7 +109,7 @@
         <section class="section-container">
             <div class="section-header">
                 <h2>Shop & Collezioni</h2>
-                <a class="tasto_lato" href="${pageContext.request.contextPath}/jsp/merch.jsp">Vedi tutti</a>
+                <a class="tasto_lato" href="${pageContext.request.contextPath}/merch">Vedi tutti</a>
             </div>
             <div class="contenitore-card fade-right">
                 <div class="card">
@@ -156,7 +156,7 @@
 
     <%@ include file="/WEB-INF/fragments/footer.jspf" %>
     
- 	<script src="${pageContext.request.contextPath}/js/menu.js"></script>
+  	<script src="${pageContext.request.contextPath}/js/menu.js"></script>
 
 </body>
 </html>
