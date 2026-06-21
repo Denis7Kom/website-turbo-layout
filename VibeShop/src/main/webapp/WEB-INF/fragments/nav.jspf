@@ -2,5 +2,5 @@
 <nav id="nav-menu" class="nav-left">
     <a href="${pageContext.request.contextPath}/jsp/concerti.jsp">Concerti</a>
     <a href="${pageContext.request.contextPath}/jsp/artisti.jsp">Artisti</a>
-    <a href="${pageContext.request.contextPath}/jsp/merch.jsp">Merch</a>
+    <a href="${pageContext.request.contextPath}/merch">Merch</a>
 </nav>
