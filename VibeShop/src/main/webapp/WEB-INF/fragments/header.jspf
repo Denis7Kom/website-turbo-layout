@@ -15,7 +15,7 @@
 %>
 <header>
     <div class="left">
-        <a href="${pageContext.request.contextPath}/homepage.jsp" class="logo">
+        <a href="${pageContext.request.contextPath}/home" class="logo">
             <img src="${pageContext.request.contextPath}/img/logo.svg" alt="VibeShop Icon" class="brand-icon"/>
         </a>
         <span class="brand-text">VibeShop</span>
