@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gestione Ordini (Admin) - VibeShop</title>
     <link rel="icon" type="image/svg+xml" href="${pageContext.request.contextPath}/img/logo.svg" />
-    
+
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css" />
 </head>
@@ -25,7 +25,7 @@
                 <p>Monitora gli acquisti globali, filtra per data e aggiorna gli stati di spedizione dei clienti.</p>
             </div>
         </div>
-        
+
         <div class="admin-quick-stats">
             <div class="quick-stat">
                 <span class="stat-val">12</span>
@@ -39,20 +39,20 @@
     </header>
 
     <div class="admin-content-grid">
-     
+
         <aside class="admin-sidebar">
             <nav class="sidebar-nav">
                 <a href="${pageContext.request.contextPath}/jsp/admin/dashboard.jsp">📊 Panoramica</a>
                 <a href="${pageContext.request.contextPath}/jsp/admin/ad-orders.jsp" class="active">📦 Gestione Ordini</a>
                 <a href="${pageContext.request.contextPath}/jsp/admin/products.jsp">🎟️ Gestione Prodotti</a>
-                
+
                 <a href="${pageContext.request.contextPath}/logout" class="logout-link">Disconnetti</a>
             </nav>
         </aside>
 
         <div class="admin-main-view">
             <section class="card-vibe">
-                
+
                 <div class="section-title-row">
                     <h2>Registro Ordini Ricevuti</h2>
                 </div>
@@ -70,7 +70,8 @@
                         <label for="filterStatus">Stato</label>
                         <select id="filterStatus">
                             <option value="all">Tutti gli stati</option>
-                            <option value="pending">In Lavorazione</option>
+                            <option value="pending">In lavorazione</option>
+                            <option value="shipping">In consegna</option>
                             <option value="completed">Spedito</option>
                             <option value="cancelled">Annullato</option>
                         </select>
@@ -79,3 +80,82 @@
 
                 <div class="table-responsive">
                     <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Codice Ordine</th>
+                                <th>Cliente</th>
+                                <th>Data</th>
+                                <th>Totale</th>
+                                <th>Stato</th>
+                                <th style="text-align: center;">Azioni</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-status="pending">
+                                <td><strong>#VB-99812</strong></td>
+                                <td>vibe.u@vibeshop.it</td>
+                                <td>20 Giu 2026</td>
+                                <td><strong>€ 155,00</strong></td>
+                                <td><span class="badge pending">In lavorazione</span></td>
+                                <td>
+                                    <div class="admin-actions-cell">
+                                        <button type="button" class="btn-table-edit" onclick="updateOrderStatus('#VB-99812')">Aggiorna</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr data-status="shipping">
+                                <td><strong>#VB-99811</strong></td>
+                                <td>mario.rossi@email.it</td>
+                                <td>19 Giu 2026</td>
+                                <td><strong>€ 45,00</strong></td>
+                                <td><span class="badge shipping">In consegna</span></td>
+                                <td>
+                                    <div class="admin-actions-cell">
+                                        <button type="button" class="btn-table-edit" onclick="updateOrderStatus('#VB-99811')">Aggiorna</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr data-status="completed">
+                                <td><strong>#VB-99810</strong></td>
+                                <td>luigi.verdi@email.it</td>
+                                <td>18 Giu 2026</td>
+                                <td><strong>€ 81,00</strong></td>
+                                <td><span class="badge completed">Spedito</span></td>
+                                <td>
+                                    <div class="admin-actions-cell">
+                                        <button type="button" class="btn-table-edit" onclick="updateOrderStatus('#VB-99810')">Dettagli</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr data-status="cancelled">
+                                <td><strong>#VB-99809</strong></td>
+                                <td>anna.bianchi@email.it</td>
+                                <td>17 Giu 2026</td>
+                                <td><strong>€ 32,00</strong></td>
+                                <td><span class="badge cancelled">Annullato</span></td>
+                                <td>
+                                    <div class="admin-actions-cell">
+                                        <button type="button" class="btn-table-edit" onclick="updateOrderStatus('#VB-99809')">Dettagli</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </section>
+        </div>
+
+    </div>
+</main>
+
+<%@ include file="/WEB-INF/fragments/footer.jspf" %>
+<script src="${pageContext.request.contextPath}/js/menu.js"></script>
+
+<script>
+function updateOrderStatus(orderCode) {
+    alert("Richiesta di aggiornamento inviata per l'ordine " + orderCode + ".");
+}
+</script>
+</body>
+</html>
