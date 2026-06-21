@@ -156,7 +156,7 @@
 
     <%@ include file="/WEB-INF/fragments/footer.jspf" %>
     
- 	<script src="${pageContext.request.contextPath}/js/menu.js"></script>
+  	<script src="${pageContext.request.contextPath}/js/menu.js"></script>
 
 </body>
 </html>

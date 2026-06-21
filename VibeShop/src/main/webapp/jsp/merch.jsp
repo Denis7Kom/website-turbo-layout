@@ -73,6 +73,12 @@
                             <span class="product-artist">VibeShop</span>
                             <h3 class="product-title"><%= product.getNome() %></h3>
                             <span class="product-price">€ <%= product.getPrezzo() %></span>
+                            <form action="${pageContext.request.contextPath}/cart" method="post">
+                                <input type="hidden" name="action" value="add">
+                                <input type="hidden" name="idProdotto" value="<%= product.getIdProdotto() %>">
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="auth-primary-btn">Aggiungi al carrello</button>
+                            </form>
                         </div>
                     </div>
                 <% } %>
