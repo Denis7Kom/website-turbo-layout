@@ -3,9 +3,14 @@
     String currentURI = request.getRequestURI();
     boolean isLoginPage    = currentURI.contains("login.jsp");
     boolean isRegisterPage = currentURI.contains("register.jsp");
-    
-    // Nuova variabile per comodità: è true se siamo nel login o nel register
+    boolean isCartPage     = currentURI.contains("cart.jsp");
+    boolean isCheckoutPage = currentURI.contains("checkout.jsp");
+
+    // Nasconde ricerca e carrello nelle pagine di login/registrazione.
     boolean hideNavElements = isLoginPage || isRegisterPage;
+
+    // Nasconde solo l'icona del carrello nelle pagine carrello/checkout.
+    boolean hideCartIcon = hideNavElements || isCartPage || isCheckoutPage;
 
     Object utente = session.getAttribute("utente");
     if (utente == null) {
@@ -51,8 +56,8 @@
                 <a href="${pageContext.request.contextPath}/jsp/login.jsp" class="login">Login</a>
             <% } %>
 
-            <%-- Mostra il carrello SOLO se non siamo in login/register --%>
-            <% if (!hideNavElements) { %>
+            <%-- Mostra il carrello solo nelle pagine dove ha senso come scorciatoia --%>
+            <% if (!hideCartIcon) { %>
             <a href="${pageContext.request.contextPath}/jsp/cart.jsp" class="cart-link">
                 <img src="${pageContext.request.contextPath}/img/shop.svg" alt="Carrello" class="cart-icon"/>
                 <span class="cart-count"><%
