@@ -1,7 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
 <%@ page import="model.ProductBean" %>
+<%!
+    private String h(String value) {
+        if (value == null) {
+            return "";
+        }
+        return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#39;");
+    }
+%>
 <%
     Object value = request.getAttribute("products");
     List<ProductBean> products;
@@ -11,6 +21,8 @@
     } else {
         products = new ArrayList<ProductBean>();
     }
+
+    NumberFormat money = NumberFormat.getCurrencyInstance(Locale.ITALY);
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -71,8 +83,8 @@
                         </div>
                         <div class="product-card-body">
                             <span class="product-artist">VibeShop</span>
-                            <h3 class="product-title"><%= product.getNome() %></h3>
-                            <span class="product-price">€ <%= product.getPrezzo() %></span>
+                            <h3 class="product-title"><%= h(product.getNome()) %></h3>
+                            <span class="product-price"><%= money.format(product.getPrezzo()) %></span>
                             <form action="${pageContext.request.contextPath}/cart" method="post">
                                 <input type="hidden" name="action" value="add">
                                 <input type="hidden" name="idProdotto" value="<%= product.getIdProdotto() %>">
