@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>Homepage - VibeShop</title>
+    <link rel="icon" type="image/svg+xml" href="${pageContext.request.contextPath}/img/logo.svg" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/homepage.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
