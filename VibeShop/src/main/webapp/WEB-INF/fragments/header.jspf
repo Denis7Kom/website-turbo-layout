@@ -12,17 +12,6 @@
         utente = session.getAttribute("user");
     }
 %>
-<script>
-(function () {
-    if (!document.querySelector('link[rel="icon"]')) {
-        const favicon = document.createElement('link');
-        favicon.rel = 'icon';
-        favicon.type = 'image/svg+xml';
-        favicon.href = '${pageContext.request.contextPath}/img/logo.svg';
-        document.head.appendChild(favicon);
-    }
-})();
-</script>
 <header>
     <div class="left">
         <a href="${pageContext.request.contextPath}/homepage.jsp" class="logo">
