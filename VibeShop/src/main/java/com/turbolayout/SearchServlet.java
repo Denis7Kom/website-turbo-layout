@@ -77,7 +77,7 @@ public class SearchServlet extends HttpServlet {
             statement.setString(2, like);
             try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
-                    results.add(new SearchResult("Merch", rs.getString("nome"), rs.getString("descrizione"), "/product?id=" + rs.getInt("id_prodotto")));
+                    results.add(new SearchResult("Merch", rs.getString("nome"), rs.getString("descrizione"), "/merch"));
                 }
             }
         }
@@ -92,7 +92,7 @@ public class SearchServlet extends HttpServlet {
             try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
                     String subtitle = join(rs.getString("genere"), rs.getString("paese"));
-                    results.add(new SearchResult("Artista", rs.getString("nome_d_arte"), subtitle, "/home#artisti"));
+                    results.add(new SearchResult("Artista", rs.getString("nome_d_arte"), subtitle, "/artisti"));
                 }
             }
         }
