@@ -88,6 +88,10 @@
     private String concertImage(int index) {
         return "img/concerti/" + ((Math.abs(index) % 4) + 1) + ".jpg";
     }
+
+    private String fallbackOnError() {
+        return "if(!this.dataset.fallback){this.dataset.fallback='casual';this.src=this.dataset.casual;}else{this.onerror=null;this.src=this.dataset.logo;}";
+    }
 %>
 <%
     List<ConcertoBean> concerts = new ArrayList<ConcertoBean>();
@@ -191,7 +195,7 @@
                     <% for (int i = 0; i < artists.size() && i < 6; i++) { ArtistBean artist = artists.get(i); %>
                         <div class="card">
                             <a href="${pageContext.request.contextPath}/artisti">
-                                <img class="card-image" src="${pageContext.request.contextPath}/<%= h(artistImage(artist, i)) %>" alt="<%= h(artist.getNomeArte()) %>" onerror="this.onerror=null;this.src='${pageContext.request.contextPath}/<%= h(casualImage(i)) %>';">
+                                <img class="card-image" src="${pageContext.request.contextPath}/<%= h(artistImage(artist, i)) %>" data-casual="${pageContext.request.contextPath}/<%= h(casualImage(i)) %>" data-logo="${pageContext.request.contextPath}/img/logo.svg" alt="<%= h(artist.getNomeArte()) %>" onerror="<%= fallbackOnError() %>">
                                 <div class="card-content">
                                     <span class="card-label">Artista</span>
                                     <span class="card-title"><%= h(artist.getNomeArte()) %></span>
