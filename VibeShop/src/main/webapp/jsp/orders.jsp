@@ -13,6 +13,18 @@
         }
         return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#39;");
     }
+
+    private String statusClass(String status) {
+        if (status == null) return "unknown";
+        if ("ANNULLATO".equalsIgnoreCase(status)) return "cancelled";
+        if ("IN_ELABORAZIONE".equalsIgnoreCase(status)) return "processing";
+        if ("CONFERMATO".equalsIgnoreCase(status)) return "completed";
+        return "unknown";
+    }
+
+    private String displayStatus(String status) {
+        return status == null ? "" : status.replace("_", " ");
+    }
 %>
 <%
     Object userObject = session.getAttribute("user");
@@ -43,7 +55,7 @@
 <main class="profile-main-container">
     <header class="profile-hero">
         <div class="profile-avatar-box">
-            <a href="${pageContext.request.contextPath}/jsp/profile.jsp" class="avatar-link">
+            <a href="${pageContext.request.contextPath}/profile" class="avatar-link">
                 <div class="avatar-circle"><%= h(initials) %></div>
             </a>
             <div class="profile-welcome">
@@ -74,7 +86,7 @@
                                     </div>
                                 </div>
                             <% } else { %>
-                                <% for (OrderBean order : orders) { %>
+                                <% for (OrderBean order : orders) { String stato = order.getStatoOrdine(); %>
                                     <div class="order-row-item active">
                                         <div class="order-row-header">
                                             <div class="order-col-left">
@@ -82,7 +94,7 @@
                                                 <span class="order-date"><%= order.getDataOrdine() %></span>
                                             </div>
                                             <div class="order-col-center">
-                                                <div class="order-badge-status completed"><%= h(order.getStatoOrdine()) %></div>
+                                                <div class="order-badge-status <%= statusClass(stato) %>"><%= h(displayStatus(stato)) %></div>
                                             </div>
                                             <div class="order-col-right">
                                                 <span class="order-price"><%= money.format(order.getTotalPrice()) %></span>
