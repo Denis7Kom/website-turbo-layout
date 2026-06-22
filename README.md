@@ -4,7 +4,7 @@
 
 **VibeShop** è un progetto web sviluppato dal gruppo **Turbo Layout** per il corso di **Tecnologie Software per il Web** presso l'Università degli Studi di Salerno.
 
-Il sito nasce come piattaforma e-commerce dedicata al mondo della musica live. L'obiettivo principale è offrire agli utenti un ambiente semplice, moderno e intuitivo dove poter scoprire concerti, artisti e merchandising musicale.
+Il sito è una piattaforma e-commerce dedicata alla musica live. L'applicazione permette di consultare concerti, artisti e merchandising musicale, gestire un carrello, completare un ordine e amministrare catalogo e ordini tramite un pannello riservato.
 
 ## Componenti del gruppo
 
@@ -14,76 +14,69 @@ Il sito nasce come piattaforma e-commerce dedicata al mondo della musica live. L
 
 ## Obiettivo del progetto
 
-VibeShop vuole diventare un punto di riferimento per gli utenti interessati alla musica dal vivo.  
-La piattaforma permette di esplorare concerti disponibili, consultare le informazioni sugli artisti, cercare prodotti musicali e acquistare merchandising o biglietti attraverso un flusso di navigazione chiaro.
+L'obiettivo di VibeShop è simulare un negozio online specializzato nel settore musicale, con un flusso chiaro per l'utente e una separazione ordinata tra presentazione JSP, servlet di controllo, DAO e database relazionale.
 
-Il progetto combina funzionalità tipiche di un e-commerce con un'identità visiva ispirata all'atmosfera dei concerti: energia, luci, movimento e contenuti musicali.
+Il progetto combina funzionalità tipiche di un e-commerce con un'identità visiva ispirata all'atmosfera dei concerti: cataloghi dinamici, ricerca, carrello, checkout, area personale e gestione amministrativa.
 
-## Funzionalità principali
+## Funzionalità implementate
 
 ### Utente non registrato
 
 L'utente guest può:
 
-- visualizzare i concerti disponibili;
-- consultare i dettagli degli artisti;
-- ricercare concerti, artisti e merchandising;
-- accedere alle pagine di registrazione e login;
-- esplorare il catalogo senza finalizzare acquisti.
+- visualizzare la homepage con concerti, artisti e merchandising in evidenza;
+- consultare la pagina concerti;
+- consultare la pagina artisti;
+- esplorare il catalogo merchandising;
+- usare la ricerca globale per prodotti, artisti e concerti;
+- accedere alle pagine di registrazione e login.
 
-La registrazione è richiesta per completare un ordine e per contattare l'assistenza.
+La registrazione è richiesta per completare un ordine e visualizzare la propria area personale.
 
 ### Utente registrato
 
 L'utente registrato può:
 
-- aggiungere prodotti al carrello;
-- completare l'acquisto;
+- effettuare il login tramite username o email;
+- aggiungere merchandising e biglietti al carrello;
+- modificare quantità e contenuto del carrello;
+- completare il checkout;
 - visualizzare gli ordini effettuati;
-- consultare la cronologia degli acquisti;
-- modificare i propri dati personali, tra cui nome, cognome, email, indirizzo di spedizione e metodo di pagamento.
+- accedere al profilo personale;
+- aggiornare i propri dati account.
 
 ### Amministratore
 
 L'amministratore può:
 
-- aggiungere, modificare ed eliminare concerti;
-- gestire il merchandising presente sul sito;
-- visualizzare gli ordini per data;
-- gestire le richieste di assistenza degli utenti.
+- accedere al pannello di controllo;
+- gestire i prodotti merchandising;
+- gestire concerti e biglietti;
+- visualizzare e filtrare gli ordini;
+- aggiornare lo stato degli ordini tra `CONFERMATO`, `IN_ELABORAZIONE` e `ANNULLATO`.
 
-## Struttura dei file in Eclipse
+## Struttura principale del sito
 
-La cartella "Sito WEB(Gruppo)" serve solo per configurare Eclipse, i file al suo interno possono subire dei cambiamenti.
+Il sito include:
 
-## Struttura del sito
-
-Il sito prevede una struttura di navigazione composta da:
-
-- Homepage;
-- pagina concerti;
-- dettaglio concerto;
-- pagina artisti;
-- dettaglio artista;
-- merchandising;
-- dettaglio prodotto;
-- ricerca globale;
-- carrello;
-- checkout;
-- login;
-- registrazione;
-- area personale;
+- homepage (`/jsp/index.jsp` e route compatibili `/home`, `/homepage`);
+- pagina concerti (`/concerti`);
+- pagina artisti (`/artisti`);
+- catalogo merchandising (`/merch`);
+- dettaglio prodotto (`/product?id=...`);
+- ricerca globale (`/search`);
+- carrello (`/cart`);
+- checkout (`/checkout`);
+- login e registrazione;
+- profilo utente;
 - storico ordini;
-- dettaglio ordine;
-- area amministratore;
-- assistenza.
+- pannello amministratore.
 
-Il flusso principale porta l'utente dalla homepage alla consultazione di concerti, artisti e prodotti, fino all'aggiunta al carrello e alla finalizzazione dell'acquisto.
+Il flusso principale porta l'utente dalla consultazione dei cataloghi all'aggiunta degli articoli nel carrello e alla conferma dell'ordine.
 
 ## Base di dati
 
-Il progetto prevede una base di dati strutturata tramite schema Entità-Relazione.  
-Le entità principali sono:
+Il progetto utilizza un database MySQL con entità principali:
 
 - Utente;
 - Ordine;
@@ -92,27 +85,23 @@ Le entità principali sono:
 - Artista;
 - Concerto.
 
-Le relazioni principali permettono di collegare utenti e ordini, ordini e dettagli d'ordine, prodotti e artisti, concerti e artisti. Questa struttura consente di gestire sia la parte e-commerce sia la parte informativa legata agli eventi musicali.
+Le relazioni collegano utenti e ordini, ordini e dettagli, prodotti e artisti, concerti e artisti. Lo schema include chiavi esterne, vincoli di integrità e campi per gestire ruoli utente, stato degli ordini e tipologia degli articoli acquistati.
+
+## Architettura applicativa
+
+L'applicazione segue una struttura classica per progetto Servlet/JSP:
+
+- le JSP gestiscono la presentazione;
+- le servlet gestiscono richieste, sessione e flusso applicativo;
+- i DAO centralizzano l'accesso al database;
+- i bean rappresentano le entità principali;
+- il database MySQL mantiene catalogo, utenti, ordini e dettagli.
+
+Per la gestione delle password viene utilizzato bcrypt tramite jBCrypt. L'hash viene salvato nel database, mentre la password in chiaro non viene mai memorizzata.
 
 ## Layout
 
-Il layout del sito è stato progettato tramite wireframe delle pagine principali:
-
-- Homepage;
-- pagina artista;
-- pagina prodotto o concerto;
-- carrello e checkout.
-
-La homepage include una hero section con messaggio principale e call to action.  
-Le pagine prodotto e concerto contengono informazioni dettagliate, prezzo, descrizione, disponibilità e azioni per l'acquisto.  
-Il carrello e il checkout guidano l'utente verso la conferma dell'ordine.
-
-## Tema grafico
-
-Lo stile grafico scelto è moderno, pulito e orientato alla musica live.  
-L'interfaccia deve trasmettere energia senza diventare troppo pesante o confusa.
-
-Il design si ispira a siti moderni con uno stile chiaro e ordinato, mantenendo un tono comunicativo diretto, informale e adatto a un pubblico giovane, ma allo stesso tempo professionale per un contesto e-commerce.
+Il layout è stato progettato per essere moderno, pulito e coerente con il tema musicale. Le pagine principali mantengono una navigazione comune, card di catalogo, pannelli amministrativi e messaggi di stato per rendere l'interazione più chiara.
 
 ## Palette colori
 
@@ -126,21 +115,31 @@ Il design si ispira a siti moderni con uno stile chiaro e ordinato, mantenendo u
 | Testo secondario | Grigio medio | `#7A7A7A` |
 | Bordi / Divider | Grigio chiaro | `#E5E5E5` |
 
-La combinazione di viola e rosa richiama le luci dei concerti, mentre gli sfondi chiari mantengono l'interfaccia leggibile e ordinata.
-
 ## Tecnologie utilizzate
 
+- Java
+- Servlet
+- JSP
 - HTML
 - CSS
-- Java
-- JSP
-- Servlet
-- Database relazionale
+- JavaScript
+- MySQL
+- DAO pattern
+- bcrypt per password hashing
+
+## Avvio del progetto
+
+Per eseguire il progetto è necessario:
+
+1. importare lo schema `VibeShop/db/VIBESHOP_FINAL.sql` in MySQL;
+2. configurare l'utente database usato dall'applicazione;
+3. aggiungere MySQL Connector/J al progetto o al server Tomcat;
+4. aggiungere `jbcrypt-0.4.jar` per la gestione delle password;
+5. eseguire il progetto su Tomcat 9.
 
 ## Stato del progetto
 
-Il progetto è in fase di sviluppo come elaborato universitario.  
-Le funzionalità principali sono definite a livello di architettura, navigazione, layout e modello dati.
+Il progetto implementa il flusso principale di consultazione catalogo, registrazione, login, carrello, checkout, storico ordini e amministrazione. Alcune aree possono essere estese in futuro, ma la struttura attuale copre il funzionamento essenziale richiesto per un e-commerce didattico basato su Servlet, JSP e database relazionale.
 
 ## Licenza
 
