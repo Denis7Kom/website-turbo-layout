@@ -27,6 +27,7 @@
     }
 
     NumberFormat money = NumberFormat.getCurrencyInstance(Locale.ITALY);
+    String searchQuery = (String) request.getAttribute("searchQuery");
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -53,8 +54,8 @@
     <div class="filter-bar">
         <div class="categories-capsules">
             <a href="${pageContext.request.contextPath}/merch" class="capsule active">Tutti i prodotti</a>
-            <a href="${pageContext.request.contextPath}/jsp/concerti.jsp" class="capsule">Biglietti</a>
-            <a href="${pageContext.request.contextPath}/jsp/artisti.jsp" class="capsule">Artisti</a>
+            <a href="${pageContext.request.contextPath}/concerti" class="capsule">Biglietti</a>
+            <a href="${pageContext.request.contextPath}/artisti" class="capsule">Artisti</a>
         </div>
     </div>
     <section class="section-container">
