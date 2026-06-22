@@ -100,15 +100,15 @@
             </div>
         </section>
 
-        <section class="section-container">
+        <section id="artisti" class="section-container">
             <div class="section-header">
                 <h2>Artisti da scoprire</h2>
-                <a class="tasto_lato" href="${pageContext.request.contextPath}/artisti">Vedi tutti</a>
+                <a class="tasto_lato" href="${pageContext.request.contextPath}/concerti">Vedi concerti</a>
             </div>
             <div class="contenitore-card fade-right">
                 <% if (artists.isEmpty()) { %>
                     <div class="card empty-card">
-                        <a href="${pageContext.request.contextPath}/artisti">
+                        <a href="${pageContext.request.contextPath}/concerti">
                             <div class="card-content">
                                 <span class="card-label">Artisti</span>
                                 <span class="card-title">Nessun artista disponibile</span>
@@ -119,7 +119,7 @@
                 <% } else { %>
                     <% for (int i = 0; i < artists.size() && i < 6; i++) { ArtistBean artist = artists.get(i); %>
                         <div class="card">
-                            <a href="${pageContext.request.contextPath}/artisti">
+                            <a href="${pageContext.request.contextPath}/concerti">
                                 <div class="card-content">
                                     <span class="card-label">Artista</span>
                                     <span class="card-title"><%= h(artist.getNomeArte()) %></span>
