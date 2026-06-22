@@ -11,10 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.regex.Pattern;
 
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+
+    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,63}$");
+    private static final Pattern PHONE_PATTERN = Pattern.compile("^\\+?[0-9 .()\\-]{7,20}$");
 
     private final UserDAO userDAO = new UserDAO();
 
@@ -34,8 +38,18 @@ public class RegisterServlet extends HttpServlet {
         String terms = request.getParameter("terms");
 
         if (isEmpty(nome) || isEmpty(cognome) || isEmpty(email)
-                || isEmpty(username) || isEmpty(pwd) || isEmpty(confirmPwd)) {
-            forwardWithError(request, response, "Compila tutti i campi obbligatori.");
+                || isEmpty(telefono) || isEmpty(username) || isEmpty(pwd) || isEmpty(confirmPwd)) {
+            forwardWithError(request, response, "Compila tutti i campi obbligatori, inclusi email e telefono.");
+            return;
+        }
+
+        if (!EMAIL_PATTERN.matcher(email).matches()) {
+            forwardWithError(request, response, "Inserisci un indirizzo email valido.");
+            return;
+        }
+
+        if (!PHONE_PATTERN.matcher(telefono).matches() || countDigits(telefono) < 7) {
+            forwardWithError(request, response, "Inserisci un numero di telefono valido.");
             return;
         }
 
@@ -46,11 +60,6 @@ public class RegisterServlet extends HttpServlet {
 
         if (terms == null) {
             forwardWithError(request, response, "Devi accettare i Termini e la Privacy Policy.");
-            return;
-        }
-
-        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
-            forwardWithError(request, response, "Formato email non valido.");
             return;
         }
 
@@ -92,5 +101,15 @@ public class RegisterServlet extends HttpServlet {
 
     private boolean isEmpty(String value) {
         return value == null || value.trim().isEmpty();
+    }
+
+    private int countDigits(String value) {
+        int count = 0;
+        for (int i = 0; i < value.length(); i++) {
+            if (Character.isDigit(value.charAt(i))) {
+                count++;
+            }
+        }
+        return count;
     }
 }
