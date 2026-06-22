@@ -28,6 +28,7 @@
     <link rel="icon" type="image/svg+xml" href="${pageContext.request.contextPath}/img/logo.svg" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin-extra.css" />
 </head>
 <body>
 <%@ include file="/WEB-INF/fragments/header.jspf" %>
