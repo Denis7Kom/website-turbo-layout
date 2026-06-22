@@ -1,0 +1,61 @@
+@charset "UTF-8";
+
+.admin-resource-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: -6px 0 22px;
+}
+
+.admin-resource-tabs a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    color: var(--text);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    transition: all 0.2s ease;
+}
+
+.admin-resource-tabs a:hover {
+    border-color: var(--purple);
+    color: var(--purple);
+}
+
+.admin-resource-tabs a.active {
+    background: var(--purple);
+    border-color: var(--purple);
+    color: var(--white);
+}
+
+.badge,
+.order-badge-status {
+    text-decoration: none !important;
+}
+
+.badge.processing,
+.badge.pending,
+.order-badge-status.processing {
+    background: var(--warning-bg) !important;
+    color: var(--warning) !important;
+    border: 1px solid rgba(183, 121, 0, 0.18) !important;
+}
+
+.badge.cancelled,
+.order-badge-status.cancelled {
+    background: var(--danger-bg) !important;
+    color: var(--danger) !important;
+    border: 1px solid rgba(198, 40, 40, 0.18) !important;
+}
+
+.badge.completed,
+.order-badge-status.completed {
+    background: var(--success-bg) !important;
+    color: var(--success) !important;
+    border: 1px solid rgba(46, 125, 50, 0.16) !important;
+}
