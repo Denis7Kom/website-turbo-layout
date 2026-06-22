@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
-@WebServlet({"/home", "/homepage"})
+@WebServlet("/home")
 public class HomeServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
