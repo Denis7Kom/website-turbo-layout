@@ -59,7 +59,7 @@ L'amministratore può:
 
 Il sito include:
 
-- homepage (`/jsp/index.jsp` e route compatibili `/home`, `/homepage`);
+- homepage (`/jsp/index.jsp` e route `/home`);
 - pagina concerti (`/concerti`);
 - pagina artisti (`/artisti`);
 - catalogo merchandising (`/merch`);
