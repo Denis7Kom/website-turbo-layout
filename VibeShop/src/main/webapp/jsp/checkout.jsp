@@ -59,14 +59,14 @@
         <% } %>
 
         <div class="checkout-grid">
-            <form method="post" action="${pageContext.request.contextPath}/checkout" class="checkout-form" novalidate>
+            <form method="post" action="${pageContext.request.contextPath}/checkout" class="checkout-form">
                 <div class="checkout-card">
                     <h3>Indirizzo di Spedizione</h3>
                     <input type="text" name="nome" placeholder="Nome e Cognome" required class="input-field">
                     <input type="text" name="indirizzo" placeholder="Via e numero civico" required class="input-field">
                     <div class="row-fields">
                         <input type="text" name="citta" placeholder="Città" required class="input-field">
-                        <input type="text" name="cap" placeholder="CAP" required maxlength="5" class="input-field">
+                        <input type="text" name="cap" placeholder="CAP" required maxlength="5" inputmode="numeric" pattern="[0-9]{5}" class="input-field">
                     </div>
                 </div>
 
@@ -74,10 +74,10 @@
                     <h3>Dati di Pagamento</h3>
                     <input type="hidden" name="tipoPagamento" value="Carta">
                     <input type="text" name="cardHolder" placeholder="Nome intestatario" required class="input-field">
-                    <input type="text" name="cardNumber" placeholder="Numero Carta (16 cifre)" required maxlength="16" class="input-field">
+                    <input type="text" name="cardNumber" placeholder="Numero Carta (16 cifre)" required maxlength="16" inputmode="numeric" pattern="[0-9]{16}" class="input-field">
                     <div class="row-fields">
-                        <input type="text" name="expiry" placeholder="MM/YY" required maxlength="5" class="input-field">
-                        <input type="password" name="cvv" placeholder="CVV" required maxlength="3" class="input-field">
+                        <input type="text" name="expiry" placeholder="MM/YY" required maxlength="5" inputmode="numeric" pattern="(0[1-9]|1[0-2])/[0-9]{2}" title="Formato richiesto: MM/YY. Il mese non può essere superiore a 12." class="input-field">
+                        <input type="password" name="cvv" placeholder="CVV" required maxlength="3" inputmode="numeric" pattern="[0-9]{3}" class="input-field">
                     </div>
                 </div>
 
@@ -97,5 +97,6 @@
 
 <%@ include file="/WEB-INF/fragments/footer.jspf" %>
 <script src="${pageContext.request.contextPath}/js/menu.js"></script>
+<script src="${pageContext.request.contextPath}/js/vibeshop-ajax.js"></script>
 </body>
 </html>
