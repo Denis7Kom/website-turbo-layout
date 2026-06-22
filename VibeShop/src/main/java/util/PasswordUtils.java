@@ -3,20 +3,12 @@ package util;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-/**
- * Utility class for password hashing and verification.
- *
- * The project uses jBCrypt when the jbcrypt-0.4.jar library is available in WEB-INF/lib.
- * Reflection is used here so the whole web project can still compile in Eclipse even before
- * the external JAR is added to the build path.
- */
 public final class PasswordUtils {
 
     private static final int BCRYPT_COST = 12;
     private static final String BCRYPT_CLASS = "org.mindrot.jbcrypt.BCrypt";
 
     private PasswordUtils() {
-        // Utility class: do not instantiate.
     }
 
     public static String hashPassword(String plainPassword) {
