@@ -51,8 +51,7 @@
             <nav class="sidebar-nav">
                 <a href="${pageContext.request.contextPath}/admin/dashboard">Panoramica</a>
                 <a href="${pageContext.request.contextPath}/admin/orders">Gestione Ordini</a>
-                <a href="${pageContext.request.contextPath}/admin/products" class="active">Gestione Prodotti</a>
-                <a href="${pageContext.request.contextPath}/admin/concerts">Gestione Concerti e Biglietti</a>
+                <a href="${pageContext.request.contextPath}/admin/products" class="active">Gestione Prodotti, Concerti e Biglietti</a>
                 <a href="${pageContext.request.contextPath}/logout" class="logout-link">Disconnetti</a>
             </nav>
         </aside>
@@ -61,6 +60,10 @@
                 <div class="section-title-row">
                     <h2>Catalogo Articoli</h2>
                     <a href="${pageContext.request.contextPath}/admin/product-form" class="btn-add-product">Aggiungi Prodotto</a>
+                </div>
+                <div class="admin-resource-tabs">
+                    <a href="${pageContext.request.contextPath}/admin/products" class="active">Prodotti</a>
+                    <a href="${pageContext.request.contextPath}/admin/concerts">Concerti e Biglietti</a>
                 </div>
                 <div class="admin-filters-bar">
                     <div class="filter-group-search">
