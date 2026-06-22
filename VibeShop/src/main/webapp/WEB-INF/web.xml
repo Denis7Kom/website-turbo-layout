@@ -19,6 +19,10 @@
   </filter-mapping>
   <filter-mapping>
     <filter-name>AuthFilter</filter-name>
+    <url-pattern>/jsp/profilo.jsp</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>AuthFilter</filter-name>
     <url-pattern>/jsp/modifica-profilo.jsp</url-pattern>
   </filter-mapping>
   <filter-mapping>
@@ -32,6 +36,10 @@
   <filter-mapping>
     <filter-name>AuthFilter</filter-name>
     <url-pattern>/profile</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>AuthFilter</filter-name>
+    <url-pattern>/profilo</url-pattern>
   </filter-mapping>
   <filter-mapping>
     <filter-name>AuthFilter</filter-name>
@@ -94,6 +102,10 @@
   <servlet-mapping>
     <servlet-name>ProfileServlet</servlet-name>
     <url-pattern>/profile</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ProfileServlet</servlet-name>
+    <url-pattern>/profilo</url-pattern>
   </servlet-mapping>
 
   <servlet>
