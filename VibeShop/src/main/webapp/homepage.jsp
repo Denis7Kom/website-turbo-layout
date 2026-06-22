@@ -18,6 +18,23 @@
         }
         return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#39;");
     }
+
+    private boolean hasText(String value) {
+        return value != null && !value.trim().isEmpty();
+    }
+
+    private String shortText(String value, int maxLength) {
+        if (value == null) {
+            return "";
+        }
+
+        String clean = value.trim();
+        if (clean.length() <= maxLength) {
+            return clean;
+        }
+
+        return clean.substring(0, maxLength).trim() + "...";
+    }
 %>
 <%
     List<ConcertoBean> concerts = new ArrayList<ConcertoBean>();
@@ -83,7 +100,7 @@
                                 <div class="card-content">
                                     <span class="card-label">Concerto</span>
                                     <span class="card-title"><%= h(concert.getNome()) %></span>
-                                    <% if (concert.getLuogo() != null && !concert.getLuogo().trim().isEmpty()) { %>
+                                    <% if (hasText(concert.getLuogo())) { %>
                                         <span class="card-meta"><%= h(concert.getLuogo()) %></span>
                                     <% } %>
                                     <% if (concert.getDataEvento() != null) { %>
@@ -103,12 +120,12 @@
         <section id="artisti" class="section-container">
             <div class="section-header">
                 <h2>Artisti da scoprire</h2>
-                <a class="tasto_lato" href="${pageContext.request.contextPath}/concerti">Vedi concerti</a>
+                <a class="tasto_lato" href="${pageContext.request.contextPath}/artisti">Vedi tutti</a>
             </div>
             <div class="contenitore-card fade-right">
                 <% if (artists.isEmpty()) { %>
                     <div class="card empty-card">
-                        <a href="${pageContext.request.contextPath}/concerti">
+                        <a href="${pageContext.request.contextPath}/artisti">
                             <div class="card-content">
                                 <span class="card-label">Artisti</span>
                                 <span class="card-title">Nessun artista disponibile</span>
@@ -119,15 +136,18 @@
                 <% } else { %>
                     <% for (int i = 0; i < artists.size() && i < 6; i++) { ArtistBean artist = artists.get(i); %>
                         <div class="card">
-                            <a href="${pageContext.request.contextPath}/concerti">
+                            <a href="${pageContext.request.contextPath}/artisti">
                                 <div class="card-content">
                                     <span class="card-label">Artista</span>
                                     <span class="card-title"><%= h(artist.getNomeArte()) %></span>
-                                    <% if (artist.getGenere() != null && !artist.getGenere().trim().isEmpty()) { %>
+                                    <% if (hasText(artist.getGenere())) { %>
                                         <span class="card-meta"><%= h(artist.getGenere()) %></span>
                                     <% } %>
-                                    <% if (artist.getPaese() != null && !artist.getPaese().trim().isEmpty()) { %>
+                                    <% if (hasText(artist.getPaese())) { %>
                                         <span class="card-meta"><%= h(artist.getPaese()) %></span>
+                                    <% } %>
+                                    <% if (hasText(artist.getBiografia())) { %>
+                                        <span class="card-meta"><%= h(shortText(artist.getBiografia(), 90)) %></span>
                                     <% } %>
                                 </div>
                             </a>
@@ -160,7 +180,7 @@
                                 <div class="card-content">
                                     <span class="card-label">Merch</span>
                                     <span class="card-title"><%= h(product.getNome()) %></span>
-                                    <% if (product.getDescrizione() != null && !product.getDescrizione().trim().isEmpty()) { %>
+                                    <% if (hasText(product.getDescrizione())) { %>
                                         <span class="card-meta"><%= h(product.getDescrizione()) %></span>
                                     <% } %>
                                     <% if (product.getPrezzo() != null) { %>
