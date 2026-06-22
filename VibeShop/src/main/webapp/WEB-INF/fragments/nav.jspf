@@ -3,9 +3,9 @@
     boolean isAdminNav = session != null && "ADMIN".equals(session.getAttribute("role"));
 %>
 <nav id="nav-menu" class="nav-left">
-    <a href="${pageContext.request.contextPath}/home">Home</a>
+    <a href="${pageContext.request.contextPath}/jsp/index.jsp">Home</a>
     <a href="${pageContext.request.contextPath}/concerti">Concerti</a>
-    <a href="${pageContext.request.contextPath}/home#artisti">Artisti</a>
+    <a href="${pageContext.request.contextPath}/artisti">Artisti</a>
     <a href="${pageContext.request.contextPath}/merch">Merch</a>
     <% if (isAdminNav) { %>
         <a href="${pageContext.request.contextPath}/admin/dashboard">Pannello di Controllo</a>

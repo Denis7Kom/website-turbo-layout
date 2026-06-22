@@ -20,17 +20,23 @@
     }
 %>
 <%
-    List<ConcertoBean> concerts = new ArrayList<ConcertoBean>();
-    List<ArtistBean> artists = new ArrayList<ArtistBean>();
-    List<ProductBean> products = new ArrayList<ProductBean>();
-    String databaseWarning = null;
+    Object concertsObject = request.getAttribute("featuredConcerts");
+    Object artistsObject = request.getAttribute("featuredArtists");
+    Object productsObject = request.getAttribute("featuredProducts");
 
-    try {
-        concerts = new ConcertoDAO().findAllActive();
-        artists = new ArtistDAO().findFeatured(6);
-        products = new ProductDAO().findAllActive();
-    } catch (SQLException e) {
-        databaseWarning = "Database non disponibile: contenuti dinamici temporaneamente vuoti.";
+    List<ConcertoBean> concerts = concertsObject instanceof List ? (List<ConcertoBean>) concertsObject : new ArrayList<ConcertoBean>();
+    List<ArtistBean> artists = artistsObject instanceof List ? (List<ArtistBean>) artistsObject : new ArrayList<ArtistBean>();
+    List<ProductBean> products = productsObject instanceof List ? (List<ProductBean>) productsObject : new ArrayList<ProductBean>();
+    String databaseWarning = (String) request.getAttribute("databaseWarning");
+
+    if (concertsObject == null && artistsObject == null && productsObject == null) {
+        try {
+            concerts = new ConcertoDAO().findAllActive();
+            artists = new ArtistDAO().findFeatured(6);
+            products = new ProductDAO().findAllActive();
+        } catch (SQLException e) {
+            databaseWarning = "Database non disponibile: contenuti dinamici temporaneamente vuoti.";
+        }
     }
 
     NumberFormat money = NumberFormat.getCurrencyInstance(Locale.ITALY);
@@ -40,7 +46,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8" />
-    <title>Homepage - VibeShop</title>
+    <title>VibeShop</title>
     <link rel="icon" type="image/svg+xml" href="${pageContext.request.contextPath}/img/logo.svg" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/homepage.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css" />
@@ -103,12 +109,12 @@
         <section id="artisti" class="section-container">
             <div class="section-header">
                 <h2>Artisti da scoprire</h2>
-                <a class="tasto_lato" href="${pageContext.request.contextPath}/concerti">Vedi concerti</a>
+                <a class="tasto_lato" href="${pageContext.request.contextPath}/artisti">Vedi tutti</a>
             </div>
             <div class="contenitore-card fade-right">
                 <% if (artists.isEmpty()) { %>
                     <div class="card empty-card">
-                        <a href="${pageContext.request.contextPath}/concerti">
+                        <a href="${pageContext.request.contextPath}/artisti">
                             <div class="card-content">
                                 <span class="card-label">Artisti</span>
                                 <span class="card-title">Nessun artista disponibile</span>
@@ -119,7 +125,7 @@
                 <% } else { %>
                     <% for (int i = 0; i < artists.size() && i < 6; i++) { ArtistBean artist = artists.get(i); %>
                         <div class="card">
-                            <a href="${pageContext.request.contextPath}/concerti">
+                            <a href="${pageContext.request.contextPath}/artisti">
                                 <div class="card-content">
                                     <span class="card-label">Artista</span>
                                     <span class="card-title"><%= h(artist.getNomeArte()) %></span>
