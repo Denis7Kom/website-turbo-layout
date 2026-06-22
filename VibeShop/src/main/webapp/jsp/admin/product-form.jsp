@@ -43,8 +43,7 @@
             <nav class="sidebar-nav">
                 <a href="${pageContext.request.contextPath}/admin/dashboard">Panoramica</a>
                 <a href="${pageContext.request.contextPath}/admin/orders">Gestione Ordini</a>
-                <a href="${pageContext.request.contextPath}/admin/products" class="active">Gestione Prodotti</a>
-                <a href="${pageContext.request.contextPath}/admin/concerts">Gestione Concerti e Biglietti</a>
+                <a href="${pageContext.request.contextPath}/admin/products" class="active">Gestione Prodotti, Concerti e Biglietti</a>
                 <a href="${pageContext.request.contextPath}/logout" class="logout-link">Disconnetti</a>
             </nav>
         </aside>
