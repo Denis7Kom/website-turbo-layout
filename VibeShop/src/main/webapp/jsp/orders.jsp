@@ -18,25 +18,30 @@
     private int itemQuantity(OrderItemBean item) {
         Integer productQuantity = item.getQuantitaProdotto();
         Integer ticketQuantity = item.getQuantitaBiglietti();
-
-        if (productQuantity != null && productQuantity.intValue() > 0) {
-            return productQuantity.intValue();
-        }
-
-        if (ticketQuantity != null && ticketQuantity.intValue() > 0) {
-            return ticketQuantity.intValue();
-        }
-
+        if (productQuantity != null && productQuantity.intValue() > 0) return productQuantity.intValue();
+        if (ticketQuantity != null && ticketQuantity.intValue() > 0) return ticketQuantity.intValue();
         return 1;
+    }
+
+    private String statusClass(String status) {
+        if (status == null) return "unknown";
+        if ("CONFERMATO".equalsIgnoreCase(status)) return "completed";
+        if ("IN_ELABORAZIONE".equalsIgnoreCase(status)) return "processing";
+        if ("ANNULLATO".equalsIgnoreCase(status)) return "cancelled";
+        return "unknown";
+    }
+
+    private String statusLabel(String status) {
+        if (status == null) return "SCONOSCIUTO";
+        if ("IN_ELABORAZIONE".equalsIgnoreCase(status)) return "IN ELABORAZIONE";
+        return status;
     }
 %>
 <%
     Object userObject = session.getAttribute("user");
     UserBean user = userObject instanceof UserBean ? (UserBean) userObject : null;
-
     Object ordersObject = request.getAttribute("orders");
     List<OrderBean> orders = ordersObject instanceof List ? (List<OrderBean>) ordersObject : new ArrayList<OrderBean>();
-
     String userName = user == null ? "Utente" : user.getNome();
     String initials = userName == null || userName.isEmpty() ? "U" : userName.substring(0, 1).toUpperCase();
     NumberFormat money = NumberFormat.getCurrencyInstance(Locale.ITALY);
@@ -53,80 +58,24 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/orders.css" />
 </head>
 <body>
-
 <%@ include file="/WEB-INF/fragments/header.jspf" %>
 <%@ include file="/WEB-INF/fragments/nav.jspf" %>
-
 <main class="profile-main-container">
-    <header class="profile-hero">
-        <div class="profile-avatar-box">
-            <a href="${pageContext.request.contextPath}/jsp/profile.jsp" class="avatar-link">
-                <div class="avatar-circle"><%= h(initials) %></div>
-            </a>
-            <div class="profile-welcome">
-                <h1>Ciao, <%= h(userName) %></h1>
-                <p>Cronologia ordini VibeShop</p>
-            </div>
-        </div>
-    </header>
-
-    <div class="profile-content-grid">
-        <aside class="profile-sidebar">
-            <nav class="sidebar-nav">
-                <div class="profile-main-view active">
-                    <section class="card-vibe">
-                        <div class="section-title-row">
-                            <h2>Cronologia Ordini</h2>
-                            <span class="orders-count-badge"><%= orders.size() %> Ordini</span>
-                        </div>
-
-                        <div class="orders-list">
-                            <% if (orders.isEmpty()) { %>
-                                <div class="order-row-item">
-                                    <div class="order-row-header">
-                                        <div class="order-col-left">
-                                            <span class="order-id">Nessun ordine</span>
-                                            <span class="order-date">Non hai ancora completato acquisti.</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            <% } else { %>
-                                <% for (OrderBean order : orders) { %>
-                                    <div class="order-row-item active">
-                                        <div class="order-row-header">
-                                            <div class="order-col-left">
-                                                <span class="order-id">#<%= order.getIdOrdine() %></span>
-                                                <span class="order-date"><%= order.getDataOrdine() == null ? "-" : orderDateFormat.format(order.getDataOrdine()) %></span>
-                                            </div>
-                                            <div class="order-col-center">
-                                                <div class="order-badge-status completed"><%= h(order.getStatoOrdine()) %></div>
-                                            </div>
-                                            <div class="order-col-right">
-                                                <span class="order-price"><%= money.format(order.getTotalPrice()) %></span>
-                                            </div>
-                                        </div>
-                                        <div class="order-row-body">
-                                            <div class="expanded-items-container">
-                                                <% for (OrderItemBean item : order.getItems()) { %>
-                                                    <div class="expanded-item-line">
-                                                        <span class="item-name"><%= h(item.getItemName()) %></span>
-                                                        <span class="item-qty">x<%= itemQuantity(item) %></span>
-                                                        <span class="item-subprice"><%= money.format(item.getPrezzoTotale()) %></span>
-                                                    </div>
-                                                <% } %>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <% } %>
-                            <% } %>
-                        </div>
-                    </section>
-                </div>
-            </nav>
-        </aside>
-    </div>
+    <header class="profile-hero"><div class="profile-avatar-box"><a href="${pageContext.request.contextPath}/jsp/profile.jsp" class="avatar-link"><div class="avatar-circle"><%= h(initials) %></div></a><div class="profile-welcome"><h1>Ciao, <%= h(userName) %></h1><p>Cronologia ordini VibeShop</p></div></div></header>
+    <div class="profile-content-grid"><aside class="profile-sidebar"><nav class="sidebar-nav"><div class="profile-main-view active"><section class="card-vibe"><div class="section-title-row"><h2>Cronologia Ordini</h2><span class="orders-count-badge"><%= orders.size() %> Ordini</span></div><div class="orders-list">
+        <% if (orders.isEmpty()) { %>
+            <div class="order-row-item"><div class="order-row-header"><div class="order-col-left"><span class="order-id">Nessun ordine</span><span class="order-date">Non hai ancora completato acquisti.</span></div></div></div>
+        <% } else { %>
+            <% for (OrderBean order : orders) { String stato = order.getStatoOrdine(); %>
+                <div class="order-row-item active"><div class="order-row-header"><div class="order-col-left"><span class="order-id">#<%= order.getIdOrdine() %></span><span class="order-date"><%= order.getDataOrdine() == null ? "-" : orderDateFormat.format(order.getDataOrdine()) %></span></div><div class="order-col-center"><div class="order-badge-status <%= statusClass(stato) %>"><%= h(statusLabel(stato)) %></div></div><div class="order-col-right"><span class="order-price"><%= money.format(order.getTotalPrice()) %></span></div></div><div class="order-row-body"><div class="expanded-items-container">
+                    <% for (OrderItemBean item : order.getItems()) { %>
+                        <div class="expanded-item-line"><span class="item-name"><%= h(item.getItemName()) %></span><span class="item-qty">x<%= itemQuantity(item) %></span><span class="item-subprice"><%= money.format(item.getPrezzoTotale()) %></span></div>
+                    <% } %>
+                </div></div></div>
+            <% } %>
+        <% } %>
+    </div></section></div></nav></aside></div>
 </main>
-
 <%@ include file="/WEB-INF/fragments/footer.jspf" %>
 <script src="${pageContext.request.contextPath}/js/menu.js"></script>
 </body>

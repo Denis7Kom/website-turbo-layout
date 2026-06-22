@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Locale" %>
 <%@ page import="model.ArtistBean" %>
 <%!
     private String h(String value) {
@@ -8,6 +9,59 @@
             return "";
         }
         return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#39;");
+    }
+
+    private boolean hasText(String value) {
+        return value != null && !value.trim().isEmpty();
+    }
+
+    private String normalizeImagePath(String value) {
+        if (!hasText(value)) {
+            return "";
+        }
+
+        String clean = value.trim();
+        if (clean.startsWith("http://") || clean.startsWith("https://") || clean.startsWith("/")) {
+            return clean;
+        }
+
+        return clean.startsWith("img/") ? clean : "img/" + clean;
+    }
+
+    private String slug(String value) {
+        if (value == null) {
+            return "artist";
+        }
+
+        String s = value.toLowerCase(Locale.ROOT)
+                .replace("å", "a")
+                .replace("à", "a")
+                .replace("è", "e")
+                .replace("é", "e")
+                .replace("ì", "i")
+                .replace("ò", "o")
+                .replace("ù", "u")
+                .replaceAll("[^a-z0-9]+", "-")
+                .replaceAll("^-+", "")
+                .replaceAll("-+$", "");
+
+        return s.isEmpty() ? "artist" : s;
+    }
+
+    private String casualImage(int index) {
+        return "img/casual/" + ((Math.abs(index) % 6) + 1) + ".jpg";
+    }
+
+    private String artistImage(ArtistBean artist, int index) {
+        if (artist != null && hasText(artist.getFoto())) {
+            return normalizeImagePath(artist.getFoto());
+        }
+
+        if (artist != null && hasText(artist.getNomeArte())) {
+            return "img/artisti/" + slug(artist.getNomeArte()) + ".jpg";
+        }
+
+        return casualImage(index);
     }
 %>
 <%
@@ -37,16 +91,16 @@
 <main class="main-content">
 <section class="section-container">
     <div class="section-header"><h2>In evidenza</h2></div>
-    <div class="featured-grid"><a href="${pageContext.request.contextPath}/artisti" class="featured-card featured-card--large"><div class="featured-card-img"></div><div class="featured-card-overlay"></div><div class="featured-card-body"><span class="featured-card-label">Artista del momento</span><div class="featured-card-nome"><%= featuredArtist == null ? "Artisti VibeShop" : h(featuredArtist.getNomeArte()) %></div><div class="featured-card-genere"><%= featuredArtist == null ? "Live" : h(featuredArtist.getGenere()) %></div></div></a></div>
+    <div class="featured-grid"><a href="${pageContext.request.contextPath}/artisti" class="featured-card featured-card--large"><img class="featured-card-img" src="${pageContext.request.contextPath}/<%= h(featuredArtist == null ? casualImage(0) : artistImage(featuredArtist, 0)) %>" alt="<%= featuredArtist == null ? "Artisti VibeShop" : h(featuredArtist.getNomeArte()) %>" onerror="this.onerror=null;this.src='${pageContext.request.contextPath}/<%= h(casualImage(0)) %>';"><div class="featured-card-overlay"></div><div class="featured-card-body"><span class="featured-card-label">Artista del momento</span><div class="featured-card-nome"><%= featuredArtist == null ? "Artisti VibeShop" : h(featuredArtist.getNomeArte()) %></div><div class="featured-card-genere"><%= featuredArtist == null ? "Live" : h(featuredArtist.getGenere()) %></div></div></a></div>
 </section>
 <section class="section-container">
     <div class="section-header"><h2>Tutti gli artisti</h2></div>
     <div class="artisti-grid">
         <% if (artists.isEmpty()) { %>
-            <a href="${pageContext.request.contextPath}/artisti" class="artista-card"><div class="artista-card-img"></div><div class="artista-card-body"><span class="artista-card-nome">Nessun artista disponibile</span><span class="artista-card-genere">Catalogo vuoto</span></div></a>
+            <a href="${pageContext.request.contextPath}/artisti" class="artista-card"><img class="artista-card-img" src="${pageContext.request.contextPath}/<%= h(casualImage(0)) %>" alt="Artisti VibeShop"><div class="artista-card-body"><span class="artista-card-nome">Nessun artista disponibile</span><span class="artista-card-genere">Catalogo vuoto</span></div></a>
         <% } else { %>
-            <% for (ArtistBean artist : artists) { %>
-                <a href="${pageContext.request.contextPath}/artisti" class="artista-card"><div class="artista-card-img"></div><div class="artista-card-body"><span class="artista-card-nome"><%= h(artist.getNomeArte()) %></span><span class="artista-card-genere"><%= h(artist.getGenere()) %><%= artist.getPaese() == null ? "" : " · " + h(artist.getPaese()) %></span></div></a>
+            <% for (int i = 0; i < artists.size(); i++) { ArtistBean artist = artists.get(i); %>
+                <a href="${pageContext.request.contextPath}/artisti" class="artista-card"><img class="artista-card-img" src="${pageContext.request.contextPath}/<%= h(artistImage(artist, i)) %>" alt="<%= h(artist.getNomeArte()) %>" onerror="this.onerror=null;this.src='${pageContext.request.contextPath}/<%= h(casualImage(i)) %>';"/><div class="artista-card-body"><span class="artista-card-nome"><%= h(artist.getNomeArte()) %></span><span class="artista-card-genere"><%= h(artist.getGenere()) %><%= artist.getPaese() == null ? "" : " · " + h(artist.getPaese()) %></span></div></a>
             <% } %>
         <% } %>
     </div>

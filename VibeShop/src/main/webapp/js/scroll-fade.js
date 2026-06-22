@@ -1,18 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const contenitori = document.querySelectorAll(".contenitore-card");
+    document.querySelectorAll(".contenitore-card").forEach(container => {
+        const updateFade = () => {
+            const canScroll = container.scrollWidth > container.clientWidth + 1;
+            const isAtStart = container.scrollLeft <= 2;
 
-    contenitori.forEach(cont => {
-        // Al caricamento, se c'è spazio per scrollare, mostriamo il gradiente
-        // Aggiungiamo la classe base che gestisce l'opacità
-        
-        cont.addEventListener("scroll", () => {
-            // Se scrolliamo più di 5px verso destra, togliamo il gradiente
-            if (cont.scrollLeft > 5) {
-                cont.classList.add("scrolled-end");
-            } else {
-                // Se torniamo all'inizio, riappare
-                cont.classList.remove("scrolled-end");
-            }
-        });
+            container.classList.toggle("has-horizontal-overflow", canScroll);
+            container.classList.toggle("hide-scroll-fade", !canScroll || !isAtStart);
+        };
+
+        updateFade();
+        container.addEventListener("scroll", updateFade, { passive: true });
+        window.addEventListener("resize", updateFade);
     });
 });

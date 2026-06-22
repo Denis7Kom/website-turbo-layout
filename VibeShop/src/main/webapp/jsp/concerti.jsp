@@ -14,6 +14,10 @@
         }
         return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#39;");
     }
+
+    private String concertImage(int index) {
+        return "img/concerti/" + ((Math.abs(index) % 6) + 1) + ".jpg";
+    }
 %>
 <%
     Object concertsObject = request.getAttribute("concerts");
@@ -51,12 +55,12 @@
 <main class="main-content"><section class="section-container"><div class="section-header"><h2>Tutti i concerti</h2></div>
     <% if (concerts.isEmpty()) { %><p>Nessun concerto disponibile al momento.</p><% } else { %>
         <div class="concerti-grid">
-            <% for (ConcertoBean concert : concerts) {
+            <% for (int i = 0; i < concerts.size(); i++) { ConcertoBean concert = concerts.get(i);
                 String key = CartItem.TYPE_CONCERT + "-" + concert.getIdConcerto();
                 int quantity = cart == null ? 0 : cart.getQuantity(key);
             %>
                 <div class="concerto-card">
-                    <div class="concerto-card-img"><span class="date-badge"><%= concert.getDataEvento() == null ? "LIVE" : new SimpleDateFormat("dd").format(concert.getDataEvento()) %><br><small><%= concert.getDataEvento() == null ? "" : new SimpleDateFormat("MMM", Locale.ITALY).format(concert.getDataEvento()).toUpperCase() %></small></span></div>
+                    <div class="concerto-card-img"><img src="${pageContext.request.contextPath}/<%= h(concertImage(i)) %>" alt="<%= h(concert.getNome()) %>"><span class="date-badge"><%= concert.getDataEvento() == null ? "LIVE" : new SimpleDateFormat("dd").format(concert.getDataEvento()) %><br><small><%= concert.getDataEvento() == null ? "" : new SimpleDateFormat("MMM", Locale.ITALY).format(concert.getDataEvento()).toUpperCase() %></small></span></div>
                     <div class="concerto-card-body">
                         <span class="concerto-card-artista"><%= h(concert.getNome()) %></span>
                         <span class="concerto-card-location"><%= h(concert.getLuogo()) %></span>
