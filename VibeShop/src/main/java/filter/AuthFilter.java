@@ -15,9 +15,11 @@ import javax.servlet.http.HttpSession;
 
 @WebFilter(urlPatterns = {
         "/jsp/profile.jsp",
+        "/jsp/modifica-profilo.jsp",
         "/jsp/orders.jsp",
         "/jsp/checkout.jsp",
         "/profile",
+        "/account/*",
         "/orders",
         "/checkout"
 })

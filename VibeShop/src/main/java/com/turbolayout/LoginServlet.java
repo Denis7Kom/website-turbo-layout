@@ -25,16 +25,16 @@ public class LoginServlet extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
 
-        String email = trim(request.getParameter("login"));
+        String login = trim(request.getParameter("login"));
         String password = request.getParameter("password");
 
-        if (isEmpty(email) || isEmpty(password)) {
-            forwardWithError(request, response, "Inserisci email e password.");
+        if (isEmpty(login) || isEmpty(password)) {
+            forwardWithError(request, response, "Inserisci email/username e password.");
             return;
         }
 
         try {
-            UserBean user = userDAO.findByEmailAndPassword(email, password);
+            UserBean user = userDAO.findByLoginAndPassword(login, password);
 
             if (user == null) {
                 forwardWithError(request, response, "Credenziali non valide.");
@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
 
             HttpSession session = request.getSession(true);
             session.setAttribute("user", user);
-            session.setAttribute("utente", user.getNome());
+            session.setAttribute("utente", displayName(user));
             session.setAttribute("role", user.getRole());
 
             response.sendRedirect(request.getContextPath() + "/home");
@@ -51,6 +51,13 @@ public class LoginServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new ServletException("Database error during login", e);
         }
+    }
+
+    private String displayName(UserBean user) {
+        if (user.getUsername() != null && !user.getUsername().trim().isEmpty()) {
+            return user.getUsername();
+        }
+        return user.getNome();
     }
 
     private void forwardWithError(HttpServletRequest request, HttpServletResponse response, String error)
