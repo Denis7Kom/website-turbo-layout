@@ -60,11 +60,13 @@
             <div class="merch-grid">
                 <% for (ProductBean product : products) { String key = CartItem.TYPE_PRODUCT + "-" + product.getIdProdotto(); int quantity = cart == null ? 0 : cart.getQuantity(key); %>
                     <div class="product-card">
-                        <% if (hasText(product.getImmagine())) { %><div class="product-card-img-container"><img class="product-card-img" src="${pageContext.request.contextPath}/<%= h(product.getImmagine()) %>" alt="<%= h(product.getNome()) %>"></div><% } %>
-                        <div class="product-card-body">
+                        <a class="product-detail-link" href="${pageContext.request.contextPath}/product?id=<%= product.getIdProdotto() %>">
+                            <% if (hasText(product.getImmagine())) { %><div class="product-card-img-container"><img class="product-card-img" src="${pageContext.request.contextPath}/<%= h(product.getImmagine()) %>" alt="<%= h(product.getNome()) %>"></div><% } %>
                             <span class="product-artist">VibeShop</span>
                             <h3 class="product-title"><%= h(product.getNome()) %></h3>
                             <% if (hasText(product.getDescrizione())) { %><p class="product-description"><%= h(product.getDescrizione()) %></p><% } %>
+                        </a>
+                        <div class="product-card-body">
                             <span class="product-price"><%= product.getPrezzo() == null ? "" : money.format(product.getPrezzo()) %></span>
                             <div class="product-cart-control" data-product-id="<%= product.getIdProdotto() %>">
                                 <button type="button" class="auth-primary-btn merch-add-btn <%= quantity > 0 ? "is-hidden" : "" %>">Aggiungi al carrello</button>

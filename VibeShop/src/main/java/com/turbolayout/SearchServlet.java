@@ -71,13 +71,13 @@ public class SearchServlet extends HttpServlet {
     }
 
     private void searchProducts(Connection connection, String like, List<SearchResult> results) throws SQLException {
-        String sql = "SELECT nome, descrizione FROM prodotto WHERE active = true AND (nome LIKE ? OR descrizione LIKE ?) ORDER BY nome LIMIT 8";
+        String sql = "SELECT id_prodotto, nome, descrizione FROM prodotto WHERE active = true AND (nome LIKE ? OR descrizione LIKE ?) ORDER BY nome LIMIT 8";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, like);
             statement.setString(2, like);
             try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
-                    results.add(new SearchResult("Merch", rs.getString("nome"), rs.getString("descrizione"), "/merch"));
+                    results.add(new SearchResult("Merch", rs.getString("nome"), rs.getString("descrizione"), "/product?id=" + rs.getInt("id_prodotto")));
                 }
             }
         }

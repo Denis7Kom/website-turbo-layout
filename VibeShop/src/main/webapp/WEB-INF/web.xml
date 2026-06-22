@@ -19,6 +19,10 @@
   </filter-mapping>
   <filter-mapping>
     <filter-name>AuthFilter</filter-name>
+    <url-pattern>/jsp/modifica-profilo.jsp</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>AuthFilter</filter-name>
     <url-pattern>/jsp/orders.jsp</url-pattern>
   </filter-mapping>
   <filter-mapping>
@@ -28,6 +32,10 @@
   <filter-mapping>
     <filter-name>AuthFilter</filter-name>
     <url-pattern>/profile</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>AuthFilter</filter-name>
+    <url-pattern>/account/*</url-pattern>
   </filter-mapping>
   <filter-mapping>
     <filter-name>AuthFilter</filter-name>
@@ -80,6 +88,28 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>ProfileServlet</servlet-name>
+    <servlet-class>com.turbolayout.ProfileServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProfileServlet</servlet-name>
+    <url-pattern>/profile</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>AccountServlet</servlet-name>
+    <servlet-class>com.turbolayout.AccountServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AccountServlet</servlet-name>
+    <url-pattern>/account/edit</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AccountServlet</servlet-name>
+    <url-pattern>/account/update</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>HomeServlet</servlet-name>
     <servlet-class>com.turbolayout.HomeServlet</servlet-class>
   </servlet>
@@ -99,6 +129,15 @@
   <servlet-mapping>
     <servlet-name>ProductServlet</servlet-name>
     <url-pattern>/merch</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>ProductDetailServlet</servlet-name>
+    <servlet-class>com.turbolayout.ProductDetailServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProductDetailServlet</servlet-name>
+    <url-pattern>/product</url-pattern>
   </servlet-mapping>
 
   <servlet>
