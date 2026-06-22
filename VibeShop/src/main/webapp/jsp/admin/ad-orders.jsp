@@ -13,23 +13,15 @@
     }
 
     private String statusBadgeClass(String status) {
-        if (status == null) {
-            return "unknown";
-        }
-
-        if ("IN_ELABORAZIONE".equalsIgnoreCase(status)) {
-            return "processing";
-        }
-
-        if ("ANNULLATO".equalsIgnoreCase(status)) {
-            return "cancelled";
-        }
-
-        if ("CONFERMATO".equalsIgnoreCase(status)) {
-            return "completed";
-        }
-
+        if (status == null) return "unknown";
+        if ("IN_ELABORAZIONE".equalsIgnoreCase(status)) return "processing";
+        if ("ANNULLATO".equalsIgnoreCase(status)) return "cancelled";
+        if ("CONFERMATO".equalsIgnoreCase(status)) return "completed";
         return "unknown";
+    }
+
+    private String displayStatus(String status) {
+        return status == null ? "" : status.replace("_", " ");
     }
 
     private String selectedStatus(String currentStatus, String optionStatus) {
@@ -75,8 +67,7 @@
             <nav class="sidebar-nav">
                 <a href="${pageContext.request.contextPath}/admin/dashboard">Panoramica</a>
                 <a href="${pageContext.request.contextPath}/admin/orders" class="active">Gestione Ordini</a>
-                <a href="${pageContext.request.contextPath}/admin/products">Gestione Prodotti</a>
-                <a href="${pageContext.request.contextPath}/admin/concerts">Gestione Concerti e Biglietti</a>
+                <a href="${pageContext.request.contextPath}/admin/products">Gestione Prodotti, Concerti e Biglietti</a>
                 <a href="${pageContext.request.contextPath}/logout" class="logout-link">Disconnetti</a>
             </nav>
         </aside>
@@ -103,13 +94,13 @@
                                         <td><%= order.getDataOrdine() %></td>
                                         <td><strong><%= money.format(order.getTotalPrice()) %></strong></td>
                                         <td><%= h(order.getTipoPagamento()) %></td>
-                                        <td><span class="badge <%= statusBadgeClass(stato) %>"><%= h(stato) %></span></td>
+                                        <td><span class="badge <%= statusBadgeClass(stato) %>"><%= h(displayStatus(stato)) %></span></td>
                                         <td>
                                             <form method="post" action="${pageContext.request.contextPath}/admin/orders">
                                                 <input type="hidden" name="idOrdine" value="<%= order.getIdOrdine() %>">
                                                 <select name="statoOrdine">
                                                     <option value="CONFERMATO" <%= selectedStatus(stato, "CONFERMATO") %>>CONFERMATO</option>
-                                                    <option value="IN_ELABORAZIONE" <%= selectedStatus(stato, "IN_ELABORAZIONE") %>>IN_ELABORAZIONE</option>
+                                                    <option value="IN_ELABORAZIONE" <%= selectedStatus(stato, "IN_ELABORAZIONE") %>>IN ELABORAZIONE</option>
                                                     <option value="ANNULLATO" <%= selectedStatus(stato, "ANNULLATO") %>>ANNULLATO</option>
                                                 </select>
                                                 <button type="submit" class="btn-table-edit">Aggiorna</button>
