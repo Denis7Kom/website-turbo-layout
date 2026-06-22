@@ -2,6 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Locale" %>
 <%@ page import="model.UserBean" %>
 <%@ page import="model.OrderBean" %>
@@ -12,6 +13,21 @@
             return "";
         }
         return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#39;");
+    }
+
+    private int itemQuantity(OrderItemBean item) {
+        Integer productQuantity = item.getQuantitaProdotto();
+        Integer ticketQuantity = item.getQuantitaBiglietti();
+
+        if (productQuantity != null && productQuantity.intValue() > 0) {
+            return productQuantity.intValue();
+        }
+
+        if (ticketQuantity != null && ticketQuantity.intValue() > 0) {
+            return ticketQuantity.intValue();
+        }
+
+        return 1;
     }
 %>
 <%
@@ -24,6 +40,7 @@
     String userName = user == null ? "Utente" : user.getNome();
     String initials = userName == null || userName.isEmpty() ? "U" : userName.substring(0, 1).toUpperCase();
     NumberFormat money = NumberFormat.getCurrencyInstance(Locale.ITALY);
+    SimpleDateFormat orderDateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.ITALY);
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -79,7 +96,7 @@
                                         <div class="order-row-header">
                                             <div class="order-col-left">
                                                 <span class="order-id">#<%= order.getIdOrdine() %></span>
-                                                <span class="order-date"><%= order.getDataOrdine() %></span>
+                                                <span class="order-date"><%= order.getDataOrdine() == null ? "-" : orderDateFormat.format(order.getDataOrdine()) %></span>
                                             </div>
                                             <div class="order-col-center">
                                                 <div class="order-badge-status completed"><%= h(order.getStatoOrdine()) %></div>
@@ -93,7 +110,7 @@
                                                 <% for (OrderItemBean item : order.getItems()) { %>
                                                     <div class="expanded-item-line">
                                                         <span class="item-name"><%= h(item.getItemName()) %></span>
-                                                        <span class="item-qty">x<%= item.getQuantitaProdotto() == null ? item.getQuantitaBiglietti() : item.getQuantitaProdotto() %></span>
+                                                        <span class="item-qty">x<%= itemQuantity(item) %></span>
                                                         <span class="item-subprice"><%= money.format(item.getPrezzoTotale()) %></span>
                                                     </div>
                                                 <% } %>
