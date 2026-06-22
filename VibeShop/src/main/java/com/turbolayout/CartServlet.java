@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 
 @WebServlet("/cart")
@@ -46,39 +47,42 @@ public class CartServlet extends HttpServlet {
         Cart cart = getCart(session);
         String action = request.getParameter("action");
         boolean ajax = isAjax(request);
-        int idProdotto = parseInt(request.getParameter("idProdotto"), 0);
-        String productKey = productKey(idProdotto);
 
         try {
             if ("add".equalsIgnoreCase(action)) {
-                addProduct(request, cart);
+                String cartKey = addProduct(request, cart, true);
                 synchronizeCartCount(session, cart);
                 if (ajax) {
-                    writeCartJson(response, cart, productKey);
+                    writeCartJson(response, cart, cartKey);
                     return;
                 }
-                response.sendRedirect(request.getContextPath() + "/cart?added=true");
+                response.sendRedirect(request.getContextPath() + "/merch?added=true");
                 return;
             }
 
             if ("increaseProduct".equalsIgnoreCase(action)) {
-                addProduct(request, cart);
+                String cartKey = addProduct(request, cart, false);
                 synchronizeCartCount(session, cart);
-                writeCartJson(response, cart, productKey);
+                writeCartJson(response, cart, cartKey);
                 return;
             }
 
             if ("decreaseProduct".equalsIgnoreCase(action)) {
-                cart.decreaseQuantity(productKey);
+                String cartKey = productKey(parseInt(request.getParameter("idProdotto"), 0));
+                cart.decreaseQuantity(cartKey);
                 synchronizeCartCount(session, cart);
-                writeCartJson(response, cart, productKey);
+                writeCartJson(response, cart, cartKey);
                 return;
             }
 
             if ("addConcert".equalsIgnoreCase(action)) {
-                addConcert(request, cart);
+                String cartKey = addConcert(request, cart, true);
                 synchronizeCartCount(session, cart);
-                response.sendRedirect(request.getContextPath() + "/cart?added=true");
+                if (ajax) {
+                    writeCartJson(response, cart, cartKey);
+                    return;
+                }
+                response.sendRedirect(request.getContextPath() + "/concerti?added=true");
                 return;
             }
 
@@ -95,6 +99,12 @@ public class CartServlet extends HttpServlet {
             }
 
             synchronizeCartCount(session, cart);
+
+            if (ajax) {
+                writeCartJson(response, cart, cartKey);
+                return;
+            }
+
             response.sendRedirect(request.getContextPath() + "/cart");
 
         } catch (SQLException e) {
@@ -102,12 +112,17 @@ public class CartServlet extends HttpServlet {
         }
     }
 
-    private void addProduct(HttpServletRequest request, Cart cart) throws SQLException {
+    private String addProduct(HttpServletRequest request, Cart cart, boolean onlyIfAbsent) throws SQLException {
         int idProdotto = parseInt(request.getParameter("idProdotto"), 0);
         int quantity = parseInt(request.getParameter("quantity"), 1);
+        String cartKey = productKey(idProdotto);
 
         if (idProdotto <= 0) {
-            return;
+            return cartKey;
+        }
+
+        if (onlyIfAbsent && cart.getQuantity(cartKey) > 0) {
+            return cartKey;
         }
 
         ProductBean product = productDAO.findById(idProdotto);
@@ -115,14 +130,21 @@ public class CartServlet extends HttpServlet {
         if (product != null && product.isActive()) {
             cart.addProduct(product, quantity);
         }
+
+        return cartKey;
     }
 
-    private void addConcert(HttpServletRequest request, Cart cart) throws SQLException {
+    private String addConcert(HttpServletRequest request, Cart cart, boolean onlyIfAbsent) throws SQLException {
         int idConcerto = parseInt(request.getParameter("idConcerto"), 0);
         int quantity = parseInt(request.getParameter("quantity"), 1);
+        String cartKey = concertKey(idConcerto);
 
         if (idConcerto <= 0) {
-            return;
+            return cartKey;
+        }
+
+        if (onlyIfAbsent && cart.getQuantity(cartKey) > 0) {
+            return cartKey;
         }
 
         ConcertoBean concert = concertoDAO.findById(idConcerto);
@@ -138,6 +160,8 @@ public class CartServlet extends HttpServlet {
             item.setQuantity(quantity);
             cart.addItem(item);
         }
+
+        return cartKey;
     }
 
     private Cart getCart(HttpSession session) {
@@ -165,12 +189,45 @@ public class CartServlet extends HttpServlet {
         return CartItem.TYPE_PRODUCT + "-" + idProdotto;
     }
 
+    private String concertKey(int idConcerto) {
+        return CartItem.TYPE_CONCERT + "-" + idConcerto;
+    }
+
     private void writeCartJson(HttpServletResponse response, Cart cart, String cartKey) throws IOException {
         response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
         response.setContentType("application/json;charset=UTF-8");
+
         int quantity = cart.getQuantity(cartKey);
         int cartCount = cart.getTotalQuantity();
-        response.getWriter().write("{\"quantity\":" + quantity + ",\"cartCount\":" + cartCount + "}");
+        BigDecimal subtotal = findSubtotal(cart, cartKey);
+        BigDecimal total = cart.getTotalPrice();
+
+        response.getWriter().write("{"
+                + "\"success\":true,"
+                + "\"quantity\":" + quantity + ","
+                + "\"cartCount\":" + cartCount + ","
+                + "\"subtotal\":" + toJsonDecimal(subtotal) + ","
+                + "\"total\":" + toJsonDecimal(total) + ","
+                + "\"empty\":" + cart.isEmpty()
+                + "}");
+    }
+
+    private BigDecimal findSubtotal(Cart cart, String cartKey) {
+        if (cartKey == null) {
+            return BigDecimal.ZERO;
+        }
+
+        for (CartItem item : cart.getItems()) {
+            if (cartKey.equals(item.getCartKey())) {
+                return item.getSubtotal();
+            }
+        }
+
+        return BigDecimal.ZERO;
+    }
+
+    private String toJsonDecimal(BigDecimal value) {
+        return value == null ? "0" : value.toPlainString();
     }
 
     private int parseInt(String value, int defaultValue) {
