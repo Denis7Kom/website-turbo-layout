@@ -66,12 +66,15 @@ public class AdminConcertServlet extends HttpServlet {
                 int id = parseInt(request.getParameter("id"), 0);
                 if (id > 0) {
                     concertoDAO.delete(id);
+                    response.sendRedirect(request.getContextPath() + "/admin/concerts?message=concert-removed");
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/admin/concerts?message=invalid-id");
                 }
-                response.sendRedirect(request.getContextPath() + "/admin/concerts");
                 return;
             }
 
             ConcertoBean concert = buildConcert(request);
+            boolean editing = concert.getIdConcerto() > 0;
             String validationError = validateConcert(concert);
             if (validationError != null) {
                 request.setAttribute("error", validationError);
@@ -80,13 +83,13 @@ public class AdminConcertServlet extends HttpServlet {
                 return;
             }
 
-            if (concert.getIdConcerto() > 0) {
+            if (editing) {
                 concertoDAO.update(concert);
             } else {
                 concertoDAO.create(concert);
             }
 
-            response.sendRedirect(request.getContextPath() + "/admin/concerts");
+            response.sendRedirect(request.getContextPath() + "/admin/concerts?message=" + (editing ? "concert-updated" : "concert-created"));
         } catch (SQLException e) {
             throw new ServletException("Database error while saving concert", e);
         }
