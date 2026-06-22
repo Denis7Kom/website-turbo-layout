@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/profile")
+@WebServlet({"/profile", "/profilo"})
 public class ProfileServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -37,12 +37,23 @@ public class ProfileServlet extends HttpServlet {
             UserBean freshUser = userDAO.findById(sessionUser.getIdUtente());
             if (freshUser != null) {
                 session.setAttribute("user", freshUser);
-                session.setAttribute("utente", freshUser.getUsername());
+                session.setAttribute("utente", displayName(freshUser));
                 session.setAttribute("role", freshUser.getRole());
             }
-            request.getRequestDispatcher("/jsp/profile.jsp").forward(request, response);
         } catch (SQLException e) {
-            throw new ServletException("Database error while loading profile", e);
+            request.setAttribute("profileWarning", "Profilo mostrato dai dati di sessione: aggiornamento dal database non riuscito.");
         }
+
+        request.getRequestDispatcher("/jsp/profile.jsp").forward(request, response);
+    }
+
+    private String displayName(UserBean user) {
+        if (user.getUsername() != null && !user.getUsername().trim().isEmpty()) {
+            return user.getUsername();
+        }
+        if (user.getNome() != null && !user.getNome().trim().isEmpty()) {
+            return user.getNome();
+        }
+        return user.getEmail();
     }
 }
