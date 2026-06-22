@@ -174,8 +174,8 @@ public class CheckoutServlet extends HttpServlet {
             OrderItemBean item = new OrderItemBean();
             item.setIdProdotto(cartItem.getIdProdotto());
             item.setIdConcerto(cartItem.getIdConcerto());
-            item.setQuantitaProdotto(cartItem.getIdProdotto() == null ? 0 : cartItem.getQuantity());
-            item.setQuantitaBiglietti(cartItem.getIdConcerto() == null ? 0 : cartItem.getQuantity());
+            item.setQuantitaProdotto(cartItem.getIdProdotto() == null ? null : cartItem.getQuantity());
+            item.setQuantitaBiglietti(cartItem.getIdConcerto() == null ? null : cartItem.getQuantity());
             item.setPrezzoTotale(cartItem.getSubtotal());
             item.setItemType(cartItem.getItemType());
             item.setItemName(cartItem.getItemName());
