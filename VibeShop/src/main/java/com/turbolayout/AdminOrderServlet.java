@@ -66,8 +66,11 @@ public class AdminOrderServlet extends HttpServlet {
             } catch (SQLException e) {
                 throw new ServletException("Database error while updating order status", e);
             }
+            response.sendRedirect(request.getContextPath() + "/admin/orders?message=order-updated");
+            return;
         }
-        response.sendRedirect(request.getContextPath() + "/admin/orders");
+
+        response.sendRedirect(request.getContextPath() + "/admin/orders?message=invalid-order-action");
     }
 
     private boolean isAdmin(HttpServletRequest request, HttpServletResponse response) throws IOException {
