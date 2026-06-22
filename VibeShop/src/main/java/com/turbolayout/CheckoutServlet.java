@@ -112,25 +112,35 @@ public class CheckoutServlet extends HttpServlet {
             return "Il CVV deve contenere esattamente 3 cifre.";
         }
 
-        if (!isValidExpiry(expiry)) {
-            return "La scadenza della carta non è valida o è già passata.";
+        String expiryError = validateExpiry(expiry);
+        if (expiryError != null) {
+            return expiryError;
         }
 
         return null;
     }
 
-    private boolean isValidExpiry(String expiry) {
-        if (expiry == null || !expiry.matches("(0[1-9]|1[0-2])/[0-9]{2}")) {
-            return false;
+    private String validateExpiry(String expiry) {
+        if (expiry == null || !expiry.matches("[0-9]{2}/[0-9]{2}")) {
+            return "La scadenza della carta deve essere nel formato MM/YY.";
         }
 
         try {
             int month = Integer.parseInt(expiry.substring(0, 2));
             int year = 2000 + Integer.parseInt(expiry.substring(3, 5));
+
+            if (month < 1 || month > 12) {
+                return "Il mese di scadenza non può essere superiore a 12.";
+            }
+
             YearMonth expiryMonth = YearMonth.of(year, month);
-            return !expiryMonth.isBefore(YearMonth.now());
+            if (expiryMonth.isBefore(YearMonth.now())) {
+                return "La scadenza della carta è già passata.";
+            }
+
+            return null;
         } catch (RuntimeException e) {
-            return false;
+            return "La scadenza della carta non è valida.";
         }
     }
 
@@ -164,8 +174,8 @@ public class CheckoutServlet extends HttpServlet {
             OrderItemBean item = new OrderItemBean();
             item.setIdProdotto(cartItem.getIdProdotto());
             item.setIdConcerto(cartItem.getIdConcerto());
-            item.setQuantitaProdotto(cartItem.getIdProdotto() == null ? null : cartItem.getQuantity());
-            item.setQuantitaBiglietti(cartItem.getIdConcerto() == null ? null : cartItem.getQuantity());
+            item.setQuantitaProdotto(cartItem.getIdProdotto() == null ? 0 : cartItem.getQuantity());
+            item.setQuantitaBiglietti(cartItem.getIdConcerto() == null ? 0 : cartItem.getQuantity());
             item.setPrezzoTotale(cartItem.getSubtotal());
             item.setItemType(cartItem.getItemType());
             item.setItemName(cartItem.getItemName());

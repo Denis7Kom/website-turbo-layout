@@ -5,6 +5,8 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Locale" %>
 <%@ page import="model.ConcertoBean" %>
+<%@ page import="model.Cart" %>
+<%@ page import="model.CartItem" %>
 <%!
     private String h(String value) {
         if (value == null) {
@@ -27,6 +29,8 @@
         concerts = new ArrayList<ConcertoBean>();
     }
 
+    Object cartObject = session.getAttribute("cart");
+    Cart cart = cartObject instanceof Cart ? (Cart) cartObject : null;
     NumberFormat money = NumberFormat.getCurrencyInstance(Locale.ITALY);
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm", Locale.ITALY);
 %>
@@ -47,13 +51,33 @@
 <main class="main-content"><section class="section-container"><div class="section-header"><h2>Tutti i concerti</h2></div>
     <% if (concerts.isEmpty()) { %><p>Nessun concerto disponibile al momento.</p><% } else { %>
         <div class="concerti-grid">
-            <% for (ConcertoBean concert : concerts) { %>
-                <div class="concerto-card"><div class="concerto-card-img"><span class="date-badge"><%= concert.getDataEvento() == null ? "LIVE" : new SimpleDateFormat("dd").format(concert.getDataEvento()) %><br><small><%= concert.getDataEvento() == null ? "" : new SimpleDateFormat("MMM", Locale.ITALY).format(concert.getDataEvento()).toUpperCase() %></small></span></div><div class="concerto-card-body"><span class="concerto-card-artista"><%= h(concert.getNome()) %></span><span class="concerto-card-location"><%= h(concert.getLuogo()) %></span><span class="concerto-card-prezzo">Da <%= money.format(concert.getPrezzo()) %></span><% if (concert.getDataEvento() != null) { %><span class="concerto-card-location"><%= dateFormat.format(concert.getDataEvento()) %></span><% } %><form action="${pageContext.request.contextPath}/cart" method="post"><input type="hidden" name="action" value="addConcert"><input type="hidden" name="idConcerto" value="<%= concert.getIdConcerto() %>"><input type="hidden" name="quantity" value="1"><button type="submit" class="btn-acquista">Acquista Biglietto</button></form></div></div>
+            <% for (ConcertoBean concert : concerts) {
+                String key = CartItem.TYPE_CONCERT + "-" + concert.getIdConcerto();
+                int quantity = cart == null ? 0 : cart.getQuantity(key);
+            %>
+                <div class="concerto-card">
+                    <div class="concerto-card-img"><span class="date-badge"><%= concert.getDataEvento() == null ? "LIVE" : new SimpleDateFormat("dd").format(concert.getDataEvento()) %><br><small><%= concert.getDataEvento() == null ? "" : new SimpleDateFormat("MMM", Locale.ITALY).format(concert.getDataEvento()).toUpperCase() %></small></span></div>
+                    <div class="concerto-card-body">
+                        <span class="concerto-card-artista"><%= h(concert.getNome()) %></span>
+                        <span class="concerto-card-location"><%= h(concert.getLuogo()) %></span>
+                        <span class="concerto-card-prezzo">Da <%= money.format(concert.getPrezzo()) %></span>
+                        <% if (concert.getDataEvento() != null) { %><span class="concerto-card-location"><%= dateFormat.format(concert.getDataEvento()) %></span><% } %>
+                        <div class="concert-cart-control" data-concert-id="<%= concert.getIdConcerto() %>" data-cart-key="<%= h(key) %>">
+                            <button type="button" class="btn-acquista ticket-add-btn <%= quantity > 0 ? "is-hidden" : "" %>">Acquista Biglietto</button>
+                            <div class="quantity-control <%= quantity > 0 ? "" : "is-hidden" %>">
+                                <button type="button" class="qty-btn qty-minus">−</button>
+                                <span class="qty-value"><%= quantity %></span>
+                                <button type="button" class="qty-btn qty-plus">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             <% } %>
         </div>
     <% } %>
 </section></main>
 <%@ include file="/WEB-INF/fragments/footer.jspf" %>
 <script src="${pageContext.request.contextPath}/js/menu.js"></script>
+<script src="${pageContext.request.contextPath}/js/vibeshop-ajax.js"></script>
 </body>
 </html>
