@@ -63,6 +63,10 @@
 
         return casualImage(index);
     }
+
+    private String fallbackOnError(int index) {
+        return "if(!this.dataset.fallback){this.dataset.fallback='casual';this.src=this.dataset.casual;}else{this.onerror=null;this.src=this.dataset.logo;}";
+    }
 %>
 <%
     Object artistsObject = request.getAttribute("artists");
@@ -91,16 +95,16 @@
 <main class="main-content">
 <section class="section-container">
     <div class="section-header"><h2>In evidenza</h2></div>
-    <div class="featured-grid"><a href="${pageContext.request.contextPath}/artisti" class="featured-card featured-card--large"><img class="featured-card-img" src="${pageContext.request.contextPath}/<%= h(featuredArtist == null ? casualImage(0) : artistImage(featuredArtist, 0)) %>" alt="<%= featuredArtist == null ? "Artisti VibeShop" : h(featuredArtist.getNomeArte()) %>" onerror="this.onerror=null;this.src='${pageContext.request.contextPath}/<%= h(casualImage(0)) %>';"><div class="featured-card-overlay"></div><div class="featured-card-body"><span class="featured-card-label">Artista del momento</span><div class="featured-card-nome"><%= featuredArtist == null ? "Artisti VibeShop" : h(featuredArtist.getNomeArte()) %></div><div class="featured-card-genere"><%= featuredArtist == null ? "Live" : h(featuredArtist.getGenere()) %></div></div></a></div>
+    <div class="featured-grid"><a href="${pageContext.request.contextPath}/artisti" class="featured-card featured-card--large"><img class="featured-card-img" src="${pageContext.request.contextPath}/<%= h(featuredArtist == null ? casualImage(0) : artistImage(featuredArtist, 0)) %>" data-casual="${pageContext.request.contextPath}/<%= h(casualImage(0)) %>" data-logo="${pageContext.request.contextPath}/img/logo.svg" alt="<%= featuredArtist == null ? "Artisti VibeShop" : h(featuredArtist.getNomeArte()) %>" onerror="<%= fallbackOnError(0) %>"><div class="featured-card-overlay"></div><div class="featured-card-body"><span class="featured-card-label">Artista del momento</span><div class="featured-card-nome"><%= featuredArtist == null ? "Artisti VibeShop" : h(featuredArtist.getNomeArte()) %></div><div class="featured-card-genere"><%= featuredArtist == null ? "Live" : h(featuredArtist.getGenere()) %></div></div></a></div>
 </section>
 <section class="section-container">
     <div class="section-header"><h2>Tutti gli artisti</h2></div>
     <div class="artisti-grid">
         <% if (artists.isEmpty()) { %>
-            <a href="${pageContext.request.contextPath}/artisti" class="artista-card"><img class="artista-card-img" src="${pageContext.request.contextPath}/<%= h(casualImage(0)) %>" alt="Artisti VibeShop"><div class="artista-card-body"><span class="artista-card-nome">Nessun artista disponibile</span><span class="artista-card-genere">Catalogo vuoto</span></div></a>
+            <a href="${pageContext.request.contextPath}/artisti" class="artista-card"><img class="artista-card-img" src="${pageContext.request.contextPath}/img/logo.svg" alt="Artisti VibeShop"><div class="artista-card-body"><span class="artista-card-nome">Nessun artista disponibile</span><span class="artista-card-genere">Catalogo vuoto</span></div></a>
         <% } else { %>
             <% for (int i = 0; i < artists.size(); i++) { ArtistBean artist = artists.get(i); %>
-                <a href="${pageContext.request.contextPath}/artisti" class="artista-card"><img class="artista-card-img" src="${pageContext.request.contextPath}/<%= h(artistImage(artist, i)) %>" alt="<%= h(artist.getNomeArte()) %>" onerror="this.onerror=null;this.src='${pageContext.request.contextPath}/<%= h(casualImage(i)) %>';"/><div class="artista-card-body"><span class="artista-card-nome"><%= h(artist.getNomeArte()) %></span><span class="artista-card-genere"><%= h(artist.getGenere()) %><%= artist.getPaese() == null ? "" : " · " + h(artist.getPaese()) %></span></div></a>
+                <a href="${pageContext.request.contextPath}/artisti" class="artista-card"><img class="artista-card-img" src="${pageContext.request.contextPath}/<%= h(artistImage(artist, i)) %>" data-casual="${pageContext.request.contextPath}/<%= h(casualImage(i)) %>" data-logo="${pageContext.request.contextPath}/img/logo.svg" alt="<%= h(artist.getNomeArte()) %>" onerror="<%= fallbackOnError(i) %>"/><div class="artista-card-body"><span class="artista-card-nome"><%= h(artist.getNomeArte()) %></span><span class="artista-card-genere"><%= h(artist.getGenere()) %><%= artist.getPaese() == null ? "" : " · " + h(artist.getPaese()) %></span></div></a>
             <% } %>
         <% } %>
     </div>
