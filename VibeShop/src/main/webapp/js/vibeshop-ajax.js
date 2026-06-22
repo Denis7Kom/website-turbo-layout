@@ -65,6 +65,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const minus = control.querySelector('.qty-minus');
 
         function send(action) {
+            const oldQuantity = parseInt(qtyValue.textContent || '0', 10) || 0;
+            const oldCartCount = getCurrentCartCount();
+
             const body = new URLSearchParams();
             body.set('ajax', 'true');
             body.set('action', action);
@@ -80,12 +83,23 @@ document.addEventListener('DOMContentLoaded', function () {
                 body: body.toString()
             })
                 .then(function (response) { return response.json(); })
-                .then(function (data) { updateQuantity(data.quantity, data.cartCount); })
+                .then(function (data) {
+                    const newQuantity = parseInt(data.quantity || 0, 10) || 0;
+                    let newCartCount = parseInt(data.cartCount, 10);
+
+                    if (Number.isNaN(newCartCount)) {
+                        newCartCount = Math.max(0, oldCartCount + newQuantity - oldQuantity);
+                    }
+
+                    updateQuantity(newQuantity, newCartCount);
+                })
                 .catch(function () {});
         }
 
         function updateQuantity(quantity, cartCount) {
             const qty = parseInt(quantity || 0, 10);
+            const count = Math.max(0, parseInt(cartCount || 0, 10));
+
             qtyValue.textContent = qty;
             if (qty > 0) {
                 addButton.classList.add('is-hidden');
@@ -95,9 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 quantityControl.classList.add('is-hidden');
             }
 
-            document.querySelectorAll('.cart-count').forEach(function (badge) {
-                badge.textContent = cartCount;
-            });
+            updateCartBadges(count);
         }
 
         if (addButton) addButton.addEventListener('click', function () { send('add'); });
@@ -114,6 +126,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 row.style.display = row.textContent.toLowerCase().indexOf(value) >= 0 ? '' : 'none';
             });
         });
+    }
+
+    function updateCartBadges(count) {
+        document.querySelectorAll('.cart-count').forEach(function (badge) {
+            badge.textContent = count;
+            badge.style.display = count > 0 ? 'flex' : 'none';
+        });
+    }
+
+    function getCurrentCartCount() {
+        const badge = document.querySelector('.cart-count');
+        return badge ? (parseInt(badge.textContent || '0', 10) || 0) : 0;
     }
 
     function getContextPath() {
