@@ -19,6 +19,7 @@
     String role = user == null ? "" : user.getRole();
     String initials = nome == null || nome.isEmpty() ? "U" : nome.substring(0, 1).toUpperCase();
     boolean updated = "true".equals(request.getParameter("updated"));
+    String profileWarning = (String) request.getAttribute("profileWarning");
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -58,6 +59,10 @@
 
     <% if (updated) { %>
         <div class="profile-alert success">Dati account aggiornati correttamente.</div>
+    <% } %>
+
+    <% if (profileWarning != null && !profileWarning.trim().isEmpty()) { %>
+        <div class="profile-alert error"><%= h(profileWarning) %></div>
     <% } %>
 
     <div class="profile-content-grid">
