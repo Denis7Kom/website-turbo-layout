@@ -33,7 +33,7 @@
 <main class="admin-main-container">
     <header class="admin-hero">
         <div class="admin-welcome-box">
-            <div class="admin-icon">PR</div>
+            <div class="admin-icon admin-icon-logo"><img src="${pageContext.request.contextPath}/img/logo.svg" alt="VibeShop" /></div>
             <div class="admin-welcome-text">
                 <h1>Gestione Prodotti</h1>
                 <p>Catalogo prodotti collegato al database.</p>
@@ -52,6 +52,7 @@
                 <a href="${pageContext.request.contextPath}/admin/dashboard">Panoramica</a>
                 <a href="${pageContext.request.contextPath}/admin/orders">Gestione Ordini</a>
                 <a href="${pageContext.request.contextPath}/admin/products" class="active">Gestione Prodotti</a>
+                <a href="${pageContext.request.contextPath}/admin/concerts">Gestione Concerti e Biglietti</a>
                 <a href="${pageContext.request.contextPath}/logout" class="logout-link">Disconnetti</a>
             </nav>
         </aside>
