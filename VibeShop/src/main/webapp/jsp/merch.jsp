@@ -51,7 +51,7 @@
     <div class="merch-hero-fade"></div>
 </div>
 <main class="main-content">
-    <div class="filter-bar"><div class="categories-capsules"><a href="${pageContext.request.contextPath}/merch" class="capsule active">Tutti i prodotti</a><a href="${pageContext.request.contextPath}/concerti" class="capsule">Biglietti</a><a href="${pageContext.request.contextPath}/home#artisti" class="capsule">Artisti</a></div></div>
+    <div class="filter-bar"><div class="categories-capsules"><a href="${pageContext.request.contextPath}/home" class="capsule">Tutti i prodotti</a><a href="${pageContext.request.contextPath}/concerti" class="capsule">Biglietti</a><a href="${pageContext.request.contextPath}/artisti" class="capsule">Artisti</a></div></div>
     <section class="section-container">
         <% if (searchQuery != null && !searchQuery.trim().isEmpty()) { %><div class="section-header"><h2>Risultati per: <%= h(searchQuery) %></h2></div><% } %>
         <% if (products.isEmpty()) { %>

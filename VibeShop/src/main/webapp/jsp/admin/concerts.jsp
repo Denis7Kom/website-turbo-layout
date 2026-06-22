@@ -89,11 +89,13 @@
                                         <td><strong><%= concert.getPrezzo() == null ? money.format(0) : money.format(concert.getPrezzo()) %></strong></td>
                                         <td><%= concert.getIva() %>%</td>
                                         <td>
-                                            <a href="${pageContext.request.contextPath}/admin/concert-form?id=<%= concert.getIdConcerto() %>" class="btn-table-edit">Modifica</a>
-                                            <form action="${pageContext.request.contextPath}/admin/concerts/delete" method="post" style="display:inline;">
-                                                <input type="hidden" name="id" value="<%= concert.getIdConcerto() %>">
-                                                <button type="submit" class="btn-table-delete">Elimina</button>
-                                            </form>
+                                            <div class="admin-actions-cell">
+                                                <a href="${pageContext.request.contextPath}/admin/concert-form?id=<%= concert.getIdConcerto() %>" class="btn-table-edit">Modifica</a>
+                                                <form action="${pageContext.request.contextPath}/admin/concerts/delete" method="post">
+                                                    <input type="hidden" name="id" value="<%= concert.getIdConcerto() %>">
+                                                    <button type="submit" class="btn-table-delete">Elimina</button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
                                 <% } %>
