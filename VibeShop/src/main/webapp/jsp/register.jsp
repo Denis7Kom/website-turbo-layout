@@ -39,7 +39,7 @@
                     <div class="auth-field"><label for="nome">Nome</label><input type="text" id="nome" name="nome" placeholder="Inserisci il tuo nome" required /></div>
                     <div class="auth-field"><label for="cognome">Cognome</label><input type="text" id="cognome" name="cognome" placeholder="Inserisci il tuo cognome" required /></div>
                 </div>
-                <div class="auth-field"><label for="username">Username</label><input type="text" id="username" name="username" placeholder="Scegli un username unico" required /></div>
+                <div class="auth-field"><label for="username">Username</label><input type="text" id="username" name="username" placeholder="Scegli un username unico" pattern="[A-Za-z0-9._-]{3,30}" title="3-30 caratteri: lettere, numeri, punto, trattino o underscore" required /></div>
                 <div class="auth-form-grid">
                     <div class="auth-field"><label for="email">Email</label><input type="email" id="email" name="email" placeholder="Inserisci la tua email" required autocomplete="email" /></div>
                     <div class="auth-field"><label for="telefono">Telefono</label><input type="tel" id="telefono" name="telefono" placeholder="Es. +39 333 123 4567" pattern="\+?[0-9 .()\-]{7,20}" title="Inserisci un numero valido, ad esempio +39 333 123 4567" required autocomplete="tel" /></div>
