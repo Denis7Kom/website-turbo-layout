@@ -18,17 +18,6 @@
         }
         return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#39;");
     }
-
-    private String shortText(String value, int maxLength) {
-        if (value == null) {
-            return "";
-        }
-        String clean = value.trim();
-        if (clean.length() <= maxLength) {
-            return clean;
-        }
-        return clean.substring(0, maxLength - 1).trim() + "…";
-    }
 %>
 <%
     List<ConcertoBean> concerts = new ArrayList<ConcertoBean>();
@@ -139,9 +128,6 @@
                                     <% } %>
                                     <% if (artist.getPaese() != null && !artist.getPaese().trim().isEmpty()) { %>
                                         <span class="card-meta"><%= h(artist.getPaese()) %></span>
-                                    <% } %>
-                                    <% if (artist.getBiografia() != null && !artist.getBiografia().trim().isEmpty()) { %>
-                                        <span class="card-meta"><%= h(shortText(artist.getBiografia(), 95)) %></span>
                                     <% } %>
                                 </div>
                             </a>
