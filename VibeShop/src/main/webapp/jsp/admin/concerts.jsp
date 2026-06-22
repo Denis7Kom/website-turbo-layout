@@ -12,12 +12,26 @@
         }
         return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#39;");
     }
+
+    private String adminMessage(String code) {
+        if ("concert-created".equals(code)) return "Concerto creato correttamente.";
+        if ("concert-updated".equals(code)) return "Concerto aggiornato correttamente.";
+        if ("concert-removed".equals(code)) return "Concerto eliminato correttamente.";
+        if ("invalid-id".equals(code)) return "Azione non completata: identificativo non valido.";
+        return null;
+    }
+
+    private String adminMessageClass(String code) {
+        return "invalid-id".equals(code) ? "admin-action-message error" : "admin-action-message success";
+    }
 %>
 <%
     Object data = request.getAttribute("concerts");
     List<ConcertoBean> concerts = data instanceof List ? (List<ConcertoBean>) data : new ArrayList<ConcertoBean>();
     NumberFormat money = NumberFormat.getCurrencyInstance(Locale.ITALY);
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm", Locale.ITALY);
+    String messageCode = request.getParameter("message");
+    String actionMessage = adminMessage(messageCode);
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -70,6 +84,9 @@
                     <a href="${pageContext.request.contextPath}/admin/products">Prodotti</a>
                     <a href="${pageContext.request.contextPath}/admin/concerts" class="active">Concerti e Biglietti</a>
                 </div>
+                <% if (actionMessage != null) { %>
+                    <div class="<%= adminMessageClass(messageCode) %>" role="status"><%= h(actionMessage) %></div>
+                <% } %>
                 <div class="admin-filters-bar">
                     <div class="filter-group-search">
                         <label for="searchProduct">Cerca evento</label>
@@ -94,7 +111,7 @@
                                         <td><%= concert.getIva() %>%</td>
                                         <td>
                                             <a href="${pageContext.request.contextPath}/admin/concert-form?id=<%= concert.getIdConcerto() %>" class="btn-table-edit">Modifica</a>
-                                            <form action="${pageContext.request.contextPath}/admin/concerts/delete" method="post" style="display:inline;">
+                                            <form action="${pageContext.request.contextPath}/admin/concerts/delete" method="post" style="display:inline;" onsubmit="return confirm('Confermi l eliminazione di questo concerto e dei relativi biglietti dal catalogo?');">
                                                 <input type="hidden" name="id" value="<%= concert.getIdConcerto() %>">
                                                 <button type="submit" class="btn-table-delete">Elimina</button>
                                             </form>
