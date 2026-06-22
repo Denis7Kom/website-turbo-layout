@@ -11,6 +11,30 @@
         }
         return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#39;");
     }
+
+    private String statusBadgeClass(String status) {
+        if (status == null) {
+            return "unknown";
+        }
+
+        if ("IN_ELABORAZIONE".equalsIgnoreCase(status)) {
+            return "processing";
+        }
+
+        if ("ANNULLATO".equalsIgnoreCase(status)) {
+            return "cancelled";
+        }
+
+        if ("CONFERMATO".equalsIgnoreCase(status)) {
+            return "completed";
+        }
+
+        return "unknown";
+    }
+
+    private String selectedStatus(String currentStatus, String optionStatus) {
+        return optionStatus.equalsIgnoreCase(currentStatus == null ? "" : currentStatus) ? "selected" : "";
+    }
 %>
 <%
     Object ordersObject = request.getAttribute("orders");
@@ -33,7 +57,7 @@
 <main class="admin-main-container">
     <header class="admin-hero">
         <div class="admin-welcome-box">
-            <div class="admin-icon">OR</div>
+            <div class="admin-icon admin-icon-logo"><img src="${pageContext.request.contextPath}/img/logo.svg" alt="VibeShop" /></div>
             <div class="admin-welcome-text">
                 <h1>Gestione Ordini</h1>
                 <p>Ordini letti dal database MySQL.</p>
@@ -52,6 +76,7 @@
                 <a href="${pageContext.request.contextPath}/admin/dashboard">Panoramica</a>
                 <a href="${pageContext.request.contextPath}/admin/orders" class="active">Gestione Ordini</a>
                 <a href="${pageContext.request.contextPath}/admin/products">Gestione Prodotti</a>
+                <a href="${pageContext.request.contextPath}/admin/concerts">Gestione Concerti e Biglietti</a>
                 <a href="${pageContext.request.contextPath}/logout" class="logout-link">Disconnetti</a>
             </nav>
         </aside>
@@ -71,18 +96,22 @@
                             <% if (orders.isEmpty()) { %>
                                 <tr><td colspan="7">Nessun ordine trovato.</td></tr>
                             <% } else { %>
-                                <% for (OrderBean order : orders) { %>
+                                <% for (OrderBean order : orders) { String stato = order.getStatoOrdine(); %>
                                     <tr>
                                         <td><strong>#<%= order.getIdOrdine() %></strong></td>
                                         <td><%= order.getIdUtente() %></td>
                                         <td><%= order.getDataOrdine() %></td>
                                         <td><strong><%= money.format(order.getTotalPrice()) %></strong></td>
                                         <td><%= h(order.getTipoPagamento()) %></td>
-                                        <td><span class="badge completed"><%= h(order.getStatoOrdine()) %></span></td>
+                                        <td><span class="badge <%= statusBadgeClass(stato) %>"><%= h(stato) %></span></td>
                                         <td>
                                             <form method="post" action="${pageContext.request.contextPath}/admin/orders">
                                                 <input type="hidden" name="idOrdine" value="<%= order.getIdOrdine() %>">
-                                                <select name="statoOrdine"><option value="CONFERMATO">CONFERMATO</option><option value="IN_ELABORAZIONE">IN_ELABORAZIONE</option><option value="ANNULLATO">ANNULLATO</option></select>
+                                                <select name="statoOrdine">
+                                                    <option value="CONFERMATO" <%= selectedStatus(stato, "CONFERMATO") %>>CONFERMATO</option>
+                                                    <option value="IN_ELABORAZIONE" <%= selectedStatus(stato, "IN_ELABORAZIONE") %>>IN_ELABORAZIONE</option>
+                                                    <option value="ANNULLATO" <%= selectedStatus(stato, "ANNULLATO") %>>ANNULLATO</option>
+                                                </select>
                                                 <button type="submit" class="btn-table-edit">Aggiorna</button>
                                             </form>
                                         </td>

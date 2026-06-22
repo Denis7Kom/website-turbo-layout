@@ -26,12 +26,14 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); line
 .concerto-card-artista { font-size: 16px; font-weight: 700; overflow-wrap: anywhere; word-break: break-word; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 40px; }
 .concerto-card-location { font-size: 13px; color: var(--text-dim); overflow-wrap: anywhere; }
 .concerto-card-prezzo { font-size: 14px; font-weight: 600; color: var(--purple); margin-top: 6px; }
-.btn-acquista { margin-top: 10px; padding: 10px 14px; border: none; border-radius: 12px; background: var(--purple); color: var(--white); font-weight: 700; cursor: pointer; }
-.btn-acquista:disabled, .qty-btn:disabled { opacity: .6; cursor: wait; }
+.concert-cart-control { margin-top: 10px; }
+.btn-acquista { width: 100%; margin-top: 10px; padding: 10px 14px; border: none; border-radius: 12px; background: var(--purple); color: var(--white); font-weight: 700; cursor: pointer; transition: background .2s ease, transform .2s ease; }
+.btn-acquista:hover { background: #5a4bb8; transform: translateY(-1px); }
+.btn-acquista:disabled, .qty-btn:disabled { opacity: .6; cursor: wait; transform: none; }
 .is-hidden { display: none !important; }
-.quantity-control { margin-top: 10px; display: flex; align-items: center; justify-content: space-between; gap: 10px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 6px; }
-.qty-btn { width: 32px; height: 32px; border: none; border-radius: 8px; background: var(--white); color: var(--purple); font-size: 18px; font-weight: 800; cursor: pointer; }
-.qty-value { min-width: 28px; text-align: center; font-weight: 800; color: var(--text); }
+.quantity-control { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 10px; padding: 8px; border: 1px solid var(--border); border-radius: 12px; background: #fff; }
+.qty-btn { width: 34px; height: 34px; border: none; border-radius: 10px; background: rgba(106,90,205,0.12); color: var(--purple); font-size: 20px; font-weight: 800; cursor: pointer; }
+.qty-value { min-width: 30px; text-align: center; font-weight: 800; color: var(--text); }
 .pagination { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 48px; }
 .pagination a,.pagination span { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 10px; font-size: 14px; font-weight: 600; text-decoration: none; transition: all 0.2s ease; }
 .pagination a { background: var(--white); color: var(--text); border: 1px solid var(--border); }
