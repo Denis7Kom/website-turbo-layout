@@ -35,7 +35,7 @@
 
     <div class="actions">
         <button type="button" class="btn btn-primary" onclick="goBackOrHome()">← Pagina precedente</button>
-        <a href="${pageContext.request.contextPath}/jsp/index.jsp" class="btn btn-ghost">Home</a>
+        <a href="${pageContext.request.contextPath}/home" class="btn btn-ghost">Home</a>
         <a href="${pageContext.request.contextPath}/merch" class="btn btn-ghost">Merch</a>
     </div>
     <p class="note">Se il problema persiste, contatta l'assistenza.</p>
@@ -45,7 +45,7 @@ function goBackOrHome() {
     if (document.referrer && document.referrer.indexOf(location.origin) === 0) {
         history.back();
     } else {
-        location.href = '${pageContext.request.contextPath}/jsp/index.jsp';
+        location.href = '${pageContext.request.contextPath}/home';
     }
 }
 </script>

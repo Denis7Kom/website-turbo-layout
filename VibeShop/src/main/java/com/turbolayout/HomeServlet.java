@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
-@WebServlet("/home")
+@WebServlet({"/home", "/homepage"})
 public class HomeServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -38,12 +38,14 @@ public class HomeServlet extends HttpServlet {
             request.setAttribute("featuredArtists", artists);
             request.setAttribute("featuredProducts", products);
         } catch (SQLException e) {
+            // The homepage must remain reachable even if the database is not configured yet.
+            // In that case the JSP renders proper empty states instead of breaking the whole site.
             request.setAttribute("featuredConcerts", Collections.<ConcertoBean>emptyList());
             request.setAttribute("featuredArtists", Collections.<ArtistBean>emptyList());
             request.setAttribute("featuredProducts", Collections.<ProductBean>emptyList());
             request.setAttribute("databaseWarning", "Database non disponibile: contenuti dinamici temporaneamente vuoti.");
         }
 
-        request.getRequestDispatcher("/jsp/index.jsp").forward(request, response);
+        request.getRequestDispatcher("/homepage.jsp").forward(request, response);
     }
 }

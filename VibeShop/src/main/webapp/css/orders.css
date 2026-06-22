@@ -31,6 +31,9 @@ body {
     position: relative;
 }
 
+/* ══════════════════════════════════════
+   HERO — AVATAR + BENVENUTO
+══════════════════════════════════════ */
 .profile-hero {
     position: relative;
     overflow: hidden;
@@ -86,6 +89,9 @@ body {
     color: rgba(255, 255, 255, 0.6);
 }
 
+/* ══════════════════════════════════════
+   STRUTTURA SCHEDA E CONTENITORI
+══════════════════════════════════════ */
 .profile-content-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -154,6 +160,9 @@ body {
     border: 1px solid var(--border);
 }
 
+/* ══════════════════════════════════════
+   STRUTTURA RIGIDA TRE COLONNE (ACCORDION)
+══════════════════════════════════════ */
 .orders-list {
     display: flex;
     flex-direction: column;
@@ -173,6 +182,7 @@ body {
     border-color: var(--purple);
 }
 
+/* Header cliccabile */
 .order-row-header {
     display: flex;
     align-items: center;
@@ -181,6 +191,7 @@ body {
     user-select: none;
 }
 
+/* Colonna Sinistra: Codice + Data */
 .order-col-left {
     flex: 1;
     display: flex;
@@ -191,6 +202,7 @@ body {
 .order-id { font-size: 15px; font-weight: 700; color: var(--text); }
 .order-date { font-size: 12px; color: var(--text-dim); }
 
+/* Colonna Centrale: Stato (Perfettamente al Centro della riga) */
 .order-col-center {
     flex: 1;
     display: flex;
@@ -208,6 +220,7 @@ body {
 .order-badge-status.shipping { background-color: rgba(2, 136, 209, 0.08); color: #0288d1; }
 .order-badge-status.completed { background-color: rgba(46, 125, 50, 0.08); color: #2e7d32; }
 
+/* Colonna Destra: Prezzo + Freccia */
 .order-col-right {
     flex: 1;
     display: flex;
@@ -218,17 +231,22 @@ body {
 .order-price { font-size: 16px; font-weight: 800; color: var(--text); }
 .accordion-arrow { font-size: 11px; color: var(--text-dim); transition: transform 0.2s ease; }
 
+/* Quando la riga è attiva ruota la freccia */
 .order-row-item.active .accordion-arrow {
     transform: rotate(180deg);
     color: var(--purple);
 }
 
+/* ══════════════════════════════════════
+   GESTIONE COMPARSA ARTICOLI
+══════════════════════════════════════ */
 .order-row-body {
-    display: none;
+    display: none; /* NASCOSTO DI DEFAULT */
     background: var(--bg);
     border-top: 1px solid var(--border);
 }
 
+/* Diventa visibile solo quando l'elemento ha la classe .active */
 .order-row-item.active .order-row-body {
     display: block;
 }
@@ -250,6 +268,7 @@ body {
 .item-qty { font-weight: 700; color: var(--text-dim); flex: 0.5; text-align: center; }
 .item-subprice { font-weight: 700; color: var(--text); flex: 0.5; text-align: right; }
 
+/* RESPONSIVE DESIGN MOBILE */
 @media (max-width: 768px) {
     .order-row-header {
         flex-direction: column;

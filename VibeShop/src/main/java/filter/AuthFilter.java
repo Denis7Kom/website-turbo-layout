@@ -27,6 +27,7 @@ public class AuthFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+        // No initialization needed.
     }
 
     @Override
@@ -49,5 +50,6 @@ public class AuthFilter implements Filter {
 
     @Override
     public void destroy() {
+        // No resources to release.
     }
 }
