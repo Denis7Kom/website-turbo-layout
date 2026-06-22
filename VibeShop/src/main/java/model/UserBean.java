@@ -8,6 +8,7 @@ public class UserBean implements Serializable {
     private int idUtente;
     private String nome;
     private String cognome;
+    private String username;
     private String email;
     private String role;
     private String cellulare;
@@ -35,6 +36,14 @@ public class UserBean implements Serializable {
 
     public void setCognome(String cognome) {
         this.cognome = cognome;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
