@@ -4,6 +4,8 @@
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.util.Locale" %>
 <%@ page import="model.ProductBean" %>
+<%@ page import="model.Cart" %>
+<%@ page import="model.CartItem" %>
 <%!
     private String h(String value) {
         if (value == null) {
@@ -28,6 +30,8 @@
 
     NumberFormat money = NumberFormat.getCurrencyInstance(Locale.ITALY);
     String searchQuery = (String) request.getAttribute("searchQuery");
+    Object cartObject = session.getAttribute("cart");
+    Cart cart = cartObject instanceof Cart ? (Cart) cartObject : null;
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -43,54 +47,33 @@
 <%@ include file="/WEB-INF/fragments/header.jspf" %>
 <%@ include file="/WEB-INF/fragments/nav.jspf" %>
 <div class="merch-hero">
-    <div class="merch-hero-inner">
-        <span class="merch-hero-label">Collezioni Esclusive</span>
-        <h1>Merch<br>Ufficiale</h1>
-        <p>Indossa la tua passione. T-shirt, felpe e accessori in edizione limitata<br>dei migliori artisti della scena.</p>
-    </div>
+    <div class="merch-hero-inner"><span class="merch-hero-label">Collezioni Esclusive</span><h1>Merch<br>Ufficiale</h1><p>Indossa la tua passione. T-shirt, felpe e accessori in edizione limitata<br>dei migliori artisti della scena.</p></div>
     <div class="merch-hero-fade"></div>
 </div>
 <main class="main-content">
-    <div class="filter-bar">
-        <div class="categories-capsules">
-            <a href="${pageContext.request.contextPath}/merch" class="capsule active">Tutti i prodotti</a>
-            <a href="${pageContext.request.contextPath}/concerti" class="capsule">Biglietti</a>
-            <a href="${pageContext.request.contextPath}/artisti" class="capsule">Artisti</a>
-        </div>
-    </div>
+    <div class="filter-bar"><div class="categories-capsules"><a href="${pageContext.request.contextPath}/merch" class="capsule active">Tutti i prodotti</a><a href="${pageContext.request.contextPath}/concerti" class="capsule">Biglietti</a><a href="${pageContext.request.contextPath}/artisti" class="capsule">Artisti</a></div></div>
     <section class="section-container">
-        <% if (searchQuery != null && !searchQuery.trim().isEmpty()) { %>
-            <div class="section-header"><h2>Risultati per: <%= h(searchQuery) %></h2></div>
-        <% } %>
+        <% if (searchQuery != null && !searchQuery.trim().isEmpty()) { %><div class="section-header"><h2>Risultati per: <%= h(searchQuery) %></h2></div><% } %>
         <% if (products.isEmpty()) { %>
-            <div class="empty-catalog-message">
-                <h2>Nessun prodotto disponibile</h2>
-                <p>Il catalogo merch è temporaneamente vuoto o non ci sono risultati per la ricerca.</p>
-            </div>
+            <div class="empty-catalog-message"><h2>Nessun prodotto disponibile</h2><p>Il catalogo merch è temporaneamente vuoto o non ci sono risultati per la ricerca.</p></div>
         <% } else { %>
             <div class="merch-grid">
-                <% for (ProductBean product : products) { %>
+                <% for (ProductBean product : products) { String key = CartItem.TYPE_PRODUCT + "-" + product.getIdProdotto(); int quantity = cart == null ? 0 : cart.getQuantity(key); %>
                     <div class="product-card">
-                        <% if (hasText(product.getImmagine())) { %>
-                            <div class="product-card-img-container">
-                                <img class="product-card-img"
-                                     src="${pageContext.request.contextPath}/<%= h(product.getImmagine()) %>"
-                                     alt="<%= h(product.getNome()) %>">
-                            </div>
-                        <% } %>
+                        <% if (hasText(product.getImmagine())) { %><div class="product-card-img-container"><img class="product-card-img" src="${pageContext.request.contextPath}/<%= h(product.getImmagine()) %>" alt="<%= h(product.getNome()) %>"></div><% } %>
                         <div class="product-card-body">
                             <span class="product-artist">VibeShop</span>
                             <h3 class="product-title"><%= h(product.getNome()) %></h3>
-                            <% if (hasText(product.getDescrizione())) { %>
-                                <p class="product-description"><%= h(product.getDescrizione()) %></p>
-                            <% } %>
+                            <% if (hasText(product.getDescrizione())) { %><p class="product-description"><%= h(product.getDescrizione()) %></p><% } %>
                             <span class="product-price"><%= product.getPrezzo() == null ? "" : money.format(product.getPrezzo()) %></span>
-                            <form action="${pageContext.request.contextPath}/cart" method="post">
-                                <input type="hidden" name="action" value="add">
-                                <input type="hidden" name="idProdotto" value="<%= product.getIdProdotto() %>">
-                                <input type="hidden" name="quantity" value="1">
-                                <button type="submit" class="auth-primary-btn">Aggiungi al carrello</button>
-                            </form>
+                            <div class="product-cart-control" data-product-id="<%= product.getIdProdotto() %>">
+                                <button type="button" class="auth-primary-btn merch-add-btn <%= quantity > 0 ? "is-hidden" : "" %>">Aggiungi al carrello</button>
+                                <div class="quantity-control <%= quantity > 0 ? "" : "is-hidden" %>">
+                                    <button type="button" class="qty-btn qty-minus">−</button>
+                                    <span class="qty-value"><%= quantity %></span>
+                                    <button type="button" class="qty-btn qty-plus">+</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 <% } %>
@@ -100,5 +83,6 @@
 </main>
 <%@ include file="/WEB-INF/fragments/footer.jspf" %>
 <script src="${pageContext.request.contextPath}/js/menu.js"></script>
+<script src="${pageContext.request.contextPath}/js/vibeshop-ajax.js"></script>
 </body>
 </html>

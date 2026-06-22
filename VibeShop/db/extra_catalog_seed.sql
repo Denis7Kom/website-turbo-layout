@@ -1,0 +1,70 @@
+USE `vibeshop`;
+
+INSERT INTO `artista` (`id_artista`, `nome_d_arte`, `paese`, `biografia`, `genere`, `foto`) VALUES
+(101,'Luna Nova','Italia','Cantautrice pop italiana con sonorità elettroniche e testi intimisti.','pop',NULL),
+(102,'Marco Vento','Italia','Artista indie rock attivo nei principali club italiani.','rock',NULL),
+(103,'Ari Blake','USA','Voce soul-pop internazionale con produzioni moderne.','pop',NULL),
+(104,'The Northern Lights','Regno Unito','Band alternative rock con forte presenza live.','rock',NULL),
+(105,'Nero Milano','Italia','Rapper italiano con stile urban e testi introspettivi.','rap',NULL),
+(106,'Sofia Rey','Spagna','Cantante pop latina con tour europei.','pop',NULL),
+(107,'Mikael Frost','Svezia','Produttore e performer elettronico nordico.','electronic',NULL),
+(108,'Giulia Aria','Italia','Voce crossover tra pop e lirica contemporanea.','opera',NULL),
+(109,'East River Crew','USA','Collettivo hip hop newyorkese.','rap',NULL),
+(110,'Valerio Blu','Italia','Cantautore pop-rock con forte seguito radiofonico.','pop',NULL),
+(111,'Noemi K','Italia','Artista R&B italiana emergente.','rnb',NULL),
+(112,'Atlas Road','Canada','Band folk-rock con arrangiamenti acustici.','rock',NULL),
+(113,'Kira Moon','Corea del Sud','Performer pop internazionale con coreografie live.','pop',NULL),
+(114,'Diego Santos','Brasile','Cantante latin-pop e chitarra acustica.','latin',NULL),
+(115,'Echo District','Germania','Duo elettronico con visual show immersivi.','electronic',NULL),
+(116,'Francesco Lupo','Italia','Rapper melodico italiano.','rap',NULL),
+(117,'Elena Forte','Italia','Soprano crossover per eventi teatrali e live.','opera',NULL),
+(118,'Silver Harbor','Australia','Band pop-rock australiana.','rock',NULL),
+(119,'Nadia Sol','Francia','Cantante soul francese con influenze jazz.','soul',NULL),
+(120,'Roman Gray','Irlanda','Cantautore folk-pop con tour europeo.','folk',NULL)
+ON DUPLICATE KEY UPDATE nome_d_arte=VALUES(nome_d_arte), paese=VALUES(paese), biografia=VALUES(biografia), genere=VALUES(genere);
+
+INSERT INTO `prodotto` (`id_prodotto`, `active`, `nome`, `id_artista`, `prezzo`, `iva`, `descrizione`, `immagine`) VALUES
+(101,1,'Luna Nova Oversize Tour T-Shirt',101,34.90,22.00,'T-shirt oversize ufficiale del tour 2026.',NULL),
+(102,1,'Marco Vento Black Hoodie',102,69.90,22.00,'Felpa nera premium con stampa frontale.',NULL),
+(103,1,'Ari Blake Vinyl Limited Edition',103,39.90,22.00,'Vinile edizione limitata con booklet.',NULL),
+(104,1,'The Northern Lights Beanie',104,24.90,22.00,'Berretto ricamato con logo della band.',NULL),
+(105,1,'Nero Milano Urban Cap',105,29.90,22.00,'Cappellino nero regolabile con ricamo.',NULL),
+(106,1,'Sofia Rey Tour Poster',106,14.90,22.00,'Poster ufficiale formato 50x70 cm.',NULL),
+(107,1,'Mikael Frost Reflective Tote Bag',107,22.90,22.00,'Borsa tote riflettente per eventi live.',NULL),
+(108,1,'Giulia Aria Gold Program Book',108,19.90,22.00,'Programma ufficiale con foto e testi.',NULL),
+(109,1,'East River Crew Long Sleeve',109,44.90,22.00,'Long sleeve bianca con stampa posteriore.',NULL),
+(110,1,'Valerio Blu Acoustic CD',110,18.90,22.00,'CD live acoustic session.',NULL),
+(111,1,'Noemi K Violet T-Shirt',111,32.90,22.00,'T-shirt viola in cotone organico.',NULL),
+(112,1,'Atlas Road Canvas Backpack',112,54.90,22.00,'Zaino canvas con patch ufficiale.',NULL),
+(113,1,'Kira Moon Lightstick',113,49.90,22.00,'Lightstick ufficiale per concerti.',NULL),
+(114,1,'Diego Santos Summer Shirt',114,36.90,22.00,'Camicia leggera ispirata al tour estivo.',NULL),
+(115,1,'Echo District Neon Wristband',115,12.90,22.00,'Bracciale neon per eventi elettronici.',NULL),
+(116,1,'Francesco Lupo Deluxe Album',116,27.90,22.00,'Album deluxe con tracce bonus.',NULL),
+(117,1,'Elena Forte Theater Scarf',117,42.90,22.00,'Sciarpa elegante con logo ricamato.',NULL),
+(118,1,'Silver Harbor Surf Hoodie',118,64.90,22.00,'Felpa blu con grafica oceanica.',NULL),
+(119,1,'Nadia Sol Jazz Vinyl',119,38.90,22.00,'Vinile soul-jazz edizione speciale.',NULL),
+(120,1,'Roman Gray Folk Notebook',120,16.90,22.00,'Notebook ufficiale con testi selezionati.',NULL)
+ON DUPLICATE KEY UPDATE active=VALUES(active), nome=VALUES(nome), id_artista=VALUES(id_artista), prezzo=VALUES(prezzo), iva=VALUES(iva), descrizione=VALUES(descrizione);
+
+INSERT INTO `concerto` (`id_concerto`, `data_ora`, `titolo_evento`, `prezzo`, `iva`, `id_artista`, `luogo_indirizzo`, `event_manager`) VALUES
+(101,'2026-05-03 21:00:00','Luna Nova Live a Milano',55.00,10.00,101,'Milano, Teatro Arcimboldi, Viale dell Innovazione 20','Vibe Events'),
+(102,'2026-05-08 20:30:00','Marco Vento Rock Night',42.50,10.00,102,'Torino, Hiroshima Mon Amour, Via Bossoli 83','North Stage'),
+(103,'2026-05-12 21:00:00','Ari Blake European Tour',68.00,10.00,103,'Roma, Auditorium Parco della Musica','Live Nation Italia'),
+(104,'2026-05-15 20:00:00','The Northern Lights Arena Show',74.90,10.00,104,'Bologna, Unipol Arena','Arena Music'),
+(105,'2026-05-18 22:00:00','Nero Milano Urban Session',39.90,10.00,105,'Napoli, Casa della Musica','Urban Lab'),
+(106,'2026-05-22 21:00:00','Sofia Rey Fiesta Pop',49.90,10.00,106,'Firenze, Tuscany Hall','Mediterraneo Live'),
+(107,'2026-05-25 23:00:00','Mikael Frost Electronic Vision',58.00,10.00,107,'Milano, Fabrique, Via Fantoli 9','Echo Events'),
+(108,'2026-05-29 20:30:00','Giulia Aria Crossover Gala',62.00,10.00,108,'Verona, Teatro Romano','Classic Live'),
+(109,'2026-06-02 21:30:00','East River Crew Hip Hop Night',45.00,10.00,109,'Roma, Atlantico Live','Urban Stage'),
+(110,'2026-06-06 20:30:00','Valerio Blu Acoustic Tour',37.50,10.00,110,'Salerno, Teatro Augusteo','Vibe Events'),
+(111,'2026-06-10 21:00:00','Noemi K R&B Showcase',34.90,10.00,111,'Napoli, Duel Club','Soul Management'),
+(112,'2026-06-14 20:00:00','Atlas Road Folk Evening',41.00,10.00,112,'Bergamo, Creberg Teatro','Acoustic Road'),
+(113,'2026-06-18 21:00:00','Kira Moon Pop Universe',79.90,10.00,113,'Milano, Mediolanum Forum','Galaxy Live'),
+(114,'2026-06-22 21:30:00','Diego Santos Summer Live',44.00,10.00,114,'Bari, Arena della Vittoria','Summer Agency'),
+(115,'2026-06-26 23:30:00','Echo District Neon Festival',52.00,10.00,115,'Rimini, Rimini Beach Arena','Neon Crew'),
+(116,'2026-07-01 21:00:00','Francesco Lupo Notte Rap',36.00,10.00,116,'Palermo, Cantieri Culturali','South Flow'),
+(117,'2026-07-05 20:30:00','Elena Forte Theater Night',59.00,10.00,117,'Venezia, Teatro Goldoni','Opera Events'),
+(118,'2026-07-09 21:00:00','Silver Harbor Summer Rock',47.50,10.00,118,'Genova, Arena del Mare','Harbor Live'),
+(119,'2026-07-13 20:30:00','Nadia Sol Soul Jazz Live',43.00,10.00,119,'Torino, Teatro Colosseo','Blue Note Agency'),
+(120,'2026-07-17 21:00:00','Roman Gray Folk Stories',35.00,10.00,120,'Trento, Auditorium Santa Chiara','Folk Italia')
+ON DUPLICATE KEY UPDATE data_ora=VALUES(data_ora), titolo_evento=VALUES(titolo_evento), prezzo=VALUES(prezzo), iva=VALUES(iva), id_artista=VALUES(id_artista), luogo_indirizzo=VALUES(luogo_indirizzo), event_manager=VALUES(event_manager);

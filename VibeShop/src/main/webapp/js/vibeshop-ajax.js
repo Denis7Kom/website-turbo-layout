@@ -23,9 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         message.textContent = 'Email gia registrata';
                     }
                 })
-                .catch(function () {
-                    message.textContent = '';
-                });
+                .catch(function () { message.textContent = ''; });
         });
     }
 
@@ -42,23 +40,82 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            const base = searchInput.form.action.replace('/Ricerca', '/search');
-            fetch(base + '?q=' + encodeURIComponent(value))
+            fetch(searchInput.form.action + '?q=' + encodeURIComponent(value))
                 .then(function (response) { return response.json(); })
                 .then(function (items) {
                     results.innerHTML = '';
-                    items.forEach(function (item) {
-                        const row = document.createElement('div');
+                    items.slice(0, 10).forEach(function (item) {
+                        const row = document.createElement('a');
                         row.className = 'search-suggestion-row';
-                        row.textContent = item.name + ' - euro ' + item.price;
+                        row.href = getContextPath() + item.url;
+                        row.innerHTML = '<span>' + escapeHtml(item.type) + '</span><strong>' + escapeHtml(item.title) + '</strong><small>' + escapeHtml(item.subtitle || '') + '</small>';
                         results.appendChild(row);
                     });
                 })
-                .catch(function () {
-                    results.innerHTML = '';
-                });
+                .catch(function () { results.innerHTML = ''; });
         });
     }
+
+    document.querySelectorAll('.product-cart-control').forEach(function (control) {
+        const productId = control.getAttribute('data-product-id');
+        const addButton = control.querySelector('.merch-add-btn');
+        const quantityControl = control.querySelector('.quantity-control');
+        const qtyValue = control.querySelector('.qty-value');
+        const plus = control.querySelector('.qty-plus');
+        const minus = control.querySelector('.qty-minus');
+
+        function send(action) {
+            const oldQuantity = parseInt(qtyValue.textContent || '0', 10) || 0;
+            const oldCartCount = getCurrentCartCount();
+
+            const body = new URLSearchParams();
+            body.set('ajax', 'true');
+            body.set('action', action);
+            body.set('idProdotto', productId);
+            body.set('quantity', '1');
+
+            fetch(getContextPath() + '/cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: body.toString()
+            })
+                .then(function (response) { return response.json(); })
+                .then(function (data) {
+                    const newQuantity = parseInt(data.quantity || 0, 10) || 0;
+                    let newCartCount = parseInt(data.cartCount, 10);
+
+                    if (Number.isNaN(newCartCount)) {
+                        newCartCount = Math.max(0, oldCartCount + newQuantity - oldQuantity);
+                    }
+
+                    updateQuantity(newQuantity, newCartCount);
+                })
+                .catch(function () {});
+        }
+
+        function updateQuantity(quantity, cartCount) {
+            const qty = parseInt(quantity || 0, 10);
+            const count = Math.max(0, parseInt(cartCount || 0, 10));
+
+            qtyValue.textContent = qty;
+            if (qty > 0) {
+                addButton.classList.add('is-hidden');
+                quantityControl.classList.remove('is-hidden');
+            } else {
+                addButton.classList.remove('is-hidden');
+                quantityControl.classList.add('is-hidden');
+            }
+
+            updateCartBadges(count);
+        }
+
+        if (addButton) addButton.addEventListener('click', function () { send('add'); });
+        if (plus) plus.addEventListener('click', function () { send('increaseProduct'); });
+        if (minus) minus.addEventListener('click', function () { send('decreaseProduct'); });
+    });
 
     const adminSearch = document.getElementById('searchProduct');
     const table = document.getElementById('adminProductsTable');
@@ -68,6 +125,30 @@ document.addEventListener('DOMContentLoaded', function () {
             table.querySelectorAll('tbody tr').forEach(function (row) {
                 row.style.display = row.textContent.toLowerCase().indexOf(value) >= 0 ? '' : 'none';
             });
+        });
+    }
+
+    function updateCartBadges(count) {
+        document.querySelectorAll('.cart-count').forEach(function (badge) {
+            badge.textContent = count;
+            badge.style.display = count > 0 ? 'flex' : 'none';
+        });
+    }
+
+    function getCurrentCartCount() {
+        const badge = document.querySelector('.cart-count');
+        return badge ? (parseInt(badge.textContent || '0', 10) || 0) : 0;
+    }
+
+    function getContextPath() {
+        const path = window.location.pathname;
+        const secondSlash = path.indexOf('/', 1);
+        return secondSlash === -1 ? '' : path.substring(0, secondSlash);
+    }
+
+    function escapeHtml(value) {
+        return String(value || '').replace(/[&<>"']/g, function (char) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char];
         });
     }
 });

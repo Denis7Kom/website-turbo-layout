@@ -43,6 +43,20 @@ public class Cart implements Serializable {
         addItem(item);
     }
 
+    public int getQuantity(String cartKey) {
+        if (cartKey == null) {
+            return 0;
+        }
+
+        for (CartItem item : items) {
+            if (cartKey.equals(item.getCartKey())) {
+                return item.getQuantity();
+            }
+        }
+
+        return 0;
+    }
+
     public void updateQuantity(String cartKey, int quantity) {
         if (cartKey == null) {
             return;
@@ -79,9 +93,17 @@ public class Cart implements Serializable {
             return;
         }
 
-        for (CartItem item : items) {
+        Iterator<CartItem> iterator = items.iterator();
+
+        while (iterator.hasNext()) {
+            CartItem item = iterator.next();
+
             if (cartKey.equals(item.getCartKey())) {
-                item.decreaseQuantity(1);
+                if (item.getQuantity() <= 1) {
+                    iterator.remove();
+                } else {
+                    item.decreaseQuantity(1);
+                }
                 return;
             }
         }

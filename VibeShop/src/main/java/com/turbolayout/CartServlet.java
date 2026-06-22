@@ -45,12 +45,33 @@ public class CartServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
         Cart cart = getCart(session);
         String action = request.getParameter("action");
+        boolean ajax = isAjax(request);
+        int idProdotto = parseInt(request.getParameter("idProdotto"), 0);
+        String productKey = productKey(idProdotto);
 
         try {
             if ("add".equalsIgnoreCase(action)) {
                 addProduct(request, cart);
                 synchronizeCartCount(session, cart);
+                if (ajax) {
+                    writeCartJson(response, cart, productKey);
+                    return;
+                }
                 response.sendRedirect(request.getContextPath() + "/cart?added=true");
+                return;
+            }
+
+            if ("increaseProduct".equalsIgnoreCase(action)) {
+                addProduct(request, cart);
+                synchronizeCartCount(session, cart);
+                writeCartJson(response, cart, productKey);
+                return;
+            }
+
+            if ("decreaseProduct".equalsIgnoreCase(action)) {
+                cart.decreaseQuantity(productKey);
+                synchronizeCartCount(session, cart);
+                writeCartJson(response, cart, productKey);
                 return;
             }
 
@@ -133,6 +154,23 @@ public class CartServlet extends HttpServlet {
 
     private void synchronizeCartCount(HttpSession session, Cart cart) {
         session.setAttribute("cartCount", cart.getTotalQuantity());
+    }
+
+    private boolean isAjax(HttpServletRequest request) {
+        return "XMLHttpRequest".equalsIgnoreCase(request.getHeader("X-Requested-With"))
+                || "true".equalsIgnoreCase(request.getParameter("ajax"));
+    }
+
+    private String productKey(int idProdotto) {
+        return CartItem.TYPE_PRODUCT + "-" + idProdotto;
+    }
+
+    private void writeCartJson(HttpServletResponse response, Cart cart, String cartKey) throws IOException {
+        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+        response.setContentType("application/json;charset=UTF-8");
+        int quantity = cart.getQuantity(cartKey);
+        int cartCount = cart.getTotalQuantity();
+        response.getWriter().write("{\"quantity\":" + quantity + ",\"cartCount\":" + cartCount + "}");
     }
 
     private int parseInt(String value, int defaultValue) {
