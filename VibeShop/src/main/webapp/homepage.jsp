@@ -4,9 +4,13 @@
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Locale" %>
+<%@ page import="java.sql.SQLException" %>
 <%@ page import="model.ConcertoBean" %>
 <%@ page import="model.ArtistBean" %>
 <%@ page import="model.ProductBean" %>
+<%@ page import="model.dao.ConcertoDAO" %>
+<%@ page import="model.dao.ArtistDAO" %>
+<%@ page import="model.dao.ProductDAO" %>
 <%!
     private String h(String value) {
         if (value == null) {
@@ -16,20 +20,18 @@
     }
 %>
 <%
-    if (request.getAttribute("featuredConcerts") == null
-            && request.getAttribute("featuredArtists") == null
-            && request.getAttribute("featuredProducts") == null) {
-        response.sendRedirect(request.getContextPath() + "/home");
-        return;
+    List<ConcertoBean> concerts = new ArrayList<ConcertoBean>();
+    List<ArtistBean> artists = new ArrayList<ArtistBean>();
+    List<ProductBean> products = new ArrayList<ProductBean>();
+    String databaseWarning = null;
+
+    try {
+        concerts = new ConcertoDAO().findAllActive();
+        artists = new ArtistDAO().findFeatured(6);
+        products = new ProductDAO().findAllActive();
+    } catch (SQLException e) {
+        databaseWarning = "Database non disponibile: contenuti dinamici temporaneamente vuoti.";
     }
-
-    Object concertsObject = request.getAttribute("featuredConcerts");
-    Object artistsObject = request.getAttribute("featuredArtists");
-    Object productsObject = request.getAttribute("featuredProducts");
-
-    List<ConcertoBean> concerts = concertsObject instanceof List ? (List<ConcertoBean>) concertsObject : new ArrayList<ConcertoBean>();
-    List<ArtistBean> artists = artistsObject instanceof List ? (List<ArtistBean>) artistsObject : new ArrayList<ArtistBean>();
-    List<ProductBean> products = productsObject instanceof List ? (List<ProductBean>) productsObject : new ArrayList<ProductBean>();
 
     NumberFormat money = NumberFormat.getCurrencyInstance(Locale.ITALY);
     SimpleDateFormat dayFormat = new SimpleDateFormat("dd MMM yyyy", Locale.ITALY);
@@ -49,6 +51,15 @@
     <%@ include file="/WEB-INF/fragments/nav.jspf" %>
 
     <main class="main-content">
+        <% if (databaseWarning != null) { %>
+            <div class="card empty-card" style="margin-bottom: 24px; min-height: auto;">
+                <div class="card-content" style="min-height: auto;">
+                    <span class="card-label">Database</span>
+                    <span class="card-title"><%= h(databaseWarning) %></span>
+                </div>
+            </div>
+        <% } %>
+
         <section class="section-container">
             <div class="section-header">
                 <h2>Concerti in evidenza</h2>
