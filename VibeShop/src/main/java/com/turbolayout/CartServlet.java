@@ -47,13 +47,14 @@ public class CartServlet extends HttpServlet {
         String action = request.getParameter("action");
         boolean ajax = isAjax(request);
         int idProdotto = parseInt(request.getParameter("idProdotto"), 0);
+        String productKey = productKey(idProdotto);
 
         try {
             if ("add".equalsIgnoreCase(action)) {
                 addProduct(request, cart);
                 synchronizeCartCount(session, cart);
                 if (ajax) {
-                    writeCartJson(response, cart, productKey(idProdotto));
+                    writeCartJson(response, cart, productKey);
                     return;
                 }
                 response.sendRedirect(request.getContextPath() + "/cart?added=true");
@@ -63,20 +64,14 @@ public class CartServlet extends HttpServlet {
             if ("increaseProduct".equalsIgnoreCase(action)) {
                 addProduct(request, cart);
                 synchronizeCartCount(session, cart);
-                writeCartJson(response, cart, productKey(idProdotto));
+                writeCartJson(response, cart, productKey);
                 return;
             }
 
             if ("decreaseProduct".equalsIgnoreCase(action)) {
-                String key = productKey(idProdotto);
-                int current = cart.getQuantity(key);
-                if (current <= 1) {
-                    cart.removeItem(key);
-                } else {
-                    cart.decreaseQuantity(key);
-                }
+                cart.decreaseQuantity(productKey);
                 synchronizeCartCount(session, cart);
-                writeCartJson(response, cart, key);
+                writeCartJson(response, cart, productKey);
                 return;
             }
 
@@ -171,9 +166,11 @@ public class CartServlet extends HttpServlet {
     }
 
     private void writeCartJson(HttpServletResponse response, Cart cart, String cartKey) throws IOException {
+        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
         response.setContentType("application/json;charset=UTF-8");
         int quantity = cart.getQuantity(cartKey);
-        response.getWriter().write("{\"quantity\":" + quantity + ",\"cartCount\":" + cart.getTotalQuantity() + "}");
+        int cartCount = cart.getTotalQuantity();
+        response.getWriter().write("{\"quantity\":" + quantity + ",\"cartCount\":" + cartCount + "}");
     }
 
     private int parseInt(String value, int defaultValue) {
