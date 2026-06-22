@@ -77,7 +77,7 @@ public class SearchServlet extends HttpServlet {
             statement.setString(2, like);
             try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
-                    results.add(new SearchResult("Merch", rs.getString("nome"), rs.getString("descrizione"), "/product?id=" + rs.getInt("id_prodotto")));
+                    results.add(new SearchResult("Merch", rs.getString("nome"), rs.getString("descrizione"), "/merch"));
                 }
             }
         }

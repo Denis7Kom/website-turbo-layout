@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content {
+    flex: 1 0 auto;
+}
+
+.site-footer {
+    margin-top: auto;
+    flex-shrink: 0;
+}
+
+.summary-card .btn-checkout-cta {
+    margin-bottom: 14px;
+}
+
+.summary-card .cart-clear-form {
+    margin: 0 0 14px;
+}
+
+.summary-card .cart-clear-form .btn-continue-shopping {
+    margin: 0;
+}
+
+@media (min-width: 993px) {
+    .cart-container {
+        min-height: 360px;
+    }
+}
