@@ -11,11 +11,25 @@
         }
         return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#39;");
     }
+
+    private String adminMessage(String code) {
+        if ("product-created".equals(code)) return "Prodotto creato correttamente.";
+        if ("product-updated".equals(code)) return "Prodotto aggiornato correttamente.";
+        if ("product-deleted".equals(code)) return "Prodotto disattivato correttamente.";
+        if ("invalid-id".equals(code)) return "Azione non completata: identificativo non valido.";
+        return null;
+    }
+
+    private String adminMessageClass(String code) {
+        return "invalid-id".equals(code) ? "admin-action-message error" : "admin-action-message success";
+    }
 %>
 <%
     Object data = request.getAttribute("products");
     List<ProductBean> products = data instanceof List ? (List<ProductBean>) data : new ArrayList<ProductBean>();
     NumberFormat money = NumberFormat.getCurrencyInstance(Locale.ITALY);
+    String messageCode = request.getParameter("message");
+    String actionMessage = adminMessage(messageCode);
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -66,6 +80,9 @@
                     <a href="${pageContext.request.contextPath}/admin/products" class="active">Prodotti</a>
                     <a href="${pageContext.request.contextPath}/admin/concerts">Concerti e Biglietti</a>
                 </div>
+                <% if (actionMessage != null) { %>
+                    <div class="<%= adminMessageClass(messageCode) %>" role="status"><%= h(actionMessage) %></div>
+                <% } %>
                 <div class="admin-filters-bar">
                     <div class="filter-group-search">
                         <label for="searchProduct">Cerca nel catalogo</label>
@@ -88,7 +105,7 @@
                                         <td><%= product.getIva() %>%</td>
                                         <td>
                                             <a href="${pageContext.request.contextPath}/admin/product-form?id=<%= product.getIdProdotto() %>" class="btn-table-edit">Modifica</a>
-                                            <form action="${pageContext.request.contextPath}/admin/products/delete" method="post" style="display:inline;">
+                                            <form action="${pageContext.request.contextPath}/admin/products/delete" method="post" style="display:inline;" onsubmit="return confirm('Confermi la disattivazione di questo prodotto? Gli ordini storici resteranno integri.');">
                                                 <input type="hidden" name="id" value="<%= product.getIdProdotto() %>">
                                                 <button type="submit" class="btn-table-delete">Disattiva</button>
                                             </form>
