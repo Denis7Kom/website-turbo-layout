@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="model.UserBean" %>
 <%
     String currentURI = request.getRequestURI();
     boolean isLoginPage = currentURI.contains("login.jsp");
@@ -8,9 +9,21 @@
     boolean hideNavElements = isLoginPage || isRegisterPage;
     boolean hideCartIcon = hideNavElements || isCartPage || isCheckoutPage;
 
-    Object utente = session.getAttribute("utente");
-    if (utente == null) {
-        utente = session.getAttribute("user");
+    Object userObjectForHeader = session == null ? null : session.getAttribute("user");
+    Object utenteObjectForHeader = session == null ? null : session.getAttribute("utente");
+    String profileLabel = null;
+
+    if (userObjectForHeader instanceof UserBean) {
+        UserBean headerUser = (UserBean) userObjectForHeader;
+        if (headerUser.getUsername() != null && !headerUser.getUsername().trim().isEmpty()) {
+            profileLabel = headerUser.getUsername();
+        } else if (headerUser.getNome() != null && !headerUser.getNome().trim().isEmpty()) {
+            profileLabel = headerUser.getNome();
+        } else if (headerUser.getEmail() != null && !headerUser.getEmail().trim().isEmpty()) {
+            profileLabel = headerUser.getEmail();
+        }
+    } else if (utenteObjectForHeader != null) {
+        profileLabel = String.valueOf(utenteObjectForHeader);
     }
 %>
 <header>
@@ -39,8 +52,8 @@
 
     <div class="header-actions">
         <div class="right">
-            <% if (utente != null) { %>
-                <a href="${pageContext.request.contextPath}/profile" class="login"><%= utente %></a>
+            <% if (profileLabel != null && !profileLabel.trim().isEmpty()) { %>
+                <a href="${pageContext.request.contextPath}/profile" class="login"><%= profileLabel %></a>
             <% } else if (isLoginPage) { %>
                 <a href="${pageContext.request.contextPath}/jsp/register.jsp" class="login">Registrati</a>
             <% } else if (isRegisterPage) { %>
