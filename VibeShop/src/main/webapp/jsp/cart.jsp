@@ -35,6 +35,7 @@
     <link rel="icon" type="image/svg+xml" href="${pageContext.request.contextPath}/img/logo.svg" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cart.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cart-polish.css" />
 </head>
 <body>
 
