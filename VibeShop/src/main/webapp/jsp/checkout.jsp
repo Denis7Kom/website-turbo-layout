@@ -43,7 +43,7 @@
             <h1>Grazie per l'ordine!</h1>
             <p>Codice Ordine: <strong>#<%= orderId %></strong></p>
             <a href="${pageContext.request.contextPath}/orders" class="btn-back-home">Vedi i miei ordini</a>
-            <a href="${pageContext.request.contextPath}/jsp/index.jsp" class="btn-back-home">Torna alla Home</a>
+            <a href="${pageContext.request.contextPath}/home" class="btn-back-home">Torna alla Home</a>
         </div>
     <% } else if (cart == null || cart.isEmpty()) { %>
         <div class="checkout-success">

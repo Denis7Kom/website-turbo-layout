@@ -20,6 +20,7 @@ body {
     line-height: 1.5;
 }
 
+/* MAIN STRUCTURE */
 .main-content {
     max-width: 1200px;
     margin: 0 auto;
@@ -33,6 +34,7 @@ body {
     margin-bottom: 32px;
 }
 
+/* ALERT MESSAGES */
 .cart-alert-success {
     background: rgba(106, 90, 205, 0.08);
     color: var(--purple);
@@ -44,6 +46,7 @@ body {
     margin-bottom: 24px;
 }
 
+/* CONTAINER GRID (Due colonne asimmetriche) */
 .cart-container {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -51,6 +54,7 @@ body {
     align-items: start;
 }
 
+/* COLONNA RIGHE ORDINE */
 .cart-items-section {
     display: flex;
     flex-direction: column;
@@ -108,6 +112,7 @@ body {
     margin-top: 4px;
 }
 
+/* CONTROLLO QUANTITA FORMS */
 .qty-form {
     display: flex;
     align-items: center;
@@ -148,6 +153,7 @@ body {
     outline: none;
 }
 
+/* BLOCCO PREZZO E RIMOZIONE */
 .cart-item-price-block {
     display: flex;
     flex-direction: column;
@@ -177,6 +183,7 @@ body {
     color: #cc0000;
 }
 
+/* COLONNA RIEPILOGO TOTALE */
 .summary-card {
     background: var(--white);
     border: 1px solid var(--border);
@@ -219,6 +226,7 @@ body {
     margin-bottom: 24px;
 }
 
+/* BOTTONI CTA */
 .btn-checkout-cta {
     display: flex;
     align-items: center;
@@ -265,6 +273,8 @@ body {
     border-color: var(--purple);
 }
 
+
+/* RESPONSIVE */
 @media (max-width: 992px) {
     .cart-container {
         grid-template-columns: 1fr;

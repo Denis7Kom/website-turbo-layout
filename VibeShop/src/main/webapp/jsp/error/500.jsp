@@ -52,7 +52,7 @@
     <div class="actions">
         <button type="button" class="btn btn-primary" onclick="goBackOrHome()">← Pagina precedente</button>
         <button class="btn btn-ghost" onclick="location.reload()">Riprova</button>
-        <a href="${pageContext.request.contextPath}/jsp/index.jsp" class="btn btn-ghost">Home</a>
+        <a href="${pageContext.request.contextPath}/home" class="btn btn-ghost">Home</a>
     </div>
     <p class="note">Codice: 500 &nbsp;·&nbsp; <%= new java.util.Date() %></p>
 </div>
@@ -68,7 +68,7 @@ function goBackOrHome() {
     if (document.referrer && document.referrer.indexOf(location.origin) === 0) {
         history.back();
     } else {
-        location.href = '${pageContext.request.contextPath}/jsp/index.jsp';
+        location.href = '${pageContext.request.contextPath}/home';
     }
 }
 </script>

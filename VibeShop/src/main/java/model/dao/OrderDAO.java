@@ -86,6 +86,7 @@ public class OrderDAO {
                     con.setAutoCommit(true);
                     con.close();
                 } catch (SQLException closeException) {
+                    // Connection close errors should not hide the original SQL error.
                 }
             }
         }
