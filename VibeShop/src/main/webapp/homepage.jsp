@@ -35,6 +35,59 @@
 
         return clean.substring(0, maxLength).trim() + "...";
     }
+
+    private String normalizeImagePath(String value) {
+        if (!hasText(value)) {
+            return "";
+        }
+
+        String clean = value.trim();
+        if (clean.startsWith("http://") || clean.startsWith("https://") || clean.startsWith("/")) {
+            return clean;
+        }
+
+        return clean.startsWith("img/") ? clean : "img/" + clean;
+    }
+
+    private String slug(String value) {
+        if (value == null) {
+            return "artist";
+        }
+
+        String s = value.toLowerCase(Locale.ROOT)
+                .replace("å", "a")
+                .replace("à", "a")
+                .replace("è", "e")
+                .replace("é", "e")
+                .replace("ì", "i")
+                .replace("ò", "o")
+                .replace("ù", "u")
+                .replaceAll("[^a-z0-9]+", "-")
+                .replaceAll("^-+", "")
+                .replaceAll("-+$", "");
+
+        return s.isEmpty() ? "artist" : s;
+    }
+
+    private String artistImage(ArtistBean artist, int index) {
+        if (artist != null && hasText(artist.getFoto())) {
+            return normalizeImagePath(artist.getFoto());
+        }
+
+        if (artist != null && hasText(artist.getNomeArte())) {
+            return "img/artisti/" + slug(artist.getNomeArte()) + ".jpg";
+        }
+
+        return casualImage(index);
+    }
+
+    private String casualImage(int index) {
+        return "img/casual/" + ((Math.abs(index) % 6) + 1) + ".jpg";
+    }
+
+    private String concertImage(int index) {
+        return "img/concerti/" + ((Math.abs(index) % 6) + 1) + ".jpg";
+    }
 %>
 <%
     List<ConcertoBean> concerts = new ArrayList<ConcertoBean>();
@@ -97,6 +150,7 @@
                     <% for (int i = 0; i < concerts.size() && i < 6; i++) { ConcertoBean concert = concerts.get(i); %>
                         <div class="card">
                             <a href="${pageContext.request.contextPath}/concerti">
+                                <img class="card-image" src="${pageContext.request.contextPath}/<%= h(concertImage(i)) %>" alt="<%= h(concert.getNome()) %>">
                                 <div class="card-content">
                                     <span class="card-label">Concerto</span>
                                     <span class="card-title"><%= h(concert.getNome()) %></span>
@@ -137,6 +191,7 @@
                     <% for (int i = 0; i < artists.size() && i < 6; i++) { ArtistBean artist = artists.get(i); %>
                         <div class="card">
                             <a href="${pageContext.request.contextPath}/artisti">
+                                <img class="card-image" src="${pageContext.request.contextPath}/<%= h(artistImage(artist, i)) %>" alt="<%= h(artist.getNomeArte()) %>" onerror="this.onerror=null;this.src='${pageContext.request.contextPath}/<%= h(casualImage(i)) %>';">
                                 <div class="card-content">
                                     <span class="card-label">Artista</span>
                                     <span class="card-title"><%= h(artist.getNomeArte()) %></span>
@@ -197,5 +252,6 @@
 
     <%@ include file="/WEB-INF/fragments/footer.jspf" %>
     <script src="${pageContext.request.contextPath}/js/menu.js"></script>
+    <script src="${pageContext.request.contextPath}/js/scroll-fade.js"></script>
 </body>
 </html>
