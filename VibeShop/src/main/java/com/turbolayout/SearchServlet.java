@@ -92,7 +92,7 @@ public class SearchServlet extends HttpServlet {
             try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
                     String subtitle = join(rs.getString("genere"), rs.getString("paese"));
-                    results.add(new SearchResult("Artista", rs.getString("nome_d_arte"), subtitle, "/artisti"));
+                    results.add(new SearchResult("Artista", rs.getString("nome_d_arte"), subtitle, "/home#artisti"));
                 }
             }
         }
