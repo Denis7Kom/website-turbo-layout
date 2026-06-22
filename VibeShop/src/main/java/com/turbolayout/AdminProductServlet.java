@@ -44,7 +44,7 @@ public class AdminProductServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new ServletException("Database error in admin product area", e);
         } catch (NumberFormatException e) {
-            response.sendRedirect(request.getContextPath() + "/admin/products");
+            response.sendRedirect(request.getContextPath() + "/admin/products?message=invalid-id");
         }
     }
 
@@ -63,12 +63,15 @@ public class AdminProductServlet extends HttpServlet {
                 int id = parseInt(request.getParameter("id"), 0);
                 if (id > 0) {
                     productDAO.setActive(id, false);
+                    response.sendRedirect(request.getContextPath() + "/admin/products?message=product-deleted");
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/admin/products?message=invalid-id");
                 }
-                response.sendRedirect(request.getContextPath() + "/admin/products");
                 return;
             }
 
             ProductBean product = buildProduct(request);
+            boolean editing = product.getIdProdotto() > 0;
             String validationError = validateProduct(product);
             if (validationError != null) {
                 request.setAttribute("error", validationError);
@@ -77,12 +80,12 @@ public class AdminProductServlet extends HttpServlet {
                 return;
             }
 
-            if (product.getIdProdotto() > 0) {
+            if (editing) {
                 productDAO.update(product);
             } else {
                 productDAO.create(product);
             }
-            response.sendRedirect(request.getContextPath() + "/admin/products");
+            response.sendRedirect(request.getContextPath() + "/admin/products?message=" + (editing ? "product-updated" : "product-created"));
         } catch (SQLException e) {
             throw new ServletException("Database error while saving product", e);
         }
