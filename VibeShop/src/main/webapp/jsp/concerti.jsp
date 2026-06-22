@@ -16,7 +16,7 @@
     }
 
     private String concertImage(int index) {
-        return "img/concerti/" + ((Math.abs(index) % 6) + 1) + ".jpg";
+        return "img/concerti/" + ((Math.abs(index) % 4) + 1) + ".jpg";
     }
 %>
 <%
