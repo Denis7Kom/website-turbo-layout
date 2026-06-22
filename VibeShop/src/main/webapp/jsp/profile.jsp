@@ -13,9 +13,12 @@
     UserBean user = userObject instanceof UserBean ? (UserBean) userObject : null;
     String nome = user == null ? "Utente" : user.getNome();
     String cognome = user == null ? "" : user.getCognome();
+    String username = user == null ? "" : user.getUsername();
     String email = user == null ? "" : user.getEmail();
     String telefono = user == null ? "" : user.getCellulare();
+    String role = user == null ? "" : user.getRole();
     String initials = nome == null || nome.isEmpty() ? "U" : nome.substring(0, 1).toUpperCase();
+    boolean updated = "true".equals(request.getParameter("updated"));
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -53,6 +56,10 @@
         </div>
     </header>
 
+    <% if (updated) { %>
+        <div class="profile-alert success">Dati account aggiornati correttamente.</div>
+    <% } %>
+
     <div class="profile-content-grid">
         <aside class="profile-sidebar">
             <nav class="sidebar-nav">
@@ -60,7 +67,7 @@
                     <section class="card-vibe">
                         <div class="section-title-row">
                             <h2>Informazioni Personali</h2>
-                            <a href="${pageContext.request.contextPath}/jsp/modifica-profilo.jsp" class="edit-link">Modifica</a>
+                            <a href="${pageContext.request.contextPath}/account/edit" class="edit-link">Modifica</a>
                         </div>
 
                         <div class="info-grid">
@@ -69,12 +76,20 @@
                                 <p><%= h(nome) %> <%= h(cognome) %></p>
                             </div>
                             <div class="info-field">
+                                <label>Username</label>
+                                <p><%= h(username) %></p>
+                            </div>
+                            <div class="info-field">
                                 <label>Email</label>
                                 <p><%= h(email) %></p>
                             </div>
                             <div class="info-field">
                                 <label>Telefono</label>
                                 <p><%= h(telefono) %></p>
+                            </div>
+                            <div class="info-field">
+                                <label>Ruolo</label>
+                                <p><%= h(role) %></p>
                             </div>
                             <div class="info-field">
                                 <label>Metodo di Pagamento</label>

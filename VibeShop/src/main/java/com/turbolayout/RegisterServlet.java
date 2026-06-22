@@ -19,6 +19,7 @@ public class RegisterServlet extends HttpServlet {
 
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,63}$");
     private static final Pattern PHONE_PATTERN = Pattern.compile("^\\+?[0-9 .()\\-]{7,20}$");
+    private static final Pattern USERNAME_PATTERN = Pattern.compile("^[A-Za-z0-9._-]{3,30}$");
 
     private final UserDAO userDAO = new UserDAO();
 
@@ -30,16 +31,21 @@ public class RegisterServlet extends HttpServlet {
 
         String nome = trim(request.getParameter("nome"));
         String cognome = trim(request.getParameter("cognome"));
+        String username = trim(request.getParameter("username"));
         String email = trim(request.getParameter("email"));
         String telefono = trim(request.getParameter("telefono"));
-        String username = trim(request.getParameter("username"));
         String pwd = request.getParameter("password");
         String confirmPwd = request.getParameter("confirmPassword");
         String terms = request.getParameter("terms");
 
-        if (isEmpty(nome) || isEmpty(cognome) || isEmpty(email)
-                || isEmpty(telefono) || isEmpty(username) || isEmpty(pwd) || isEmpty(confirmPwd)) {
-            forwardWithError(request, response, "Compila tutti i campi obbligatori, inclusi email e telefono.");
+        if (isEmpty(nome) || isEmpty(cognome) || isEmpty(username) || isEmpty(email)
+                || isEmpty(telefono) || isEmpty(pwd) || isEmpty(confirmPwd)) {
+            forwardWithError(request, response, "Compila tutti i campi obbligatori, inclusi username, email e telefono.");
+            return;
+        }
+
+        if (!USERNAME_PATTERN.matcher(username).matches()) {
+            forwardWithError(request, response, "Lo username deve avere 3-30 caratteri e può contenere lettere, numeri, punto, trattino e underscore.");
             return;
         }
 
@@ -74,9 +80,15 @@ public class RegisterServlet extends HttpServlet {
                 return;
             }
 
+            if (userDAO.existsByUsername(username)) {
+                forwardWithError(request, response, "Username già registrato.");
+                return;
+            }
+
             UserBean user = new UserBean();
             user.setNome(nome);
             user.setCognome(cognome);
+            user.setUsername(username);
             user.setEmail(email);
             user.setCellulare(telefono);
 
