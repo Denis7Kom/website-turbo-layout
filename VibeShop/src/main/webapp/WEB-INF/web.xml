@@ -220,6 +220,27 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>AdminConcertServlet</servlet-name>
+    <servlet-class>com.turbolayout.AdminConcertServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminConcertServlet</servlet-name>
+    <url-pattern>/admin/concerts</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AdminConcertServlet</servlet-name>
+    <url-pattern>/admin/concert-form</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AdminConcertServlet</servlet-name>
+    <url-pattern>/admin/concerts/save</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AdminConcertServlet</servlet-name>
+    <url-pattern>/admin/concerts/delete</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>AdminOrderServlet</servlet-name>
     <servlet-class>com.turbolayout.AdminOrderServlet</servlet-class>
   </servlet>

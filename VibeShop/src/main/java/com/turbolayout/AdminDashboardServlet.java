@@ -2,6 +2,7 @@ package com.turbolayout;
 
 import model.OrderBean;
 import model.ProductBean;
+import model.dao.ConcertoDAO;
 import model.dao.OrderDAO;
 import model.dao.ProductDAO;
 
@@ -23,6 +24,7 @@ public class AdminDashboardServlet extends HttpServlet {
 
     private final OrderDAO orderDAO = new OrderDAO();
     private final ProductDAO productDAO = new ProductDAO();
+    private final ConcertoDAO concertoDAO = new ConcertoDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -36,6 +38,7 @@ public class AdminDashboardServlet extends HttpServlet {
         try {
             List<OrderBean> orders = orderDAO.findAll();
             List<ProductBean> products = productDAO.findAllActive();
+            int concertCount = concertoDAO.countAll();
             BigDecimal revenue = BigDecimal.ZERO;
 
             for (OrderBean order : orders) {
@@ -47,6 +50,7 @@ public class AdminDashboardServlet extends HttpServlet {
             request.setAttribute("orders", orders);
             request.setAttribute("orderCount", orders.size());
             request.setAttribute("productCount", products.size());
+            request.setAttribute("concertCount", concertCount);
             request.setAttribute("revenue", revenue);
             request.getRequestDispatcher("/jsp/admin/dashboard.jsp").forward(request, response);
         } catch (SQLException e) {
