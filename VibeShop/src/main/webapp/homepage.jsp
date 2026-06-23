@@ -36,7 +36,7 @@
     }
 
     private String casualImage(int index) {
-        return "img/casual/" + ((Math.abs(index) % 5) + 1) + ".jpg";
+        return "img/casual/" + ((Math.abs(index) % 5) + 1) + ".avif";
     }
 
     private String concertImage(int index) {
