@@ -63,8 +63,10 @@ public class AdminProductServlet extends HttpServlet {
                 int id = parseInt(request.getParameter("id"), 0);
                 if (id > 0) {
                     productDAO.setActive(id, false);
+                    response.sendRedirect(request.getContextPath() + "/admin/products?productAction=deleted");
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/admin/products?productAction=delete-error");
                 }
-                response.sendRedirect(request.getContextPath() + "/admin/products");
                 return;
             }
 
@@ -79,10 +81,11 @@ public class AdminProductServlet extends HttpServlet {
 
             if (product.getIdProdotto() > 0) {
                 productDAO.update(product);
+                response.sendRedirect(request.getContextPath() + "/admin/products?productAction=updated");
             } else {
                 productDAO.create(product);
+                response.sendRedirect(request.getContextPath() + "/admin/products?productAction=created");
             }
-            response.sendRedirect(request.getContextPath() + "/admin/products");
         } catch (SQLException e) {
             throw new ServletException("Database error while saving product", e);
         }

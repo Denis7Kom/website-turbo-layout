@@ -220,6 +220,27 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>AdminArtistServlet</servlet-name>
+    <servlet-class>com.turbolayout.AdminArtistServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminArtistServlet</servlet-name>
+    <url-pattern>/admin/artists</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AdminArtistServlet</servlet-name>
+    <url-pattern>/admin/artist-form</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AdminArtistServlet</servlet-name>
+    <url-pattern>/admin/artists/save</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AdminArtistServlet</servlet-name>
+    <url-pattern>/admin/artists/delete</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>AdminConcertServlet</servlet-name>
     <servlet-class>com.turbolayout.AdminConcertServlet</servlet-class>
   </servlet>
@@ -268,12 +289,16 @@
   </servlet-mapping>
 
   <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>jsp/index.jsp</welcome-file>
   </welcome-file-list>
 
   <mime-mapping>
     <extension>svg</extension>
     <mime-type>image/svg+xml</mime-type>
+  </mime-mapping>
+  <mime-mapping>
+    <extension>avif</extension>
+    <mime-type>image/avif</mime-type>
   </mime-mapping>
 
   <error-page>
