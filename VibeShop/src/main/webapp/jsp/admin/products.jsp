@@ -60,8 +60,10 @@
     <div class="admin-content-grid">
         <aside class="admin-sidebar"><nav class="sidebar-nav"><a href="${pageContext.request.contextPath}/admin/dashboard">Panoramica</a><a href="${pageContext.request.contextPath}/admin/orders">Gestione Ordini</a><a href="${pageContext.request.contextPath}/admin/products" class="active">Gestione Prodotti</a><a href="${pageContext.request.contextPath}/admin/concerts">Gestione Concerti</a><a href="${pageContext.request.contextPath}/logout" class="logout-link">Disconnetti</a></nav></aside>
         <div class="admin-main-view"><section class="card-vibe"><div class="section-title-row"><h2>Catalogo Articoli</h2><a href="${pageContext.request.contextPath}/admin/product-form" class="btn-add-product">Aggiungi Prodotto</a></div>
-            <% if (productMessage != null) { %>
-                <div class="<%= isErrorMessage(productAction) ? "admin-form-error" : "admin-form-success" %>"><%= h(productMessage) %></div>
+            <% if (productMessage != null && isErrorMessage(productAction)) { %>
+                <div class="admin-form-error"><%= h(productMessage) %></div>
+            <% } else if (productMessage != null) { %>
+                <div style="padding: 14px 18px; margin-bottom: 22px; border-radius: 12px; border: 1px solid rgba(46, 125, 50, 0.18); background: var(--success-bg); color: var(--success); font-size: 14px;"><%= h(productMessage) %></div>
             <% } %>
             <div class="admin-filters-bar"><div class="filter-group-search"><label for="searchProduct">Cerca nel catalogo</label><input type="text" id="searchProduct" placeholder="Cerca per nome prodotto" /></div></div>
             <div class="table-responsive"><table class="admin-table" id="adminProductsTable"><thead><tr><th>Prodotto</th><th>Prezzo</th><th>IVA</th><th>Azioni</th></tr></thead><tbody>
