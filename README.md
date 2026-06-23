@@ -139,8 +139,15 @@ La combinazione di viola e rosa richiama le luci dei concerti, mentre gli sfondi
 
 ## Stato del progetto
 
-Il progetto è in fase di sviluppo come elaborato universitario.  
-Le funzionalità principali sono definite a livello di architettura, navigazione, layout e modello dati.
+La versione universitaria del progetto è stata completata e presentata all'esame di Tecnologie Software per il Web.  
+Il repository conserva la versione stabile del lavoro svolto dal gruppo Turbo Layout e può essere utilizzato come base per ulteriori miglioramenti.
+
+Sviluppi futuri previsti:
+
+- refactoring del codice e della struttura dei package;
+- miglioramento della configurazione locale e della documentazione di setup;
+- hardening della sicurezza applicativa;
+- preparazione di una versione più adatta a portfolio, demo pubblica o possibile riuso commerciale.
 
 ## Licenza
 
