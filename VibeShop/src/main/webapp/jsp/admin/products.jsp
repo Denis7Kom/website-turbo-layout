@@ -58,7 +58,7 @@
         <div class="admin-quick-stats"><div class="quick-stat"><span class="stat-val"><%= products.size() %></span><span class="stat-lbl">Articoli attivi</span></div></div>
     </header>
     <div class="admin-content-grid">
-        <aside class="admin-sidebar"><nav class="sidebar-nav"><a href="${pageContext.request.contextPath}/admin/dashboard">Panoramica</a><a href="${pageContext.request.contextPath}/admin/orders">Gestione Ordini</a><a href="${pageContext.request.contextPath}/admin/products" class="active">Gestione Prodotti</a><a href="${pageContext.request.contextPath}/admin/artists">Gestione Artisti</a><a href="${pageContext.request.contextPath}/admin/concerts">Gestione Concerti</a><a href="${pageContext.request.contextPath}/logout" class="logout-link">Disconnetti</a></nav></aside>
+        <aside class="admin-sidebar"><nav class="sidebar-nav"><a href="${pageContext.request.contextPath}/admin/dashboard">Panoramica</a><a href="${pageContext.request.contextPath}/admin/orders">Gestione Ordini</a><a href="${pageContext.request.contextPath}/admin/products" class="active">Gestione Prodotti</a><a href="${pageContext.request.contextPath}/admin/concerts">Gestione Concerti</a><a href="${pageContext.request.contextPath}/logout" class="logout-link">Disconnetti</a></nav></aside>
         <div class="admin-main-view"><section class="card-vibe"><div class="section-title-row"><h2>Catalogo Articoli</h2><a href="${pageContext.request.contextPath}/admin/product-form" class="btn-add-product">Aggiungi Prodotto</a></div>
             <% if (productMessage != null && isErrorMessage(productAction)) { %>
                 <div class="admin-form-error"><%= h(productMessage) %></div>
