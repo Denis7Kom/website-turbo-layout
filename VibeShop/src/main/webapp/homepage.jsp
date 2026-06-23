@@ -17,7 +17,9 @@
         if (value == null) {
             return "";
         }
-        return value.replace("&", "&amp;")
+
+        return value
+                .replace("&", "&amp;")
                 .replace("<", "&lt;")
                 .replace(">", "&gt;")
                 .replace("\"", "&quot;")
@@ -32,18 +34,24 @@
         if (value == null) {
             return "";
         }
+
         String clean = value.trim();
-        return clean.length() <= maxLength ? clean : clean.substring(0, maxLength).trim() + "...";
+        return clean.length() <= maxLength
+                ? clean
+                : clean.substring(0, maxLength).trim() + "...";
     }
 
     private String normalizeImagePath(String value) {
         if (!hasText(value)) {
             return "";
         }
+
         String clean = value.trim();
+
         if (clean.startsWith("http://") || clean.startsWith("https://") || clean.startsWith("/")) {
             return clean;
         }
+
         return clean.startsWith("img/") ? clean : "img/" + clean;
     }
 
@@ -55,6 +63,7 @@
         if (artist != null && hasText(artist.getFoto())) {
             return normalizeImagePath(artist.getFoto());
         }
+
         return casualImage(index);
     }
 
@@ -91,6 +100,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
+
 <body>
     <%@ include file="/WEB-INF/fragments/header.jspf" %>
     <%@ include file="/WEB-INF/fragments/nav.jspf" %>
@@ -110,6 +120,7 @@
                 <h2>Concerti in evidenza</h2>
                 <a class="tasto_lato" href="${pageContext.request.contextPath}/concerti">Vedi tutti</a>
             </div>
+
             <div class="contenitore-card fade-right">
                 <% if (concerts.isEmpty()) { %>
                     <div class="card empty-card">
@@ -122,19 +133,29 @@
                         </a>
                     </div>
                 <% } else { %>
-                    <% for (int i = 0; i < concerts.size() && i < 6; i++) { ConcertoBean concert = concerts.get(i); %>
+                    <% for (int i = 0; i < concerts.size() && i < 6; i++) {
+                        ConcertoBean concert = concerts.get(i);
+                    %>
                         <div class="card">
                             <a href="${pageContext.request.contextPath}/concerti">
-                                <img class="card-image" src="${pageContext.request.contextPath}/<%= h(concertImage(i)) %>" alt="<%= h(concert.getNome()) %>" />
+                                <img
+                                    class="card-image"
+                                    src="${pageContext.request.contextPath}/<%= h(concertImage(i)) %>"
+                                    alt="<%= h(concert.getNome()) %>"
+                                />
+
                                 <div class="card-content">
                                     <span class="card-label">Concerto</span>
                                     <span class="card-title"><%= h(concert.getNome()) %></span>
+
                                     <% if (hasText(concert.getLuogo())) { %>
                                         <span class="card-meta"><%= h(concert.getLuogo()) %></span>
                                     <% } %>
+
                                     <% if (concert.getDataEvento() != null) { %>
                                         <span class="card-meta"><%= dayFormat.format(concert.getDataEvento()) %></span>
                                     <% } %>
+
                                     <% if (concert.getPrezzo() != null) { %>
                                         <span class="card-price"><%= money.format(concert.getPrezzo()) %></span>
                                     <% } %>
@@ -151,6 +172,7 @@
                 <h2>Artisti da scoprire</h2>
                 <a class="tasto_lato" href="${pageContext.request.contextPath}/artisti">Vedi tutti</a>
             </div>
+
             <div class="contenitore-card fade-right">
                 <% if (artists.isEmpty()) { %>
                     <div class="card empty-card">
@@ -163,19 +185,30 @@
                         </a>
                     </div>
                 <% } else { %>
-                    <% for (int i = 0; i < artists.size() && i < 6; i++) { ArtistBean artist = artists.get(i); %>
+                    <% for (int i = 0; i < artists.size() && i < 6; i++) {
+                        ArtistBean artist = artists.get(i);
+                    %>
                         <div class="card">
                             <a href="${pageContext.request.contextPath}/artisti">
-                                <img class="card-image" src="${pageContext.request.contextPath}/<%= h(artistImage(artist, i)) %>" alt="<%= h(artist.getNomeArte()) %>" />
+                                <img
+                                    class="card-image"
+                                    src="${pageContext.request.contextPath}/<%= h(artistImage(artist, i)) %>"
+                                    alt="<%= h(artist.getNomeArte()) %>"
+                                    onerror="this.onerror=null;this.src='${pageContext.request.contextPath}/<%= h(casualImage(i)) %>';"
+                                />
+
                                 <div class="card-content">
                                     <span class="card-label">Artista</span>
                                     <span class="card-title"><%= h(artist.getNomeArte()) %></span>
+
                                     <% if (hasText(artist.getGenere())) { %>
                                         <span class="card-meta"><%= h(artist.getGenere()) %></span>
                                     <% } %>
+
                                     <% if (hasText(artist.getPaese())) { %>
                                         <span class="card-meta"><%= h(artist.getPaese()) %></span>
                                     <% } %>
+
                                     <% if (hasText(artist.getBiografia())) { %>
                                         <span class="card-meta"><%= h(shortText(artist.getBiografia(), 90)) %></span>
                                     <% } %>
@@ -192,6 +225,7 @@
                 <h2>Shop & Collezioni</h2>
                 <a class="tasto_lato" href="${pageContext.request.contextPath}/merch">Vedi tutti</a>
             </div>
+
             <div class="contenitore-card fade-right">
                 <% if (products.isEmpty()) { %>
                     <div class="card empty-card">
@@ -204,15 +238,19 @@
                         </a>
                     </div>
                 <% } else { %>
-                    <% for (int i = 0; i < products.size() && i < 6; i++) { ProductBean product = products.get(i); %>
+                    <% for (int i = 0; i < products.size() && i < 6; i++) {
+                        ProductBean product = products.get(i);
+                    %>
                         <div class="card">
                             <a href="${pageContext.request.contextPath}/merch">
                                 <div class="card-content">
                                     <span class="card-label">Merch</span>
                                     <span class="card-title"><%= h(product.getNome()) %></span>
+
                                     <% if (hasText(product.getDescrizione())) { %>
                                         <span class="card-meta"><%= h(product.getDescrizione()) %></span>
                                     <% } %>
+
                                     <% if (product.getPrezzo() != null) { %>
                                         <span class="card-price"><%= money.format(product.getPrezzo()) %></span>
                                     <% } %>
