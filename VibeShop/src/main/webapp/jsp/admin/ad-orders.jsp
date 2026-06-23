@@ -2,6 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Locale" %>
 <%@ page import="model.OrderBean" %>
 <%!
@@ -32,6 +33,7 @@
     Object ordersObject = request.getAttribute("orders");
     List<OrderBean> orders = ordersObject instanceof List ? (List<OrderBean>) ordersObject : new ArrayList<OrderBean>();
     NumberFormat money = NumberFormat.getCurrencyInstance(Locale.ITALY);
+    SimpleDateFormat orderDateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.ITALY);
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -60,7 +62,7 @@
                     <tr><td colspan="7">Nessun ordine trovato.</td></tr>
                 <% } else { %>
                     <% for (OrderBean order : orders) { String stato = order.getStatoOrdine(); %>
-                        <tr><td><strong>#<%= order.getIdOrdine() %></strong></td><td><%= order.getIdUtente() %></td><td><%= order.getDataOrdine() %></td><td><strong><%= money.format(order.getTotalPrice()) %></strong></td><td><%= h(order.getTipoPagamento()) %></td><td><span class="badge <%= statusBadgeClass(stato) %>"><%= h(statusLabel(stato)) %></span></td><td><form method="post" action="${pageContext.request.contextPath}/admin/orders"><input type="hidden" name="idOrdine" value="<%= order.getIdOrdine() %>"><select name="statoOrdine"><option value="CONFERMATO" <%= selectedStatus(stato, "CONFERMATO") %>>CONFERMATO</option><option value="IN_ELABORAZIONE" <%= selectedStatus(stato, "IN_ELABORAZIONE") %>>IN ELABORAZIONE</option><option value="ANNULLATO" <%= selectedStatus(stato, "ANNULLATO") %>>ANNULLATO</option></select><button type="submit" class="btn-table-edit">Aggiorna</button></form></td></tr>
+                        <tr><td><strong>#<%= order.getIdOrdine() %></strong></td><td><%= order.getIdUtente() %></td><td><%= order.getDataOrdine() == null ? "-" : orderDateFormat.format(order.getDataOrdine()) %></td><td><strong><%= money.format(order.getTotalPrice()) %></strong></td><td><%= h(order.getTipoPagamento()) %></td><td><span class="badge <%= statusBadgeClass(stato) %>"><%= h(statusLabel(stato)) %></span></td><td><form method="post" action="${pageContext.request.contextPath}/admin/orders"><input type="hidden" name="idOrdine" value="<%= order.getIdOrdine() %>"><select name="statoOrdine"><option value="CONFERMATO" <%= selectedStatus(stato, "CONFERMATO") %>>CONFERMATO</option><option value="IN_ELABORAZIONE" <%= selectedStatus(stato, "IN_ELABORAZIONE") %>>IN ELABORAZIONE</option><option value="ANNULLATO" <%= selectedStatus(stato, "ANNULLATO") %>>ANNULLATO</option></select><button type="submit" class="btn-table-edit">Aggiorna</button></form></td></tr>
                     <% } %>
                 <% } %>
             </tbody></table></div>
