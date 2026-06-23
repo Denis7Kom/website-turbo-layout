@@ -13,9 +13,7 @@
 <%@ page import="model.dao.ProductDAO" %>
 <%!
     private String h(String value) {
-        if (value == null) {
-            return "";
-        }
+        if (value == null) return "";
         return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#39;");
     }
 
@@ -24,73 +22,25 @@
     }
 
     private String shortText(String value, int maxLength) {
-        if (value == null) {
-            return "";
-        }
-
+        if (value == null) return "";
         String clean = value.trim();
-        if (clean.length() <= maxLength) {
-            return clean;
-        }
-
-        return clean.substring(0, maxLength).trim() + "...";
-    }
-
-    private String normalizeImagePath(String value) {
-        if (!hasText(value)) {
-            return "";
-        }
-
-        String clean = value.trim();
-        if (clean.startsWith("http://") || clean.startsWith("https://") || clean.startsWith("/")) {
-            return clean;
-        }
-
-        return clean.startsWith("img/") ? clean : "img/" + clean;
-    }
-
-    private String slug(String value) {
-        if (value == null) {
-            return "artist";
-        }
-
-        String s = value.toLowerCase(Locale.ROOT)
-                .replace("å", "a")
-                .replace("à", "a")
-                .replace("è", "e")
-                .replace("é", "e")
-                .replace("ì", "i")
-                .replace("ò", "o")
-                .replace("ù", "u")
-                .replaceAll("[^a-z0-9]+", "-")
-                .replaceAll("^-+", "")
-                .replaceAll("-+$", "");
-
-        return s.isEmpty() ? "artist" : s;
+        return clean.length() <= maxLength ? clean : clean.substring(0, maxLength).trim() + "...";
     }
 
     private String artistImage(ArtistBean artist, int index) {
         if (artist != null && hasText(artist.getFoto())) {
-            return normalizeImagePath(artist.getFoto());
+            String clean = artist.getFoto().trim();
+            return clean.startsWith("img/") ? clean : "img/" + clean;
         }
-
-        if (artist != null && hasText(artist.getNomeArte())) {
-            return "img/artisti/" + slug(artist.getNomeArte()) + ".jpg";
-        }
-
         return casualImage(index);
     }
 
     private String casualImage(int index) {
-        return "img/casual/" + ((Math.abs(index) % 6) + 1) + ".jpg";
+        return "img/casual/" + ((Math.abs(index) % 5) + 1) + ".jpg";
     }
 
     private String concertImage(int index) {
         return "img/concerti/" + ((Math.abs(index) % 4) + 1) + ".jpg";
-    }
-
-    private String fallbackOnError() {
-        return "if(!this.dataset.fallback){this.dataset.fallback='casual';this.src=this.dataset.casual;}else{this.onerror=null;this.src=this.dataset.logo;}";
     }
 %>
 <%
@@ -121,141 +71,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
-    <%@ include file="/WEB-INF/fragments/header.jspf" %>
-    <%@ include file="/WEB-INF/fragments/nav.jspf" %>
-
-    <main class="main-content">
-        <% if (databaseWarning != null) { %>
-            <div class="card empty-card" style="margin-bottom: 24px; min-height: auto;">
-                <div class="card-content" style="min-height: auto;">
-                    <span class="card-label">Database</span>
-                    <span class="card-title"><%= h(databaseWarning) %></span>
-                </div>
-            </div>
-        <% } %>
-
-        <section class="section-container">
-            <div class="section-header">
-                <h2>Concerti in evidenza</h2>
-                <a class="tasto_lato" href="${pageContext.request.contextPath}/concerti">Vedi tutti</a>
-            </div>
-            <div class="contenitore-card fade-right">
-                <% if (concerts.isEmpty()) { %>
-                    <div class="card empty-card">
-                        <a href="${pageContext.request.contextPath}/concerti">
-                            <div class="card-content">
-                                <span class="card-label">Concerti</span>
-                                <span class="card-title">Nessun concerto disponibile</span>
-                                <span class="card-meta">Il calendario eventi verrà aggiornato a breve.</span>
-                            </div>
-                        </a>
-                    </div>
-                <% } else { %>
-                    <% for (int i = 0; i < concerts.size() && i < 6; i++) { ConcertoBean concert = concerts.get(i); %>
-                        <div class="card">
-                            <a href="${pageContext.request.contextPath}/concerti">
-                                <img class="card-image" src="${pageContext.request.contextPath}/<%= h(concertImage(i)) %>" alt="<%= h(concert.getNome()) %>">
-                                <div class="card-content">
-                                    <span class="card-label">Concerto</span>
-                                    <span class="card-title"><%= h(concert.getNome()) %></span>
-                                    <% if (hasText(concert.getLuogo())) { %>
-                                        <span class="card-meta"><%= h(concert.getLuogo()) %></span>
-                                    <% } %>
-                                    <% if (concert.getDataEvento() != null) { %>
-                                        <span class="card-meta"><%= dayFormat.format(concert.getDataEvento()) %></span>
-                                    <% } %>
-                                    <% if (concert.getPrezzo() != null) { %>
-                                        <span class="card-price"><%= money.format(concert.getPrezzo()) %></span>
-                                    <% } %>
-                                </div>
-                            </a>
-                        </div>
-                    <% } %>
+<%@ include file="/WEB-INF/fragments/header.jspf" %>
+<%@ include file="/WEB-INF/fragments/nav.jspf" %>
+<main class="main-content">
+    <% if (databaseWarning != null) { %>
+        <div class="card empty-card" style="margin-bottom: 24px; min-height: auto;"><div class="card-content" style="min-height: auto;"><span class="card-label">Database</span><span class="card-title"><%= h(databaseWarning) %></span></div></div>
+    <% } %>
+    <section class="section-container">
+        <div class="section-header"><h2>Concerti in evidenza</h2><a class="tasto_lato" href="${pageContext.request.contextPath}/concerti">Vedi tutti</a></div>
+        <div class="contenitore-card fade-right">
+            <% if (concerts.isEmpty()) { %>
+                <div class="card empty-card"><a href="${pageContext.request.contextPath}/concerti"><div class="card-content"><span class="card-label">Concerti</span><span class="card-title">Nessun concerto disponibile</span><span class="card-meta">Il calendario eventi verrà aggiornato a breve.</span></div></a></div>
+            <% } else { %>
+                <% for (int i = 0; i < concerts.size() && i < 6; i++) { ConcertoBean concert = concerts.get(i); %>
+                    <div class="card"><a href="${pageContext.request.contextPath}/concerti"><img class="card-image" src="${pageContext.request.contextPath}/<%= h(concertImage(i)) %>" alt="<%= h(concert.getNome()) %>"><div class="card-content"><span class="card-label">Concerto</span><span class="card-title"><%= h(concert.getNome()) %></span><% if (hasText(concert.getLuogo())) { %><span class="card-meta"><%= h(concert.getLuogo()) %></span><% } %><% if (concert.getDataEvento() != null) { %><span class="card-meta"><%= dayFormat.format(concert.getDataEvento()) %></span><% } %><% if (concert.getPrezzo() != null) { %><span class="card-price"><%= money.format(concert.getPrezzo()) %></span><% } %></div></a></div>
                 <% } %>
-            </div>
-        </section>
-
-        <section id="artisti" class="section-container">
-            <div class="section-header">
-                <h2>Artisti da scoprire</h2>
-                <a class="tasto_lato" href="${pageContext.request.contextPath}/artisti">Vedi tutti</a>
-            </div>
-            <div class="contenitore-card fade-right">
-                <% if (artists.isEmpty()) { %>
-                    <div class="card empty-card">
-                        <a href="${pageContext.request.contextPath}/artisti">
-                            <div class="card-content">
-                                <span class="card-label">Artisti</span>
-                                <span class="card-title">Nessun artista disponibile</span>
-                                <span class="card-meta">Aggiungi artisti dal database per mostrarli qui.</span>
-                            </div>
-                        </a>
-                    </div>
-                <% } else { %>
-                    <% for (int i = 0; i < artists.size() && i < 6; i++) { ArtistBean artist = artists.get(i); %>
-                        <div class="card">
-                            <a href="${pageContext.request.contextPath}/artisti">
-                                <img class="card-image" src="${pageContext.request.contextPath}/<%= h(artistImage(artist, i)) %>" data-casual="${pageContext.request.contextPath}/<%= h(casualImage(i)) %>" data-logo="${pageContext.request.contextPath}/img/logo.svg" alt="<%= h(artist.getNomeArte()) %>" onerror="<%= fallbackOnError() %>">
-                                <div class="card-content">
-                                    <span class="card-label">Artista</span>
-                                    <span class="card-title"><%= h(artist.getNomeArte()) %></span>
-                                    <% if (hasText(artist.getGenere())) { %>
-                                        <span class="card-meta"><%= h(artist.getGenere()) %></span>
-                                    <% } %>
-                                    <% if (hasText(artist.getPaese())) { %>
-                                        <span class="card-meta"><%= h(artist.getPaese()) %></span>
-                                    <% } %>
-                                    <% if (hasText(artist.getBiografia())) { %>
-                                        <span class="card-meta"><%= h(shortText(artist.getBiografia(), 90)) %></span>
-                                    <% } %>
-                                </div>
-                            </a>
-                        </div>
-                    <% } %>
+            <% } %>
+        </div>
+    </section>
+    <section id="artisti" class="section-container">
+        <div class="section-header"><h2>Artisti da scoprire</h2><a class="tasto_lato" href="${pageContext.request.contextPath}/artisti">Vedi tutti</a></div>
+        <div class="contenitore-card fade-right">
+            <% if (artists.isEmpty()) { %>
+                <div class="card empty-card"><a href="${pageContext.request.contextPath}/artisti"><div class="card-content"><span class="card-label">Artisti</span><span class="card-title">Nessun artista disponibile</span><span class="card-meta">Aggiungi artisti dal database per mostrarli qui.</span></div></a></div>
+            <% } else { %>
+                <% for (int i = 0; i < artists.size() && i < 6; i++) { ArtistBean artist = artists.get(i); %>
+                    <div class="card"><a href="${pageContext.request.contextPath}/artisti"><img class="card-image" src="${pageContext.request.contextPath}/<%= h(artistImage(artist, i)) %>" alt="<%= h(artist.getNomeArte()) %>"><div class="card-content"><span class="card-label">Artista</span><span class="card-title"><%= h(artist.getNomeArte()) %></span><% if (hasText(artist.getGenere())) { %><span class="card-meta"><%= h(artist.getGenere()) %></span><% } %><% if (hasText(artist.getPaese())) { %><span class="card-meta"><%= h(artist.getPaese()) %></span><% } %><% if (hasText(artist.getBiografia())) { %><span class="card-meta"><%= h(shortText(artist.getBiografia(), 90)) %></span><% } %></div></a></div>
                 <% } %>
-            </div>
-        </section>
-
-        <section class="section-container">
-            <div class="section-header">
-                <h2>Shop & Collezioni</h2>
-                <a class="tasto_lato" href="${pageContext.request.contextPath}/merch">Vedi tutti</a>
-            </div>
-            <div class="contenitore-card fade-right">
-                <% if (products.isEmpty()) { %>
-                    <div class="card empty-card">
-                        <a href="${pageContext.request.contextPath}/merch">
-                            <div class="card-content">
-                                <span class="card-label">Merch</span>
-                                <span class="card-title">Nessun prodotto disponibile</span>
-                                <span class="card-meta">Il catalogo merch è temporaneamente vuoto.</span>
-                            </div>
-                        </a>
-                    </div>
-                <% } else { %>
-                    <% for (int i = 0; i < products.size() && i < 6; i++) { ProductBean product = products.get(i); %>
-                        <div class="card">
-                            <a href="${pageContext.request.contextPath}/merch">
-                                <div class="card-content">
-                                    <span class="card-label">Merch</span>
-                                    <span class="card-title"><%= h(product.getNome()) %></span>
-                                    <% if (hasText(product.getDescrizione())) { %>
-                                        <span class="card-meta"><%= h(product.getDescrizione()) %></span>
-                                    <% } %>
-                                    <% if (product.getPrezzo() != null) { %>
-                                        <span class="card-price"><%= money.format(product.getPrezzo()) %></span>
-                                    <% } %>
-                                </div>
-                            </a>
-                        </div>
-                    <% } %>
+            <% } %>
+        </div>
+    </section>
+    <section class="section-container">
+        <div class="section-header"><h2>Shop & Collezioni</h2><a class="tasto_lato" href="${pageContext.request.contextPath}/merch">Vedi tutti</a></div>
+        <div class="contenitore-card fade-right">
+            <% if (products.isEmpty()) { %>
+                <div class="card empty-card"><a href="${pageContext.request.contextPath}/merch"><div class="card-content"><span class="card-label">Merch</span><span class="card-title">Nessun prodotto disponibile</span><span class="card-meta">Il catalogo merch è temporaneamente vuoto.</span></div></a></div>
+            <% } else { %>
+                <% for (int i = 0; i < products.size() && i < 6; i++) { ProductBean product = products.get(i); %>
+                    <div class="card"><a href="${pageContext.request.contextPath}/merch"><div class="card-content"><span class="card-label">Merch</span><span class="card-title"><%= h(product.getNome()) %></span><% if (hasText(product.getDescrizione())) { %><span class="card-meta"><%= h(product.getDescrizione()) %></span><% } %><% if (product.getPrezzo() != null) { %><span class="card-price"><%= money.format(product.getPrezzo()) %></span><% } %></div></a></div>
                 <% } %>
-            </div>
-        </section>
-    </main>
-
-    <%@ include file="/WEB-INF/fragments/footer.jspf" %>
-    <script src="${pageContext.request.contextPath}/js/menu.js"></script>
-    <script src="${pageContext.request.contextPath}/js/scroll-fade.js"></script>
+            <% } %>
+        </div>
+    </section>
+</main>
+<%@ include file="/WEB-INF/fragments/footer.jspf" %>
+<script src="${pageContext.request.contextPath}/js/menu.js"></script>
+<script src="${pageContext.request.contextPath}/js/scroll-fade.js"></script>
 </body>
 </html>
