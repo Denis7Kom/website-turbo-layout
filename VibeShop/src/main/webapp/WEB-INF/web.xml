@@ -296,6 +296,10 @@
     <extension>svg</extension>
     <mime-type>image/svg+xml</mime-type>
   </mime-mapping>
+  <mime-mapping>
+    <extension>avif</extension>
+    <mime-type>image/avif</mime-type>
+  </mime-mapping>
 
   <error-page>
     <error-code>404</error-code>
