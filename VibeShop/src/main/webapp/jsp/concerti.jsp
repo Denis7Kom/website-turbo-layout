@@ -15,8 +15,12 @@
         return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#39;");
     }
 
+    private int concertImageNumber(int index) {
+        return (Math.abs(index) % 13) + 1;
+    }
+
     private String concertImage(int index) {
-        return "img/concerti/" + ((Math.abs(index) % 13) + 1) + ".jpg";
+        return "img/concerti/" + concertImageNumber(index) + ".jpg";
     }
 %>
 <%
@@ -60,7 +64,7 @@
                 int quantity = cart == null ? 0 : cart.getQuantity(key);
             %>
                 <div class="concerto-card">
-                    <div class="concerto-card-img"><img src="${pageContext.request.contextPath}/<%= h(concertImage(i)) %>" alt="<%= h(concert.getNome()) %>"><span class="date-badge"><%= concert.getDataEvento() == null ? "LIVE" : new SimpleDateFormat("dd").format(concert.getDataEvento()) %><br><small><%= concert.getDataEvento() == null ? "" : new SimpleDateFormat("MMM", Locale.ITALY).format(concert.getDataEvento()).toUpperCase() %></small></span></div>
+                    <div class="concerto-card-img"><img src="${pageContext.request.contextPath}/<%= h(concertImage(i)) %>" data-concert-image-base="${pageContext.request.contextPath}/img/concerti/<%= concertImageNumber(i) %>" data-fallback-index="0" data-logo-fallback="${pageContext.request.contextPath}/img/logo.svg" onerror="fallbackConcertImage(this)" alt="<%= h(concert.getNome()) %>"><span class="date-badge"><%= concert.getDataEvento() == null ? "LIVE" : new SimpleDateFormat("dd").format(concert.getDataEvento()) %><br><small><%= concert.getDataEvento() == null ? "" : new SimpleDateFormat("MMM", Locale.ITALY).format(concert.getDataEvento()).toUpperCase() %></small></span></div>
                     <div class="concerto-card-body">
                         <span class="concerto-card-artista"><%= h(concert.getNome()) %></span>
                         <span class="concerto-card-location"><%= h(concert.getLuogo()) %></span>
@@ -83,5 +87,21 @@
 <%@ include file="/WEB-INF/fragments/footer.jspf" %>
 <script src="${pageContext.request.contextPath}/js/menu.js"></script>
 <script src="${pageContext.request.contextPath}/js/vibeshop-ajax.js"></script>
+<script>
+    function fallbackConcertImage(img) {
+        const extensions = ["png", "jpeg", "webp", "avif"];
+        const index = Number(img.dataset.fallbackIndex || "0");
+        const base = img.dataset.concertImageBase;
+
+        if (base && index < extensions.length) {
+            img.dataset.fallbackIndex = String(index + 1);
+            img.src = base + "." + extensions[index];
+            return;
+        }
+
+        img.onerror = null;
+        img.src = img.dataset.logoFallback || "${pageContext.request.contextPath}/img/logo.svg";
+    }
+</script>
 </body>
 </html>
