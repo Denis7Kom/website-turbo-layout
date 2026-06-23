@@ -72,7 +72,7 @@
     }
 
     private String concertImage(int index) {
-        return "img/concerti/" + concertImageNumber(index) + ".jpg";
+        return "img/concerti/" + ((Math.abs(index) % 12) + 1) + ".jpg";
     }
 %>
 
