@@ -150,7 +150,9 @@ INSERT INTO `artista` (`id_artista`, `nome_d_arte`, `paese`, `biografia`, `gener
 (42,'Bruno Mars','USA','Cantante e performer con stile funk e pop.','pop',NULL),
 (43,'Rammstein','Germania','Band tedesca di industrial rock famosa a livello mondiale.','rock',NULL),
 (44,'Ed Sheeran','England','Cantautore inglese molto popolare.','pop',NULL),
-(45,'David Guetta','Francia','DJ e produttore francese, tra i piu influenti nella musica dance elettronica.','elettronica',NULL);
+(45,'David Guetta','Francia','DJ e produttore francese, tra i piu influenti nella musica dance elettronica.','elettronica',NULL),
+(46,'Pyrokinesis','Russia','Rapper e cantautore noto per testi concettuali, atmosfere narrative e immagini liriche curate.','rap',NULL),
+(47,'SCIRENA','Russia','Cantante pop nata a Balakovo, attiva dal 2021 e conosciuta per il progetto Terpila e singoli come Potential e Radisson.','pop',NULL);
 
 INSERT INTO `concerto` (`id_concerto`, `data_ora`, `titolo_evento`, `prezzo`, `iva`, `id_artista`, `luogo_indirizzo`, `event_manager`) VALUES
 (1,'2026-06-23 20:30:00','Laura Pausini Live a Milano',69.90,10.00,1,'Milano, Mediolanum Forum','VibeShop Events'),
@@ -198,7 +200,9 @@ INSERT INTO `concerto` (`id_concerto`, `data_ora`, `titolo_evento`, `prezzo`, `i
 (43,'2027-03-03 21:30:00','Rammstein Industrial Rock Arena',114.90,10.00,43,'Verona, Arena di Verona','Rock Europa'),
 (44,'2027-03-10 20:45:00','Ed Sheeran Acoustic Pop Live',89.90,10.00,44,'Napoli, Palapartenope','Acoustic Road'),
 (45,'2027-03-17 22:30:00','David Guetta Electronic Dance Arena',84.90,10.00,45,'Rimini, Beach Arena','Electronic Stage'),
-(46,'2027-03-24 21:00:00','Stromae Electronic Poetry Live',76.90,10.00,29,'Torino, OGR Torino','European Stage');
+(46,'2027-03-24 21:00:00','Stromae Electronic Poetry Live',76.90,10.00,29,'Torino, OGR Torino','European Stage'),
+(47,'2026-11-03 20:00:00','Pyrokinesis Live a Mosca',19.26,10.00,46,'Mosca, CSKA ARENA, via Avtozavodskaya 23A','Vladislav Alekseevich Besedin'),
+(48,'2026-11-22 20:00:00','Pyrokinesis Live a San Pietroburgo',20.39,10.00,46,'San Pietroburgo, Complesso sportivo Yubileiny, via Dobrolyubova 18','Vladislav Alekseevich Besedin');
 
 INSERT INTO `prodotto` (`id_prodotto`, `active`, `nome`, `id_artista`, `prezzo`, `iva`, `descrizione`, `immagine`) VALUES
 (1,1,'Laura Pausini Tour T-Shirt 2026',1,34.90,22.00,'T-shirt ufficiale in cotone premium con stampa tour.',NULL),
@@ -256,4 +260,10 @@ INSERT INTO `prodotto` (`id_prodotto`, `active`, `nome`, `id_artista`, `prezzo`,
 (53,1,'David Guetta Dance Floor Cap',45,28.90,22.00,'Cappellino elettronico con logo ricamato.',NULL),
 (54,1,'David Guetta Neon Club Tee',45,35.90,22.00,'T-shirt neon con grafica club e stampa frontale.',NULL),
 (55,1,'Stromae Electronic Poetry Notebook',29,18.90,22.00,'Notebook grafico ispirato a testi profondi e stile elettronico.',NULL),
-(56,1,'Stromae European Stage Poster',29,19.90,22.00,'Poster artistico formato 50x70 per il tour europeo.',NULL);
+(56,1,'Stromae European Stage Poster',29,19.90,22.00,'Poster artistico formato 50x70 per il tour europeo.',NULL),
+(57,1,'T-shirt pyrokinesis tour black',46,50.86,22.00,'T-shirt nera ufficiale ispirata al tour di Pyrokinesis.',NULL),
+(58,1,'T-shirt KITTEN RA',46,50.86,22.00,'T-shirt da collezione KITTEN RA collegata al merch di Pyrokinesis.',NULL),
+(59,1,'Justice Plate',46,141.48,22.00,'Piatto da collezione Justice per il catalogo merch Pyrokinesis.',NULL),
+(60,1,'Justice zip hoodie',46,124.49,22.00,'Felpa con zip Justice in stile streetwear da concerto.',NULL),
+(61,1,'Deus Mortis White Longsleeve',46,96.17,22.00,'Longsleeve bianca Deus Mortis con grafica premium.',NULL),
+(62,1,'Billie Eilish T-shirt',26,45.00,22.00,'Maglietta dedicata a Billie Eilish dal catalogo merch.',NULL);
