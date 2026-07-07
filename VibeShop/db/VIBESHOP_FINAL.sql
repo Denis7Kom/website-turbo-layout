@@ -154,7 +154,8 @@ INSERT INTO `artista` (`id_artista`, `nome_d_arte`, `paese`, `biografia`, `gener
 (46,'Pyrokinesis','Russia','Rapper e cantautore noto per testi concettuali, atmosfere narrative e immagini liriche curate.','rap',NULL),
 (47,'SCIRENA','Russia','Cantante pop nata a Balakovo, attiva dal 2021 e conosciuta per il progetto Terpila e singoli come Potential e Radisson.','pop',NULL),
 (48,'MOT','Russia','Cantante e rapper pop-rap con produzioni melodiche e concerti in grandi palazzetti.','rap',NULL),
-(49,'Three Days of Rain','Russia','Band alternative rock e pop-rock nota per atmosfere malinconiche e forte presenza live.','rock',NULL);
+(49,'Three Days of Rain','Russia','Band alternative rock e pop-rock nota per atmosfere malinconiche e forte presenza live.','rock',NULL),
+(50,'Alessandro Safina','Italia','Tenore italiano nato a Siena, associato al classical crossover e all operatic pop; ha unito formazione lirica e sensibilita pop, diventando noto a livello internazionale anche grazie al brano Luna e alla partecipazione vocale alla colonna sonora di Moulin Rouge!.','classical crossover',NULL);
 
 INSERT INTO `concerto` (`id_concerto`, `data_ora`, `titolo_evento`, `prezzo`, `iva`, `id_artista`, `luogo_indirizzo`, `event_manager`) VALUES
 (1,'2026-06-23 20:30:00','Laura Pausini Live a Milano',69.90,10.00,1,'Milano, Mediolanum Forum','VibeShop Events'),
@@ -217,7 +218,9 @@ INSERT INTO `concerto` (`id_concerto`, `data_ora`, `titolo_evento`, `prezzo`, `i
 (58,'2026-07-30 20:00:00','Three Days of Rain Live a Voronezh',28.32,10.00,49,'Voronezh, Green Theater','VibeShop Events'),
 (59,'2026-09-16 20:00:00','Three Days of Rain Live a Murmansk',28.32,10.00,49,'Murmansk, Palazzo del Ghiaccio','VibeShop Events'),
 (60,'2026-09-26 20:00:00','Three Days of Rain Live a Pushkino',28.32,10.00,49,'Pushkino, III R.I.M.','VibeShop Events'),
-(61,'2026-11-07 20:00:00','Three Days of Rain Live a Minsk',40.99,10.00,49,'Minsk, Palazzo dello Sport','VibeShop Events');
+(61,'2026-11-07 20:00:00','Three Days of Rain Live a Minsk',40.99,10.00,49,'Minsk, Palazzo dello Sport','VibeShop Events'),
+(62,'2027-04-12 20:30:00','Alessandro Safina Classical Crossover Gala',68.90,10.00,50,'Firenze, Teatro Verdi','VibeShop Events'),
+(63,'2027-05-03 20:30:00','Alessandro Safina Luna Live in Siena',72.90,10.00,50,'Siena, Teatro dei Rinnovati','VibeShop Events');
 
 INSERT INTO `prodotto` (`id_prodotto`, `active`, `nome`, `id_artista`, `prezzo`, `iva`, `descrizione`, `immagine`) VALUES
 (1,1,'Laura Pausini Tour T-Shirt 2026',1,34.90,22.00,'T-shirt ufficiale in cotone premium con stampa tour.',NULL),
@@ -287,4 +290,8 @@ INSERT INTO `prodotto` (`id_prodotto`, `active`, `nome`, `id_artista`, `prezzo`,
 (65,1,'Three Days of Rain trousers garment dye black',49,74.65,22.00,'Pantaloni garment dye black Three Days of Rain.',NULL),
 (66,1,'Melancholia cap',49,22.54,22.00,'Cappellino Melancholia con design minimal.',NULL),
 (67,1,'Melancholia bag',49,22.54,22.00,'Borsa Melancholia per merch e uso quotidiano.',NULL),
-(68,1,'Three Days of Rain Hoodie Garment Dye Black',49,96.17,22.00,'Felpa garment dye black Three Days of Rain con grafica premium.',NULL);
+(68,1,'Three Days of Rain Hoodie Garment Dye Black',49,96.17,22.00,'Felpa garment dye black Three Days of Rain con grafica premium.',NULL),
+(69,1,'Alessandro Safina Luna Tour Poster',50,19.90,22.00,'Poster da collezione ispirato al brano Luna e all estetica classical crossover di Alessandro Safina.',NULL),
+(70,1,'Alessandro Safina Classical Crossover Vinyl',50,39.90,22.00,'Vinile da collezione dedicato al repertorio pop-operistico e romantico di Alessandro Safina.',NULL),
+(71,1,'Alessandro Safina Gala Program Book',50,24.90,22.00,'Program book elegante con note biografiche, fotografie e riferimenti al repertorio live.',NULL),
+(72,1,'Alessandro Safina Signature Scarf',50,34.90,22.00,'Sciarpa souvenir elegante ispirata agli eventi teatrali e al pubblico classical crossover.',NULL);
