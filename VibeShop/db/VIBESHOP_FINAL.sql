@@ -152,7 +152,9 @@ INSERT INTO `artista` (`id_artista`, `nome_d_arte`, `paese`, `biografia`, `gener
 (44,'Ed Sheeran','England','Cantautore inglese molto popolare.','pop',NULL),
 (45,'David Guetta','Francia','DJ e produttore francese, tra i piu influenti nella musica dance elettronica.','elettronica',NULL),
 (46,'Pyrokinesis','Russia','Rapper e cantautore noto per testi concettuali, atmosfere narrative e immagini liriche curate.','rap',NULL),
-(47,'SCIRENA','Russia','Cantante pop nata a Balakovo, attiva dal 2021 e conosciuta per il progetto Terpila e singoli come Potential e Radisson.','pop',NULL);
+(47,'SCIRENA','Russia','Cantante pop nata a Balakovo, attiva dal 2021 e conosciuta per il progetto Terpila e singoli come Potential e Radisson.','pop',NULL),
+(48,'MOT','Russia','Cantante e rapper pop-rap con produzioni melodiche e concerti in grandi palazzetti.','rap',NULL),
+(49,'Three Days of Rain','Russia','Band alternative rock e pop-rock nota per atmosfere malinconiche e forte presenza live.','rock',NULL);
 
 INSERT INTO `concerto` (`id_concerto`, `data_ora`, `titolo_evento`, `prezzo`, `iva`, `id_artista`, `luogo_indirizzo`, `event_manager`) VALUES
 (1,'2026-06-23 20:30:00','Laura Pausini Live a Milano',69.90,10.00,1,'Milano, Mediolanum Forum','VibeShop Events'),
@@ -202,7 +204,20 @@ INSERT INTO `concerto` (`id_concerto`, `data_ora`, `titolo_evento`, `prezzo`, `i
 (45,'2027-03-17 22:30:00','David Guetta Electronic Dance Arena',84.90,10.00,45,'Rimini, Beach Arena','Electronic Stage'),
 (46,'2027-03-24 21:00:00','Stromae Electronic Poetry Live',76.90,10.00,29,'Torino, OGR Torino','European Stage'),
 (47,'2026-11-03 20:00:00','Pyrokinesis Live a Mosca',19.26,10.00,46,'Mosca, CSKA ARENA, via Avtozavodskaya 23A','Vladislav Alekseevich Besedin'),
-(48,'2026-11-22 20:00:00','Pyrokinesis Live a San Pietroburgo',20.39,10.00,46,'San Pietroburgo, Complesso sportivo Yubileiny, via Dobrolyubova 18','Vladislav Alekseevich Besedin');
+(48,'2026-11-22 20:00:00','Pyrokinesis Live a San Pietroburgo',20.39,10.00,46,'San Pietroburgo, Complesso sportivo Yubileiny, via Dobrolyubova 18','Vladislav Alekseevich Besedin'),
+(49,'2026-06-16 20:00:00','MOT Live a Krasnodar',45.31,10.00,48,'Krasnodar, Palazzo dello Sport Olimp','VibeShop Events'),
+(50,'2026-10-04 20:00:00','MOT Live a Tomsk',30.58,10.00,48,'Tomsk, Palazzo dello spettacolo e dello sport','VibeShop Events'),
+(51,'2026-10-06 20:00:00','MOT Live a Novosibirsk',33.98,10.00,48,'Novosibirsk, Lokomotiv-Arena','VibeShop Events'),
+(52,'2026-05-09 20:00:00','Three Days of Rain Live a Mosca',90.62,10.00,49,'Mosca, 16 Tons','VibeShop Events'),
+(53,'2026-05-17 20:00:00','Three Days of Rain Live a Korolev',30.58,10.00,49,'Korolev, DUPLEX','VibeShop Events'),
+(54,'2026-05-24 20:00:00','Three Days of Rain Live a Odintsovo',40.78,10.00,49,'Odintsovo, Hands Up! Bar','VibeShop Events'),
+(55,'2026-05-28 20:00:00','Three Days of Rain Live a Tambov',30.58,10.00,49,'Tambov, H2O ArtHall','VibeShop Events'),
+(56,'2026-07-03 20:00:00','Three Days of Rain Live a Astrakhan',28.32,10.00,49,'Astrakhan, Palazzo dello Sport Spartak','VibeShop Events'),
+(57,'2026-07-05 20:00:00','Three Days of Rain Live a Stavropol',28.32,10.00,49,'Stavropol, ABRIKOS ARENA','VibeShop Events'),
+(58,'2026-07-30 20:00:00','Three Days of Rain Live a Voronezh',28.32,10.00,49,'Voronezh, Green Theater','VibeShop Events'),
+(59,'2026-09-16 20:00:00','Three Days of Rain Live a Murmansk',28.32,10.00,49,'Murmansk, Palazzo del Ghiaccio','VibeShop Events'),
+(60,'2026-09-26 20:00:00','Three Days of Rain Live a Pushkino',28.32,10.00,49,'Pushkino, III R.I.M.','VibeShop Events'),
+(61,'2026-11-07 20:00:00','Three Days of Rain Live a Minsk',40.99,10.00,49,'Minsk, Palazzo dello Sport','VibeShop Events');
 
 INSERT INTO `prodotto` (`id_prodotto`, `active`, `nome`, `id_artista`, `prezzo`, `iva`, `descrizione`, `immagine`) VALUES
 (1,1,'Laura Pausini Tour T-Shirt 2026',1,34.90,22.00,'T-shirt ufficiale in cotone premium con stampa tour.',NULL),
@@ -266,4 +281,10 @@ INSERT INTO `prodotto` (`id_prodotto`, `active`, `nome`, `id_artista`, `prezzo`,
 (59,1,'Justice Plate',46,141.48,22.00,'Piatto da collezione Justice per il catalogo merch Pyrokinesis.',NULL),
 (60,1,'Justice zip hoodie',46,124.49,22.00,'Felpa con zip Justice in stile streetwear da concerto.',NULL),
 (61,1,'Deus Mortis White Longsleeve',46,96.17,22.00,'Longsleeve bianca Deus Mortis con grafica premium.',NULL),
-(62,1,'Billie Eilish T-shirt',26,45.00,22.00,'Maglietta dedicata a Billie Eilish dal catalogo merch.',NULL);
+(62,1,'Billie Eilish T-shirt',26,45.00,22.00,'Maglietta dedicata a Billie Eilish dal catalogo merch.',NULL),
+(63,1,'Melancholia hoodie black',49,72.38,22.00,'Felpa nera Melancholia per il catalogo Three Days of Rain.',NULL),
+(64,1,'Umbrella Melancholia',49,74.65,22.00,'Ombrello Melancholia da collezione.',NULL),
+(65,1,'Three Days of Rain trousers garment dye black',49,74.65,22.00,'Pantaloni garment dye black Three Days of Rain.',NULL),
+(66,1,'Melancholia cap',49,22.54,22.00,'Cappellino Melancholia con design minimal.',NULL),
+(67,1,'Melancholia bag',49,22.54,22.00,'Borsa Melancholia per merch e uso quotidiano.',NULL),
+(68,1,'Three Days of Rain Hoodie Garment Dye Black',49,96.17,22.00,'Felpa garment dye black Three Days of Rain con grafica premium.',NULL);
